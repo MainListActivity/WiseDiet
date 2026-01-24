@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Intake Correction &amp; AI Update</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#4b7c5a",
+              "background-light": "#f6f7f7",
+              "background-dark": "#161c18",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            animation: {
+                'ripple': 'ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite',
+            },
+            keyframes: {
+                ripple: {
+                    '0%': { transform: 'scale(0.95)', opacity: '0.5' },
+                    '100%': { transform: 'scale(1.05)', opacity: '0' },
+                }
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom styles for specific component tweaks if needed */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#131514] dark:text-gray-100 font-display transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="text-[#131514] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer transition-opacity hover:opacity-70">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-[#131514] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Today's Intake</h2>
+<div class="flex w-12 items-center justify-end cursor-pointer transition-opacity hover:opacity-70">
+<p class="text-primary text-base font-bold leading-normal tracking-[0.015em] shrink-0">Done</p>
+</div>
+</div>
+<!-- Date & Header -->
+<div class="px-4 pb-3 pt-5">
+<h2 class="text-[#131514] dark:text-white tracking-tight text-[28px] font-bold leading-tight">Oct 24, 2023</h2>
+</div>
+<!-- ProfileStats -->
+<div class="flex flex-wrap gap-3 px-4 py-3">
+<div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-xl bg-white dark:bg-[#1e2621] border border-[#dfe2e0] dark:border-gray-700 p-4 items-start shadow-sm">
+<p class="text-[#131514] dark:text-white tracking-tight text-2xl font-bold leading-tight">1850</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">local_fire_department</span>
+<p class="text-[#6f7b73] dark:text-gray-400 text-sm font-medium leading-normal">Total Calories</p>
+</div>
+</div>
+<div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-xl bg-white dark:bg-[#1e2621] border border-[#dfe2e0] dark:border-gray-700 p-4 items-start shadow-sm">
+<p class="text-[#131514] dark:text-white tracking-tight text-2xl font-bold leading-tight">82g</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">fitness_center</span>
+<p class="text-[#6f7b73] dark:text-gray-400 text-sm font-medium leading-normal">Protein</p>
+</div>
+</div>
+</div>
+<!-- Section Header -->
+<div class="flex items-end justify-between px-4 pb-2 pt-6">
+<h3 class="text-[#131514] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Confirmed Menu</h3>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+                AI Active
+            </span>
+</div>
+<!-- Meal List -->
+<div class="flex flex-col gap-3 px-4">
+<!-- Item 1: Standard -->
+<div class="flex items-center gap-4 bg-white dark:bg-[#1e2621] p-3 rounded-xl shadow-sm border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14 shrink-0" data-alt="Close up of steamed broccoli florets" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCOJNtRsKJXTgpAQ-KLI32Ymu8TwuvYSR1xbnp8sU-dC5o0m-2FLOj27lbltwbPnLrJPdIxQB_KlgLgJy5xhqN8fj69h-RMourwuaJrZJiRrCd75lLJ-Z7ExIuGRPqxjGWcu3OIdKT8es7m_M5_WBKz7JyhW8G86Uh2v0StnsD_lAKpZSlhMZSNbqHwbxmkPLB4xvZtsRJjYl8peCPAKn3mdKVkewXHa_VrBdFsN9p92-snMlGxtlTxMvyWm-yBwme_atAYRmDGEm7X");'></div>
+<div class="flex flex-col flex-1 overflow-hidden">
+<p class="text-[#131514] dark:text-white text-base font-semibold leading-normal truncate">Steamed Broccoli</p>
+<p class="text-[#6f7b73] dark:text-gray-400 text-sm font-normal">150g • 55 kcal</p>
+</div>
+<button class="shrink-0 size-10 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Item 2: Edited (Active State) -->
+<div class="relative group">
+<!-- Ripple/Glow Effect Wrapper -->
+<div class="absolute -inset-0.5 bg-primary/30 rounded-xl blur opacity-75 animate-pulse"></div>
+<div class="relative flex items-center gap-4 bg-white dark:bg-[#1e2621] p-3 rounded-xl shadow-md border-2 border-primary/50 transition-all overflow-hidden">
+<!-- Subtle background texture for AI activity -->
+<div class="absolute inset-0 bg-primary/5 opacity-50 z-0"></div>
+<div class="relative z-10 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14 shrink-0" data-alt="Grilled chicken breast slices on a plate" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuu-sN7z3-M5juQxi_oqAYC6a14UQE7wmeeuizUL9E2Ux-G69hdUZ4pWElBMLDIffCwsByKl8M9pwwxpRCte_cga13R1CCwntBdTjmMofRIDI8kEuhKrcGDQDAOo9Un5m-Lqp1mjsdsvgkTE8Rw_V66eaAyufsCo8f6uMy6gmYPq4o68-n4p5WzlHY07Gr9GNADDLy0USE9hANuI0ZQHnDTVAs-q9KYz5CRf0hKBubjpnntAYZLk3PZCHUZsay8S1snKa_QCtVf7Yp");'></div>
+<div class="relative z-10 flex flex-col flex-1 overflow-hidden">
+<div class="flex items-center gap-2 mb-0.5">
+<p class="text-[#131514] dark:text-white text-base font-bold leading-normal truncate text-primary">Grilled Chicken Breast</p>
+<!-- Animated Pill -->
+<div class="flex items-center gap-1 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm animate-pulse">
+<span class="material-symbols-outlined text-[10px]">sync</span>
+                                UPDATED
+                            </div>
+</div>
+<p class="text-[#6f7b73] dark:text-gray-300 text-sm font-medium">
+<span class="line-through text-gray-400 text-xs mr-1">Beef Steak</span>
+                            200g • 330 kcal
+                        </p>
+</div>
+<button class="relative z-10 shrink-0 size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Item 3: Standard -->
+<div class="flex items-center gap-4 bg-white dark:bg-[#1e2621] p-3 rounded-xl shadow-sm border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14 shrink-0" data-alt="Bowl of brown rice" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBoEIG9WT6aM6i2EbmX4ehCIoHD6PsN4I9uxi-M-V4Ix-E6gqMchNicBypyNGeouKZDURUFtNPSFa-wqMpQea6xclB6mXBnGKLeIyK6_Rbxbms2DFIZXW83ys42QOH2JSlKFZM9stWz8tA8gKq6gPOclWNkYRwdYSrGifp-iGignOinyzWnoI0cSuccWGuZcTw_JGA6goh8tNsDUKDny9GN260vU-IQMsreXJsYhodF-fDZLsmWBHIil9z0jbUV1GmtS2LCeJC16xUv");'></div>
+<div class="flex flex-col flex-1 overflow-hidden">
+<p class="text-[#131514] dark:text-white text-base font-semibold leading-normal truncate">Brown Rice</p>
+<p class="text-[#6f7b73] dark:text-gray-400 text-sm font-normal">1 cup • 216 kcal</p>
+</div>
+<button class="shrink-0 size-10 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<div class="h-6"></div>
+<!-- Cyber Sage Notification -->
+<div class="px-4">
+<div class="flex items-start gap-3 bg-primary rounded-xl p-4 shadow-lg shadow-primary/20 transform transition-all hover:scale-[1.01] cursor-default">
+<div class="bg-white/20 p-2 rounded-full shrink-0 text-white">
+<span class="material-symbols-outlined text-xl">smart_toy</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-white font-bold text-sm mb-0.5">Great swap!</h4>
+<p class="text-white/90 text-sm leading-snug">Switching to white meat saved you <span class="font-bold text-white border-b border-white/40">4g of saturated fat</span> today.</p>
+</div>
+</div>
+</div>
+<!-- Dynamic Nutrient Chart -->
+<div class="px-4 py-6">
+<div class="bg-white dark:bg-[#1e2621] rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-[#131514] dark:text-white font-bold text-base">Nutrient Impact</h3>
+<div class="flex gap-4 text-xs font-medium">
+<div class="flex items-center gap-1.5">
+<div class="size-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+<span class="text-gray-500 dark:text-gray-400">Original</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="size-2.5 rounded-full bg-primary"></div>
+<span class="text-primary">Updated</span>
+</div>
+</div>
+</div>
+<!-- Chart Bars -->
+<div class="flex items-end justify-around h-32 w-full gap-4">
+<!-- Sat Fat Group -->
+<div class="flex flex-col items-center gap-2 flex-1 group/bar">
+<div class="relative flex items-end justify-center gap-2 h-full w-full">
+<!-- Bar 1: Old -->
+<div class="w-3 bg-gray-300 dark:bg-gray-600 rounded-t-sm h-[70%] relative group-hover/bar:bg-gray-400 transition-colors"></div>
+<!-- Bar 2: New -->
+<div class="w-3 bg-primary rounded-t-sm h-[45%] relative shadow-[0_0_10px_rgba(75,124,90,0.4)]">
+<!-- Value Bubble -->
+<div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded opacity-100 transition-opacity">
+                                    -4g
+                                </div>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-500 dark:text-gray-400">Sat. Fat</span>
+</div>
+<!-- Protein Group -->
+<div class="flex flex-col items-center gap-2 flex-1 group/bar">
+<div class="relative flex items-end justify-center gap-2 h-full w-full">
+<!-- Bar 1: Old -->
+<div class="w-3 bg-gray-300 dark:bg-gray-600 rounded-t-sm h-[60%] relative group-hover/bar:bg-gray-400 transition-colors"></div>
+<!-- Bar 2: New -->
+<div class="w-3 bg-primary rounded-t-sm h-[85%] relative">
+<div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-primary/10 text-primary border border-primary/20 text-[10px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity">
+                                   +5g
+                               </div>
+</div>
+</div>
+<span class="text-xs font-medium text-gray-500 dark:text-gray-400">Protein</span>
+</div>
+<!-- Cholesterol Group -->
+<div class="flex flex-col items-center gap-2 flex-1 group/bar">
+<div class="relative flex items-end justify-center gap-2 h-full w-full">
+<!-- Bar 1: Old -->
+<div class="w-3 bg-gray-300 dark:bg-gray-600 rounded-t-sm h-[80%] relative group-hover/bar:bg-gray-400 transition-colors"></div>
+<!-- Bar 2: New -->
+<div class="w-3 bg-primary rounded-t-sm h-[50%] relative"></div>
+</div>
+<span class="text-xs font-medium text-gray-500 dark:text-gray-400">Cholesterol</span>
+</div>
+</div>
+</div>
+</div>
+<div class="h-10"></div>
+</div>
+</body></html>

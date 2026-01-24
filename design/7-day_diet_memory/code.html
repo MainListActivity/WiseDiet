@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Diet Memory - History Tab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "primary-dark": "#3a6146",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#232a25",
+                        "text-primary-light": "#131514",
+                        "text-primary-dark": "#e0e3e1",
+                        "text-secondary-light": "#6f7b73",
+                        "text-secondary-dark": "#a0aca5",
+                        "status-perfect": "#4b7c5a",
+                        "status-modified": "#d97706",
+                        "status-skipped": "#6b7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px", "md": "0.375rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+<header class="sticky top-0 z-50 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold leading-tight tracking-tight flex-1">Diet Memory</h2>
+<div class="flex items-center justify-end gap-3">
+<button class="flex items-center justify-center rounded-full h-10 w-10 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">search</span>
+</button>
+<button class="flex items-center justify-center rounded-full h-10 w-10 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">tune</span>
+</button>
+</div>
+</header>
+<section class="flex flex-col pt-4 pb-6 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800">
+<div class="px-4 mb-4 flex justify-between items-center">
+<div>
+<span class="text-xs font-semibold text-primary uppercase tracking-wider">Current Cycle</span>
+<h3 class="text-2xl font-bold leading-tight mt-1">Week 42</h3>
+</div>
+<div class="text-right">
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark font-medium">Oct 10 - Oct 16</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5">85% Adherence</p>
+</div>
+</div>
+<div class="flex gap-3 px-4 overflow-x-auto no-scrollbar pb-2 snap-x">
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer">
+<div class="relative w-12 h-16 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-[20px] absolute top-2">check_circle</span>
+<div class="mt-4 text-xs font-bold text-primary">Mon</div>
+</div>
+<span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">10</span>
+</div>
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer">
+<div class="relative w-12 h-16 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-[20px] absolute top-2">check_circle</span>
+<div class="mt-4 text-xs font-bold text-primary">Tue</div>
+</div>
+<span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">11</span>
+</div>
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer">
+<div class="relative w-12 h-16 rounded-2xl bg-status-modified/10 dark:bg-status-modified/20 flex items-center justify-center border border-status-modified/20">
+<span class="material-symbols-outlined text-status-modified text-[20px] absolute top-2">remove_circle</span>
+<div class="mt-4 text-xs font-bold text-status-modified">Wed</div>
+</div>
+<span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">12</span>
+</div>
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer">
+<div class="relative w-12 h-16 rounded-2xl bg-primary shadow-lg shadow-primary/30 flex flex-col items-center justify-center transform scale-110 transition-transform">
+<span class="text-[10px] font-bold text-white/80 uppercase tracking-widest mb-1">TODAY</span>
+<div class="text-sm font-bold text-white">Thu</div>
+</div>
+<span class="text-xs font-bold text-primary dark:text-white">13</span>
+</div>
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer opacity-50">
+<div class="relative w-12 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center border border-dashed border-gray-300 dark:border-gray-600">
+<div class="text-xs font-bold text-gray-400 dark:text-gray-500">Fri</div>
+</div>
+<span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">14</span>
+</div>
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer opacity-50">
+<div class="relative w-12 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center border border-dashed border-gray-300 dark:border-gray-600">
+<div class="text-xs font-bold text-gray-400 dark:text-gray-500">Sat</div>
+</div>
+<span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">15</span>
+</div>
+<div class="snap-start flex flex-col items-center gap-2 min-w-[3.5rem] group cursor-pointer opacity-50">
+<div class="relative w-12 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center border border-dashed border-gray-300 dark:border-gray-600">
+<div class="text-xs font-bold text-gray-400 dark:text-gray-500">Sun</div>
+</div>
+<span class="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">16</span>
+</div>
+</div>
+</section>
+<main class="flex-1 flex flex-col gap-4 p-4 pb-8">
+<div class="flex items-center justify-between mb-2">
+<h4 class="text-sm font-semibold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Recent History</h4>
+<button class="text-xs font-medium text-primary hover:text-primary-dark transition-colors">View All</button>
+</div>
+<article class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-background-light dark:bg-white/5 flex items-center justify-center text-text-primary-light dark:text-text-primary-dark font-bold text-lg border border-gray-200 dark:border-gray-700">
+                            12
+                        </div>
+<div>
+<h3 class="font-bold text-base">Yesterday</h3>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Wednesday</p>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-status-modified/10 text-status-modified text-xs font-bold flex items-center gap-1 border border-status-modified/20">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                        Modified
+                    </div>
+</div>
+<div class="space-y-2 pl-[3.25rem]">
+<div class="flex items-start gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+<span class="font-medium text-text-primary-light dark:text-text-primary-dark">Dinner:</span> Chicken Salad with avocado dressing.
+                        </p>
+</div>
+<div class="flex items-start gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-status-modified mt-1.5 shrink-0"></div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+<span class="font-medium text-text-primary-light dark:text-text-primary-dark">Lunch:</span> Pizza slice (office party).
+                        </p>
+</div>
+<div class="flex items-start gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+<span class="font-medium text-text-primary-light dark:text-text-primary-dark">Breakfast:</span> Oatmeal, Berries, Almonds.
+                        </p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-dashed border-gray-200 dark:border-gray-700 flex gap-4 pl-[3.25rem]">
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Cals</span>
+<span class="text-xs font-mono font-medium">1,850</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Protein</span>
+<span class="text-xs font-mono font-medium">110g</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Score</span>
+<span class="text-xs font-mono font-bold text-status-modified">B+</span>
+</div>
+</div>
+</article>
+<article class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-background-light dark:bg-white/5 flex items-center justify-center text-text-primary-light dark:text-text-primary-dark font-bold text-lg border border-gray-200 dark:border-gray-700">
+                            11
+                        </div>
+<div>
+<h3 class="font-bold text-base">Tue, Oct 11</h3>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Tuesday</p>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center gap-1 border border-primary/20">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+                        Perfect
+                    </div>
+</div>
+<div class="space-y-2 pl-[3.25rem]">
+<div class="flex items-start gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+<span class="font-medium text-text-primary-light dark:text-text-primary-dark">Summary:</span> Grilled Salmon, Quinoa, Steamed Broccoli, Green Tea. No snacking.
+                        </p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-dashed border-gray-200 dark:border-gray-700 flex gap-4 pl-[3.25rem]">
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Cals</span>
+<span class="text-xs font-mono font-medium">1,620</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Protein</span>
+<span class="text-xs font-mono font-medium">145g</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Score</span>
+<span class="text-xs font-mono font-bold text-primary">A+</span>
+</div>
+</div>
+</article>
+<article class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow opacity-90">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-background-light dark:bg-white/5 flex items-center justify-center text-text-primary-light dark:text-text-primary-dark font-bold text-lg border border-gray-200 dark:border-gray-700">
+                            10
+                        </div>
+<div>
+<h3 class="font-bold text-base">Mon, Oct 10</h3>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Monday</p>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center gap-1 border border-primary/20">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+                        Perfect
+                    </div>
+</div>
+<div class="space-y-2 pl-[3.25rem]">
+<div class="flex items-start gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+<span class="font-medium text-text-primary-light dark:text-text-primary-dark">Summary:</span> Turkey sandwich, Apple, Greek Yogurt.
+                        </p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-dashed border-gray-200 dark:border-gray-700 flex gap-4 pl-[3.25rem]">
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Cals</span>
+<span class="text-xs font-mono font-medium">1,580</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">Score</span>
+<span class="text-xs font-mono font-bold text-primary">A</span>
+</div>
+</div>
+</article>
+<article class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow opacity-75 grayscale-[0.5]">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-background-light dark:bg-white/5 flex items-center justify-center text-text-primary-light dark:text-text-primary-dark font-bold text-lg border border-gray-200 dark:border-gray-700">
+                            09
+                        </div>
+<div>
+<h3 class="font-bold text-base">Sun, Oct 09</h3>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Sunday</p>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-status-skipped/10 text-status-skipped text-xs font-bold flex items-center gap-1 border border-status-skipped/20">
+<span class="material-symbols-outlined text-[14px]">do_not_disturb_on</span>
+                        Skipped
+                    </div>
+</div>
+<div class="space-y-2 pl-[3.25rem]">
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark italic">
+                        No logs recorded for this day.
+                    </p>
+</div>
+</article>
+</main>
+</div>
+
+</body></html>

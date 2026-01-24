@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Smart Replacement Modal</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e2420",
+                        "text-main-light": "#131514",
+                        "text-main-dark": "#e0e3e1",
+                        "text-sub-light": "#6f7b73",
+                        "text-sub-dark": "#a0aca5",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better visual in web preview */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-black/50 font-display flex justify-center items-end sm:items-center min-h-screen">
+<!-- Modal Container -->
+<div class="w-full max-w-md bg-background-light dark:bg-background-dark rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+<!-- BottomSheetHandle -->
+<div class="flex flex-col items-center pt-4 pb-2 bg-background-light dark:bg-background-dark shrink-0">
+<div class="h-1.5 w-12 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+</div>
+<!-- SectionHeader -->
+<div class="bg-background-light dark:bg-background-dark px-4 pb-4 text-center shrink-0 border-b border-gray-200 dark:border-gray-800">
+<div class="flex justify-between items-center relative">
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<h4 class="text-text-main-light dark:text-text-main-dark text-lg font-bold leading-normal tracking-tight">Replace Spinach</h4>
+<div class="w-8"></div> <!-- Spacer for centering -->
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto">
+<!-- AI Insight Card -->
+<div class="p-4">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-[#2a4d35] shadow-lg">
+<!-- Decorative Background Pattern -->
+<div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl"></div>
+<div class="absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-white/10 blur-2xl"></div>
+<div class="relative p-5 text-white">
+<div class="flex items-center gap-2 mb-3">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">temp_preferences_custom</span>
+</div>
+<p class="text-sm font-medium opacity-90 tracking-wide uppercase">AI Smart Match</p>
+</div>
+<h3 class="text-2xl font-bold mb-2">Nutrient Match Found</h3>
+<p class="text-white/80 text-sm leading-relaxed">
+                            Suggest replacing with <span class="font-semibold text-white border-b border-white/30">Bok Choy</span> or <span class="font-semibold text-white border-b border-white/30">Water Spinach</span>. 
+                            <br/>Both maintain a similar iron and Vitamin K profile.
+                        </p>
+</div>
+</div>
+</div>
+<!-- RadioList (Suggestions) -->
+<div class="px-4 pb-4">
+<h5 class="text-text-sub-light dark:text-text-sub-dark text-xs font-semibold uppercase tracking-wider mb-3 px-1">Top Suggestions</h5>
+<div class="flex flex-col gap-3">
+<!-- Suggestion 1 -->
+<label class="group relative flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark p-3 shadow-sm transition-all hover:border-primary cursor-pointer">
+<input checked="" class="peer h-6 w-6 border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/20 focus:ring-offset-0 checked:border-primary checked:bg-primary" name="replacement" type="radio"/>
+<div class="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+<div class="h-full w-full bg-cover bg-center" data-alt="Fresh bok choy on a wooden table" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBl6m--rekcjT-JgmsI1hh_48aVfzKDjR29rv6N1HXvzX3RRuGU6P6yb2VckWCdnDgdjJrT7Lcz-3rx7BhZQNhkf7t_yJgZ3ypvMJWi5euVDq7OYFmXLCDmGx92ytTS-6sv6BffP17CF10XqA9mU3FNCCWxHYErWqYiHVMaZNv8UGhlDTYzWU0_8hyAO-jYWlhoudFTxBXQDDWu_Fb7B82Fv3zfTVOgNU6kDXrNzCGs1lv5OeubcZgXa2_ITzecJZSqnM5vRpqm7k5i");'></div>
+</div>
+<div class="flex grow flex-col">
+<div class="flex justify-between items-start">
+<p class="text-text-main-light dark:text-text-main-dark text-base font-semibold">Bok Choy</p>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Best Match</span>
+</div>
+<p class="text-text-sub-light dark:text-text-sub-dark text-sm mt-0.5">High Iron • Crunchier Texture</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-green-500 text-[14px]">check_circle</span>
+<span class="text-xs text-green-600 dark:text-green-400 font-medium">96% Match</span>
+</div>
+</div>
+<!-- Active Border Overlay -->
+<div class="absolute inset-0 rounded-xl border-2 border-primary opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity"></div>
+</label>
+<!-- Suggestion 2 -->
+<label class="group relative flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark p-3 shadow-sm transition-all hover:border-primary cursor-pointer">
+<input class="peer h-6 w-6 border-2 border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/20 focus:ring-offset-0 checked:border-primary checked:bg-primary" name="replacement" type="radio"/>
+<div class="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+<div class="h-full w-full bg-cover bg-center" data-alt="Water spinach leaves close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCMP7NrHQcAPnz3aOyxVCjLmiUwBBl6be4VduyMpvF_A6D_iK_O5-TCKWEiiAk8WDRppD7WJsveU3lE_WtwtP9lbgDlC2aexc7Q_blpsia9CSoj3BeWM5vJ9bmdJ3L9-UYTLasw8WvTf2tH5IxJZRwN3LnJ9Fl9iiPDJ1h1CGPuXpBiW_mKVszlnLzNwU-oAniiYWIOUL_DY2EbA5htYpxx26pXSwLFubj6eu1QK9Ak_TJCv75yAhj3_hxHsmng2zN9lDvdHPQUuDWf");'></div>
+</div>
+<div class="flex grow flex-col">
+<div class="flex justify-between items-start">
+<p class="text-text-main-light dark:text-text-main-dark text-base font-semibold">Water Spinach</p>
+</div>
+<p class="text-text-sub-light dark:text-text-sub-dark text-sm mt-0.5">Rich in Vitamin K • Softer</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-green-500 text-[14px]">check_circle</span>
+<span class="text-xs text-green-600 dark:text-green-400 font-medium">89% Match</span>
+</div>
+</div>
+<!-- Active Border Overlay -->
+<div class="absolute inset-0 rounded-xl border-2 border-primary opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity"></div>
+</label>
+</div>
+</div>
+<!-- Manual Search -->
+<div class="px-4 pb-6">
+<div class="flex items-center justify-between mb-3">
+<h5 class="text-text-sub-light dark:text-text-sub-dark text-xs font-semibold uppercase tracking-wider px-1">Or search manually</h5>
+</div>
+<label class="flex flex-col h-12 w-full group">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all overflow-hidden">
+<div class="flex items-center justify-center pl-3 pr-2 text-text-sub-light dark:text-text-sub-dark">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 bg-transparent border-none text-text-main-light dark:text-text-main-dark placeholder:text-text-sub-light/70 dark:placeholder:text-text-sub-dark/70 focus:outline-none focus:ring-0 h-full px-1 text-sm font-normal" placeholder="Search for other items..." value=""/>
+</div>
+</label>
+</div>
+<!-- Bottom Spacer -->
+<div class="h-24 sm:h-6"></div>
+</div>
+<!-- Sticky Footer Action -->
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-8">
+<button class="w-full flex items-center justify-center gap-2 rounded-xl bg-primary text-white py-3.5 px-6 font-semibold text-base shadow-lg shadow-primary/30 active:scale-[0.98] transition-transform hover:bg-primary/90">
+<span class="material-symbols-outlined">check</span>
+                Apply Replacement
+            </button>
+</div>
+</div>
+</body></html>

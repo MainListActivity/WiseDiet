@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Today's Smart Menu Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "deep-logic": "#2c3e50", // Interpreting 'Deep Logic blue' as a dark slate blue for contrast
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#131514] dark:text-gray-100 antialiased selection:bg-primary/30">
+<div class="relative mx-auto flex h-full min-h-screen w-full max-w-md flex-col overflow-hidden bg-background-light dark:bg-background-dark shadow-xl">
+<!-- Sticky Header Context -->
+<header class="sticky top-0 z-20 flex items-center justify-between bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 py-3 pb-2 transition-colors">
+<h2 class="flex-1 text-lg font-bold leading-tight tracking-tight text-[#131514] dark:text-white">Today</h2>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-[#131514] dark:text-white cursor-pointer hover:text-primary transition-colors">search</span>
+<span class="material-symbols-outlined text-[#131514] dark:text-white cursor-pointer hover:text-primary transition-colors">notifications</span>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto pb-32 no-scrollbar px-4 pt-2">
+<!-- Date & Health Tip Section -->
+<div class="mb-6">
+<h1 class="text-[28px] font-bold leading-tight tracking-tight text-[#131514] dark:text-white mb-4">Monday, Oct 24</h1>
+<!-- Deep Logic Blue Tip -->
+<div class="flex items-start gap-3 rounded-xl bg-deep-logic/10 dark:bg-deep-logic/30 p-4 border border-deep-logic/20">
+<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-deep-logic text-white">
+<span class="material-symbols-outlined text-sm">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-deep-logic dark:text-blue-200">Daily Insight</p>
+<p class="text-sm leading-snug text-slate-600 dark:text-slate-300">Start your day with high protein to boost focus and reduce cravings later.</p>
+</div>
+</div>
+</div>
+<!-- Smart Feed List -->
+<div class="flex flex-col gap-6">
+<!-- Card 1 -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-[#1e2621] shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-all hover:shadow-md">
+<!-- Reason Bubble -->
+<div class="absolute left-3 top-3 z-10 max-w-[85%] rounded-lg bg-white/90 dark:bg-black/80 px-3 py-2 shadow-sm backdrop-blur-sm">
+<p class="text-xs font-medium text-primary dark:text-primary/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+                            For tonight's overtime: Rich in B vitamins
+                        </p>
+</div>
+<!-- Image -->
+<div class="relative aspect-[4/3] w-full bg-gray-200" data-alt="Grilled Salmon and Asparagus plate on a wooden table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtCtIVPJDPIlaTGejbYl_nVFudxwcmW2xhJZY551DKxfPWkrw-vXBiDOWT0_hIMVO920JWUHvnPNjfqRGUiREVLfuJsQUg2A4xYovdAcwSdI_GafRm1JAm9-vJL0NNS6gyPeoeKACu4FEPB0P_BaehiADvNDkwBT3CkzUJQGFDQHevKd0-bna8DfjJj1MvAR1-1GE30jRiIpbFzgddZihVAUyXdToykadBXlOu-lBG32w70BZdhQo6O5MsQzeDBK5D_OQPCiQLYXCE'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60"></div>
+</div>
+<!-- Card Body -->
+<div class="flex items-center justify-between p-4">
+<div class="flex-1 pr-4">
+<h3 class="text-lg font-bold text-[#131514] dark:text-white leading-tight mb-1">Grilled Salmon &amp; Asparagus</h3>
+<div class="flex items-center gap-3 text-sm text-[#6f7b73] dark:text-gray-400">
+<div class="flex items-center gap-0.5 text-yellow-500">
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+</div>
+<span>•</span>
+<span>20 mins</span>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="relative h-8 w-8 shrink-0">
+<input checked="" class="peer h-8 w-8 appearance-none rounded-full border-2 border-gray-300 bg-transparent checked:border-primary checked:bg-primary transition-all cursor-pointer focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-lg opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity">check</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-[#1e2621] shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-all hover:shadow-md">
+<!-- Reason Bubble -->
+<div class="absolute left-3 top-3 z-10 max-w-[85%] rounded-lg bg-white/90 dark:bg-black/80 px-3 py-2 shadow-sm backdrop-blur-sm">
+<p class="text-xs font-medium text-primary dark:text-primary/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+                            Light lunch for focus
+                        </p>
+</div>
+<!-- Image -->
+<div class="relative aspect-[4/3] w-full bg-gray-200" data-alt="Fresh Quinoa Avocado Salad in a bowl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCeR1LRo0aLteYGPZGcis9pGtyhG5pEDic-nnkdV9_PuKQs2LGOhfbqMTix5OTvI3d6fJaR7yHuly6BU9OWmtl6hLE_3trrgOMoiXmTfCQNrW1Yzt1vzKOhqKAQjYIQ8nvJpzy6wD3sbR4bz6XBNvdn_ZX-4g6GXQqJWDPaZRVoygnxsMFPGHMZPCXGMrC4_BhmjSlHQsrQ8ubXazMxzvW7DD66ZT6zumEpYSijd3IaA-xN5-HFIYhW0PLI2_SxoJ9aBJr9F-K1nloi'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60"></div>
+</div>
+<!-- Card Body -->
+<div class="flex items-center justify-between p-4">
+<div class="flex-1 pr-4">
+<h3 class="text-lg font-bold text-[#131514] dark:text-white leading-tight mb-1">Quinoa Avocado Salad</h3>
+<div class="flex items-center gap-3 text-sm text-[#6f7b73] dark:text-gray-400">
+<div class="flex items-center gap-0.5 text-yellow-500">
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+</div>
+<span>•</span>
+<span>10 mins</span>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="relative h-8 w-8 shrink-0">
+<input checked="" class="peer h-8 w-8 appearance-none rounded-full border-2 border-gray-300 bg-transparent checked:border-primary checked:bg-primary transition-all cursor-pointer focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-lg opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity">check</span>
+</div>
+</div>
+</div>
+<!-- Card 3 (Unchecked State Example) -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-[#1e2621] shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-all hover:shadow-md opacity-90 hover:opacity-100">
+<!-- Reason Bubble -->
+<div class="absolute left-3 top-3 z-10 max-w-[85%] rounded-lg bg-white/90 dark:bg-black/80 px-3 py-2 shadow-sm backdrop-blur-sm">
+<p class="text-xs font-medium text-primary dark:text-primary/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">nightlight</span>
+                            Low carb dinner
+                        </p>
+</div>
+<!-- Image -->
+<div class="relative aspect-[4/3] w-full bg-gray-200 grayscale-[20%]" data-alt="Zucchini Noodles with Pesto sauce close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5hDZfayyBziEYqFvUJTZfPHNh811XyXfXWcZf9hmSIqu32RvusgIh9P9Ot4JXzAI_rltQChEQFUu5xvJUGshpGBSm9wmoSWS7KPvbHa0K4WZ8NGssyWFrhwmNBl3MhzsFcgT7yG_gL5Y7QGrxTBEmkvZHUTe5LckFn_ICI4wELAggF7AupVZR8ELSnD3negsmRlsMSJd26Dm1f2COQ0PPEyiOMoCEjt2FCXd4YBOZviLgVElwLllVAvNL4viifCacelV_2bmcBSBE'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60"></div>
+</div>
+<!-- Card Body -->
+<div class="flex items-center justify-between p-4">
+<div class="flex-1 pr-4">
+<h3 class="text-lg font-bold text-[#131514] dark:text-white leading-tight mb-1">Zucchini Noodles Pesto</h3>
+<div class="flex items-center gap-3 text-sm text-[#6f7b73] dark:text-gray-400">
+<div class="flex items-center gap-0.5 text-yellow-500">
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px] filled">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+<span class="material-symbols-outlined text-[16px]">star</span>
+</div>
+<span>•</span>
+<span>15 mins</span>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="relative h-8 w-8 shrink-0">
+<input class="peer h-8 w-8 appearance-none rounded-full border-2 border-gray-300 dark:border-gray-600 bg-transparent checked:border-primary checked:bg-primary transition-all cursor-pointer focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-lg opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity">check</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Footer -->
+<div class="absolute bottom-6 left-4 right-4 z-30">
+<div class="flex flex-col items-center gap-3 rounded-2xl bg-white dark:bg-[#252f28] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 dark:border-gray-700/50 backdrop-blur-xl">
+<div class="flex w-full items-center justify-between px-2">
+<div class="flex flex-col">
+<span class="text-xs font-medium uppercase tracking-wider text-[#6f7b73] dark:text-gray-400">Summary</span>
+<p class="text-sm font-bold text-[#131514] dark:text-white">2 Items Selected • 30 mins prep</p>
+</div>
+<!-- Mini Avatars of selected food (Optional polish) -->
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white dark:border-[#252f28] bg-cover bg-center" data-alt="Small thumbnail of Salmon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXyJIDaBQckoQE7elEcNRf--ldtY8_sIjBEY36i9-zR0_cNc3w-3MUrRrRbg6mf8NqoQ4lqpt5zK-xmviRDrInzQQkfhZvTTvtIAkH5P5kJqzWDBpn3zqGQyGz--eyKe9x__58xtOdg_psAuid2Fm4T_1KwRFBk13a3k9DHyF9hlS3-UMCncV0MbRjdjcVQj-eRzV_LS0ytxfRTzw9cQVT6uQkIZajEasRV_xnt6AmSCGA3uX1yjpn_ZPwpvb3LCSRfXkljs3IatMc')"></div>
+<div class="h-8 w-8 rounded-full border-2 border-white dark:border-[#252f28] bg-cover bg-center" data-alt="Small thumbnail of Salad" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOjeyqYVvz2rB_gOKpKG08wE_UZpRuqNUXEeCxCMpIrvcxXYwef-0LZ9LbJRQdqk8EvGuIaZeJ_Lynnr7yPn4IeE0bRisql_BALXBfpetp_Ecgo6Dz8kzqjqr9DQNSYMgYz7pQwnV9XHZr-88PMfFryGJaY44D23v7yR8YkUqpNjTybU-DDLMgqHtOZgfO6RQnCAGMe1tMQNDxuBFBByZDycNM7SODOUlmZORXzwWiHt2sL57bpij3fS_rco_J6x3q_4B_jV85gvq8')"></div>
+</div>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-base font-bold text-white shadow-lg shadow-primary/30 transition-transform active:scale-[0.98] hover:bg-primary/90">
+                    Confirm Menu
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

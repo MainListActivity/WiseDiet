@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Meal Execution Timeline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#4b7c5a",
+              "action": "#E67E22",
+              "background-light": "#f6f7f7",
+              "background-dark": "#161c18",
+              "surface-light": "#ffffff",
+              "surface-dark": "#202622",
+              "subtle-light": "#eef0ef",
+              "subtle-dark": "#2a302c",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom range slider styling */
+        input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 4px solid #4b7c5a;
+            cursor: pointer;
+            margin-top: -12px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #dfe2e0;
+            border-radius: 9999px;
+        }
+        .dark input[type=range]::-webkit-slider-runnable-track {
+            background: #404040;
+        }
+        .dark input[type=range]::-webkit-slider-thumb {
+            background: #202622;
+            border-color: #4b7c5a;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden selection:bg-primary/20">
+<!-- Main Wrapper -->
+<div class="flex flex-col min-h-screen relative max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl">
+<!-- Top Header -->
+<header class="sticky top-0 z-30 flex items-center justify-between px-5 py-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Plan</span>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white leading-tight">Today</h1>
+</div>
+<button class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">calendar_month</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-4 pb-32 space-y-6">
+<!-- Reverse Timer Module -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 relative overflow-hidden">
+<!-- Decorative background blob -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="text-center mb-6">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Target Dinner Time</p>
+<h2 class="text-5xl font-bold text-slate-900 dark:text-white tracking-tight">19:00</h2>
+</div>
+<!-- Interactive Slider -->
+<div class="w-full mb-8 relative px-2">
+<input class="w-full relative z-20 focus:outline-none focus:ring-0" max="2200" min="1600" type="range" value="1900"/>
+<!-- Custom track color fill hack (visual only for this demo) -->
+<div class="absolute top-[10px] left-2 right-2 h-[6px] rounded-full overflow-hidden pointer-events-none z-10">
+<div class="h-full bg-primary w-1/2 rounded-full"></div>
+</div>
+</div>
+<!-- Timeline Visualization Band -->
+<div class="w-full flex flex-col gap-2">
+<!-- The Colored Band -->
+<div class="flex w-full h-12 rounded-xl overflow-hidden text-xs font-bold text-white relative">
+<!-- Shopping Segment -->
+<div class="flex-1 bg-action flex items-center justify-center gap-1 relative group">
+<span class="material-symbols-outlined text-[16px]">shopping_cart</span>
+<span class="hidden sm:inline">Shop</span>
+</div>
+<!-- Cooking Segment -->
+<div class="flex-[1.5] bg-primary flex items-center justify-center gap-1 relative group border-l border-white/20">
+<span class="material-symbols-outlined text-[16px]">skillet</span>
+<span class="hidden sm:inline">Cook</span>
+</div>
+<!-- Dinner Segment (Target) -->
+<div class="w-12 bg-slate-800 dark:bg-slate-700 flex items-center justify-center border-l border-white/20">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+</div>
+</div>
+<!-- Time Labels below band -->
+<div class="flex justify-between w-full text-xs font-medium text-slate-500 dark:text-slate-400 mt-1 px-1">
+<div class="flex flex-col items-start">
+<span class="text-action font-bold">16:30</span>
+<span>Start Shopping</span>
+</div>
+<div class="flex flex-col items-center pl-8">
+<span class="text-primary font-bold">17:30</span>
+<span>Start Cooking</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-slate-900 dark:text-white font-bold">19:00</span>
+<span>Ready</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Locked Menu Section -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Locked Menu</h3>
+<div class="flex items-center gap-1 text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Confirmed</span>
+</div>
+</div>
+<!-- Menu Item 1 -->
+<div class="bg-surface-light dark:bg-surface-dark p-3 rounded-xl flex gap-4 shadow-sm border border-slate-100 dark:border-slate-800 items-center">
+<div class="h-16 w-16 shrink-0 rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden relative">
+<!-- Abstract Gradient for food image -->
+<div class="w-full h-full bg-gradient-to-br from-orange-100 to-orange-300 dark:from-orange-900 dark:to-orange-800" data-alt="Close up of grilled salmon fillet"></div>
+<div class="absolute bottom-0 right-0 p-1 bg-black/40 backdrop-blur-sm rounded-tl-lg">
+<span class="material-symbols-outlined text-white text-[12px]">favorite</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-base font-semibold text-slate-900 dark:text-white truncate">Grilled Salmon Fillet</h4>
+<div class="flex items-center gap-3 mt-1 text-xs text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>45 min</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+<span>350 kcal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Menu Item 2 -->
+<div class="bg-surface-light dark:bg-surface-dark p-3 rounded-xl flex gap-4 shadow-sm border border-slate-100 dark:border-slate-800 items-center">
+<div class="h-16 w-16 shrink-0 rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden relative">
+<div class="w-full h-full bg-gradient-to-br from-green-100 to-green-300 dark:from-green-900 dark:to-green-800" data-alt="Fresh steamed broccoli florets"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-base font-semibold text-slate-900 dark:text-white truncate">Steamed Broccoli</h4>
+<div class="flex items-center gap-3 mt-1 text-xs text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>10 min</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+<span>55 kcal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Menu Item 3 -->
+<div class="bg-surface-light dark:bg-surface-dark p-3 rounded-xl flex gap-4 shadow-sm border border-slate-100 dark:border-slate-800 items-center">
+<div class="h-16 w-16 shrink-0 rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden relative">
+<div class="w-full h-full bg-gradient-to-br from-yellow-100 to-amber-200 dark:from-yellow-900 dark:to-amber-900" data-alt="Bowl of brown rice"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-base font-semibold text-slate-900 dark:text-white truncate">Brown Rice</h4>
+<div class="flex items-center gap-3 mt-1 text-xs text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>20 min</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+<span>180 kcal</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Sticky Action Footer -->
+<div class="fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12 max-w-md mx-auto">
+<button class="w-full h-14 bg-action hover:bg-orange-600 active:scale-[0.98] transition-all rounded-xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-white font-bold text-lg group">
+<span class="material-symbols-outlined group-hover:animate-bounce">shopping_cart</span>
+                Go Shopping
+            </button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WiseDiet - Occupational Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a", // Cyber Sage Green
+                        "secondary": "#2C3E50", // Deep Logic Blue
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e2420",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "glow": "0 0 15px -3px rgba(75, 124, 90, 0.4)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>@keyframes pulse-line {
+            0%, 100% { opacity: 0.3; stroke-dashoffset: 0; }
+            50% { opacity: 0.8; stroke-dashoffset: 10; }
+        }
+        .neural-line {
+            stroke-dasharray: 4 4;
+            animation: pulse-line 3s infinite linear;
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-secondary dark:text-gray-100 transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl">
+<header class="flex items-center px-6 pt-6 pb-2 justify-between z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm sticky top-0">
+<button class="text-secondary dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h2 class="text-secondary dark:text-gray-100 text-lg font-semibold tracking-tight text-center">Profile Setup</h2>
+<div class="w-10"></div> 
+</header>
+<div class="flex w-full flex-row items-center justify-center gap-2 py-4 px-6 z-10">
+<div class="h-1.5 w-8 rounded-full bg-primary"></div>
+<div class="h-1.5 w-8 rounded-full bg-primary"></div>
+<div class="h-1.5 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+<div class="h-1.5 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+</div>
+<main class="flex-1 flex flex-col px-6 pb-24 z-10">
+<div class="pt-2 pb-6">
+<h1 class="text-secondary dark:text-white text-[32px] font-bold leading-[1.2] tracking-tight mb-3">
+                    Define Your <span class="text-primary">Rhythm</span>
+</h1>
+<p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed">
+                    Select your occupation and any specific health stages to help our AI tailor nutrition to your activity levels.
+                </p>
+</div>
+<div class="relative flex-1 flex flex-col justify-center py-6 min-h-[400px]">
+<div class="absolute inset-0 z-0 pointer-events-none overflow-visible opacity-60">
+<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 350 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path class="neural-line" d="M80 60 C 80 150, 250 150, 260 280" stroke="#4b7c5a" stroke-width="1.5"></path>
+<path d="M80 60 C 120 100, 160 80, 175 140" stroke="#4b7c5a" stroke-opacity="0.5" stroke-width="1"></path>
+<circle cx="80" cy="60" fill="#4b7c5a" r="3"></circle>
+<circle cx="260" cy="280" fill="#4b7c5a" r="3"></circle>
+<circle cx="175" cy="140" fill="#4b7c5a" fill-opacity="0.5" r="2"></circle>
+</svg>
+</div>
+<div class="flex flex-wrap justify-center gap-4 z-10 content-center perspective-1000">
+<div class="group relative">
+<div class="absolute -inset-0.5 bg-primary rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-200"></div>
+<button class="relative flex h-10 items-center justify-center gap-x-2 rounded-xl bg-primary px-5 shadow-glow scale-105 transition-all duration-300">
+<span class="material-symbols-outlined text-white text-[18px]">terminal</span>
+<span class="text-white text-sm font-medium">Programmer (Sedentary)</span>
+<span class="material-symbols-outlined text-white text-[16px]">check</span>
+</button>
+</div>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Doctor (Shifts)</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Freelancer (Irregular)</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Teacher (Standing)</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Seeking Pregnancy</span>
+</button>
+<div class="group relative">
+<div class="absolute -inset-0.5 bg-primary rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-200"></div>
+<button class="relative flex h-10 items-center justify-center gap-x-2 rounded-xl bg-primary px-5 shadow-glow scale-105 transition-all duration-300">
+<span class="material-symbols-outlined text-white text-[18px]">monitor_heart</span>
+<span class="text-white text-sm font-medium">Sugar Control</span>
+<span class="material-symbols-outlined text-white text-[16px]">check</span>
+</button>
+</div>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Muscle Gain</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Frequent Traveler</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-200">
+<span class="text-gray-700 dark:text-gray-300 text-sm font-medium">Post-Op Recovery</span>
+</button>
+</div>
+<div class="mt-12 flex items-center justify-center gap-2 animate-pulse opacity-80">
+<span class="material-symbols-outlined text-primary text-[18px]">neurology</span>
+<span class="text-xs font-medium text-primary tracking-wide uppercase">AI Analyzing metabolic needs...</span>
+</div>
+</div>
+</main>
+<footer class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark z-30 max-w-md mx-auto">
+<div class="flex flex-col gap-3">
+<button class="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary p-4 shadow-lg shadow-primary/25 hover:bg-primary/90 hover:shadow-primary/40 active:scale-[0.98] transition-all duration-200">
+<span class="text-white text-base font-bold">Next Step</span>
+<span class="material-symbols-outlined text-white text-[20px]">arrow_forward</span>
+</button>
+<div class="text-center">
+<button class="text-xs text-gray-400 dark:text-gray-500 font-medium hover:text-secondary dark:hover:text-gray-300 transition-colors">Skip for now</button>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>
