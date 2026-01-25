@@ -1,0 +1,50 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    :root {
+      --bg-color: #FFFFFF;
+      --primary-color: #4b7c5a;
+      --accent-color: #2C3E50;
+      --dot-color: #2C3E50;
+      --ring-color: rgba(0, 0, 0, 0.05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #1e2621;
+        --accent-color: #9ca3af;
+        --dot-color: #FFFFFF;
+        --ring-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+    .side-line { opacity: 0.8; }
+  </style>
+
+  <!-- Background Circle with Ring -->
+  <circle cx="96" cy="96" r="95.5" fill="var(--bg-color)" stroke="var(--ring-color)" stroke-width="1"/>
+
+  <!-- Logo Graphics -->
+  <!-- 
+       Calculations based on 192x192 container:
+       Center X = 96
+       Vertical Layout:
+       - Offset Top: ~48px (Visual alignment with translate-y-2)
+       - Lines Baseline: y = 104
+       - Bowl Top: y = 112
+       - Bowl Bottom (Radius 48): y = 160
+  -->
+  
+  <!-- Left Line: 10x32 -->
+  <rect x="69" y="72" width="10" height="32" rx="5" fill="var(--accent-color)" class="side-line"/>
+  
+  <!-- Center Line: 12x56 -->
+  <rect x="91" y="48" width="12" height="56" rx="6" fill="var(--primary-color)"/>
+  
+  <!-- Right Line: 10x32 -->
+  <rect x="115" y="72" width="10" height="32" rx="5" fill="var(--accent-color)" class="side-line"/>
+  
+  <!-- Bowl: 96x48 (Box), Border 4px. Center Path Radius = 48 - 2 = 46 -->
+  <!-- Starts at y=112. Center of Arc (96, 112) -->
+  <path d="M 50 112 A 46 46 0 0 0 142 112" stroke="var(--primary-color)" stroke-width="4" stroke-linecap="butt" fill="none"/>
+  
+  <!-- Dot: 6x6. Centered in Bowl (y center ~136) + margin top 4px => y=140 -->
+  <circle cx="96" cy="140" r="3" fill="var(--dot-color)"/>
+</svg>
