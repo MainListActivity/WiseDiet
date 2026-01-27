@@ -11,17 +11,19 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-// @Testcontainers // Disabled due to sandbox environment restrictions
+@Testcontainers
 public abstract class AbstractIntegrationTest {
 
-    // @Container
-    // static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:15"));
+    @Container
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:15-alpine"));
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        // Fallback to H2 for CI/Sandbox environment
-        registry.add("spring.r2dbc.url", () -> "r2dbc:h2:mem:///wisediet;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
-        registry.add("spring.r2dbc.username", () -> "sa");
-        registry.add("spring.r2dbc.password", () -> "");
+        registry.add("spring.r2dbc.url", () -> String.format("r2dbc:postgresql://%s:%d/%s",
+                postgres.getHost(),
+                postgres.getFirstMappedPort(),
+                postgres.getDatabaseName()));
+        registry.add("spring.r2dbc.username", postgres::getUsername);
+        registry.add("spring.r2dbc.password", postgres::getPassword);
     }
 }
