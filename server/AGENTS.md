@@ -1,15 +1,13 @@
----
-trigger: always_on
----
+
 
 
 **技术栈要求：**
 ```
-- Spring Boot 3.x
+- Spring Boot 4.x
 - Spring WebFlux（响应式 Web）
 - Spring Data R2DBC（响应式数据库访问）
 - Reactor Core（响应式编程核心）
-- JUnit 5 + Reactor Test（测试框架）
+- JUnit 5 + Reactor Test（测试框架）+ testcontainers（负责拉起和初始化测试pg和redis）
 ```
 
 **编码顺序规则：**
