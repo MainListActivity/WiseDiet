@@ -1,6 +1,6 @@
 # --- 第一阶段：编译构建 (Build Stage) ---
 # 使用包含 JDK 的基础镜像进行编译
-FROM eclipse-temurin:21-jdk-alpine AS builder
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
 
 # 设置工作目录
 WORKDIR /build
