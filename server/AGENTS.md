@@ -8,6 +8,7 @@
 - Spring Data R2DBC（响应式数据库访问）
 - Reactor Core（响应式编程核心）
 - JUnit 5 + Reactor Test（测试框架）+ testcontainers（负责拉起和初始化测试pg和redis）
+- 全部测试用例从AbstractIntegrationTest继承
 ```
 
 **编码顺序规则：**

@@ -17,26 +17,20 @@ import reactor.test.StepVerifier;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 @Testcontainers
-class OnboardingApiIntegrationTest {
+class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
 
-    @Container
-    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine")
-            .withDatabaseName("wisediet")
-            .withUsername("postgres")
-            .withPassword("postgres");
 
     @DynamicPropertySource
     static void registerProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.r2dbc.url", () -> String.format(
                 "r2dbc:postgresql://%s:%d/%s",
-                POSTGRES.getHost(),
-                POSTGRES.getMappedPort(5432),
-                POSTGRES.getDatabaseName()
+                postgres.getHost(),
+                postgres.getMappedPort(5432),
+                postgres.getDatabaseName()
         ));
-        registry.add("spring.r2dbc.username", POSTGRES::getUsername);
-        registry.add("spring.r2dbc.password", POSTGRES::getPassword);
+        registry.add("spring.r2dbc.username", postgres::getUsername);
+        registry.add("spring.r2dbc.password", postgres::getPassword);
         registry.add("spring.sql.init.mode", () -> "always");
     }
 
