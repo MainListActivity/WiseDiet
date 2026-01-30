@@ -17,5 +17,5 @@ trigger: always_on
 - `/git-commit`: 规范化提交更改。
 
 ## 技术规范
-- 语言：Typescript / Node.js
+- 语言：Java Spring-Boot4 / Flutter Dart
 - 提交：Conventional Commits (中文)
