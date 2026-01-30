@@ -19,8 +19,8 @@
    - 包含数据库操作的端到端验证
    - 示例模板：
    ```java
-   @SpringBootTest(webEnvironment = RANDOM_PORT)
-   class UserApiIntegrationTest {
+
+   class UserApiIntegrationTest extends AbstractIntegrationTest{
        @Test
        void shouldCreateUser_whenValidRequest() {
            // Given: 准备测试数据
