@@ -86,4 +86,8 @@ public class OAuthService {
                                         Duration.ofMinutes(15))
                                 .thenReturn(new AuthTokenResponse(accessToken, UUID.randomUUID().toString()))));
     }
+
+    public Mono<AuthTokenResponse> getAuthUri(String authType) {
+        return null;
+    }
 }

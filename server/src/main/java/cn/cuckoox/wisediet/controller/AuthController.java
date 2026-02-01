@@ -3,10 +3,7 @@ package cn.cuckoox.wisediet.controller;
 import cn.cuckoox.wisediet.controller.dto.AuthTokenResponse;
 import cn.cuckoox.wisediet.controller.dto.OAuthLoginRequest;
 import cn.cuckoox.wisediet.service.OAuthService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -19,13 +16,19 @@ public class AuthController {
         this.oauthService = oauthService;
     }
 
-    @PostMapping("/google")
-    public Mono<AuthTokenResponse> google(@RequestBody OAuthLoginRequest request) {
-        return oauthService.login("google", request.code());
+    @PostMapping("/{authType}")
+    public Mono<AuthTokenResponse> auth(@PathVariable("authType") String type, @RequestBody OAuthLoginRequest request) {
+        return oauthService.login(type, request.code());
     }
 
-    @PostMapping("/github")
-    public Mono<AuthTokenResponse> github(@RequestBody OAuthLoginRequest request) {
-        return oauthService.login("github", request.code());
+    /**
+     * 返回state以及认证参数
+     *
+     * @param type google/github
+     * @return state/clientId
+     */
+    @GetMapping("/{authType}")
+    public Mono<AuthTokenResponse> getAuthUri(@PathVariable("authType") String type) {
+        return oauthService.getAuthUri(type);
     }
 }

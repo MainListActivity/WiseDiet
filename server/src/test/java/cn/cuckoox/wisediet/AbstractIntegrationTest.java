@@ -83,6 +83,7 @@ public abstract class AbstractIntegrationTest {
     static void shutdownOauthServer() {
         if (oauthServer != null) {
             oauthServer.disposeNow();
+            oauthServer = null;
         }
     }
 
@@ -95,10 +96,10 @@ public abstract class AbstractIntegrationTest {
                 .route(routes -> routes
                         .post("/oauth/token/google", (request, response) ->
                                 response.header("Content-Type", "application/json")
-                                        .sendString(Mono.just("{\"access_token\":\"token-google\"}")))
+                                        .sendString(Mono.just("{\"access_token\":\"token-google\",\"token_type\":\"Bearer\"}")))
                         .post("/oauth/token/github", (request, response) ->
                                 response.header("Content-Type", "application/json")
-                                        .sendString(Mono.just("{\"access_token\":\"token-github\"}")))
+                                        .sendString(Mono.just("{\"access_token\":\"token-github\",\"token_type\":\"Bearer\"}")))
                         .get("/oauth/userinfo/google", (request, response) ->
                                 response.header("Content-Type", "application/json")
                                         .sendString(Mono.just("{\"id\":\"provider-id-1\",\"email\":\"u@test.com\"}")))
