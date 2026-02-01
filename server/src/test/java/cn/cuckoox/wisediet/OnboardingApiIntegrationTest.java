@@ -14,20 +14,6 @@ import reactor.test.StepVerifier;
 @Testcontainers
 class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
 
-
-    @DynamicPropertySource
-    static void registerProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.r2dbc.url", () -> String.format(
-                "r2dbc:postgresql://%s:%d/%s",
-                postgres.getHost(),
-                postgres.getMappedPort(5432),
-                postgres.getDatabaseName()
-        ));
-        registry.add("spring.r2dbc.username", postgres::getUsername);
-        registry.add("spring.r2dbc.password", postgres::getPassword);
-        registry.add("spring.sql.init.mode", () -> "always");
-    }
-
     @Autowired
     private UserProfileRepository userProfileRepository;
 
