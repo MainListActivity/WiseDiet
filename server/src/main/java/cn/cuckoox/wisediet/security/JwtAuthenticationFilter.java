@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getPath().value();
-        if (!path.startsWith("/api/secure/")) {
+        if (!path.startsWith("/api/secure/") && !path.startsWith("/api/admin/")) {
             return chain.filter(exchange);
         }
 
