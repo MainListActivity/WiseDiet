@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
-import 'features/onboarding/screens/basic_info_screen.dart';
+import 'app/router.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'WiseDiet',
       theme: AppTheme.lightTheme,
-      home: const BasicInfoScreen(),
+      home: const AppRouter(),
       debugShowCheckedModeBanner: false,
     );
   }
