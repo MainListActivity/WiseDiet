@@ -7,19 +7,13 @@ import cn.cuckoox.wisediet.repository.UserRepository;
 import cn.cuckoox.wisediet.service.JwtService;
 import cn.cuckoox.wisediet.service.SessionStore;
 import java.time.Duration;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
 class AdminRevokeIntegrationTest extends AbstractIntegrationTest {
-
-    @Autowired
-    private ApplicationContext context;
 
     @Autowired
     private UserRepository userRepository;
@@ -32,13 +26,6 @@ class AdminRevokeIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private JwtService jwtService;
-
-    private WebTestClient webTestClient;
-
-    @BeforeEach
-    void setUp() {
-        webTestClient = WebTestClient.bindToApplicationContext(context).configureClient().build();
-    }
 
     @Test
     void adminCanRevokeAllUserSessions() {

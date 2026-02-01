@@ -9,6 +9,7 @@
 - Reactor Core（响应式编程核心）
 - JUnit 5 + Reactor Test（测试框架）+ testcontainers（负责拉起和初始化测试pg和redis）
 - 测试用例必须从AbstractIntegrationTest继承
+- 运行测试用例的超时时间为2分钟
 ```
 
 **编码顺序规则：**

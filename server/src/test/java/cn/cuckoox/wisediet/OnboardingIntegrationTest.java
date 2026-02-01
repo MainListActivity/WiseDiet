@@ -1,26 +1,12 @@
 package cn.cuckoox.wisediet;
 
 import cn.cuckoox.wisediet.model.UserProfile;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OnboardingIntegrationTest extends AbstractIntegrationTest {
-
-    @Autowired
-    private ApplicationContext context;
-
-    private WebTestClient webTestClient;
-
-    @BeforeEach
-    void setUp() {
-        webTestClient = WebTestClient.bindToApplicationContext(context).configureClient().build();
-    }
 
     @Test
     void shouldReturnSeededOccupationTags() {
