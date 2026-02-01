@@ -3,15 +3,12 @@ package cn.cuckoox.wisediet;
 import cn.cuckoox.wisediet.service.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-@SpringBootTest(properties = {
-        "app.jwt.secret=dev-secret-should-change",
-        "spring.sql.init.mode=never"
-})
-class JwtServiceTest {
+@TestPropertySource(properties = "app.jwt.secret=dev-secret-should-change")
+class JwtServiceTest extends AbstractIntegrationTest {
 
     @Autowired
     private JwtService jwtService;
