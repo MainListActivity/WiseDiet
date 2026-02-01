@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.UUID;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -34,8 +35,10 @@ public class JwtService {
     public Mono<String> createAccessToken(Long userId) {
         return Mono.fromSupplier(() -> {
             Instant now = Instant.now();
+            String jti = UUID.randomUUID().toString();
             JwtClaimsSet claims = JwtClaimsSet.builder()
                     .subject(String.valueOf(userId))
+                    .id(jti)
                     .issuedAt(now)
                     .expiresAt(now.plus(Duration.ofMinutes(jwtProperties.getAccessTtlMinutes())))
                     .build();
@@ -46,6 +49,10 @@ public class JwtService {
 
     public Mono<Long> parseUserId(String token) {
         return Mono.fromSupplier(() -> Long.valueOf(jwtDecoder.decode(token).getSubject()));
+    }
+
+    public String extractJti(String token) {
+        return jwtDecoder.decode(token).getId();
     }
 
     private static byte[] hashSecret(String secret) {

@@ -22,4 +22,14 @@ class JwtServiceTest extends AbstractIntegrationTest {
                 .expectNext(42L)
                 .verifyComplete();
     }
+
+    @Test
+    void shouldExtractJtiFromToken() {
+        Mono<String> flow = jwtService.createAccessToken(7L)
+                .map(jwtService::extractJti);
+
+        StepVerifier.create(flow)
+                .expectNextMatches(jti -> jti != null && !jti.isBlank())
+                .verifyComplete();
+    }
 }

@@ -39,7 +39,19 @@ public class JwtAuthenticationFilter implements WebFilter {
         }
 
         String token = authHeader.substring("Bearer ".length());
-        return sessionStore.exists(token)
+        String jti;
+        try {
+            jti = jwtService.extractJti(token);
+        } catch (Exception ex) {
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
+        if (jti == null || jti.isBlank()) {
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
+
+        return sessionStore.exists(jti)
                 .flatMap(exists -> {
                     if (!exists) {
                         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
