@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'auth_state.dart';
 import 'google_login.dart';
 import 'github_login.dart';
@@ -8,10 +10,30 @@ abstract class AuthApi {
   Future<AuthState> loginWithGithub();
 }
 
+abstract class TokenStorage {
+  Future<void> clearTokens();
+}
+
+class SecureTokenStorage implements TokenStorage {
+  SecureTokenStorage({FlutterSecureStorage? storage})
+      : _storage = storage ?? const FlutterSecureStorage();
+
+  final FlutterSecureStorage _storage;
+
+  @override
+  Future<void> clearTokens() async {
+    await _storage.delete(key: 'accessToken');
+    await _storage.delete(key: 'refreshToken');
+  }
+}
+
 class AuthController extends StateNotifier<AuthState> {
-  AuthController(this._authApi) : super(AuthState.initial());
+  AuthController(this._authApi, {TokenStorage? tokenStorage})
+      : _tokenStorage = tokenStorage ?? SecureTokenStorage(),
+        super(AuthState.initial());
 
   final AuthApi _authApi;
+  final TokenStorage _tokenStorage;
 
   Future<void> loginWithGoogle() async {
     final nextState = await _authApi.loginWithGoogle();
@@ -21,6 +43,27 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> loginWithGithub() async {
     final nextState = await _authApi.loginWithGithub();
     state = nextState;
+  }
+
+  Future<void> handleUnauthorized() async {
+    await _tokenStorage.clearTokens();
+    state = const AuthState(
+      isLoggedIn: false,
+      onboardingStep: 0,
+      accessToken: null,
+      refreshToken: null,
+      message: '账号暂不可用，稍后重试',
+    );
+  }
+
+  Future<void> handleOnboardingRequired() async {
+    state = AuthState(
+      isLoggedIn: true,
+      onboardingStep: 1,
+      accessToken: state.accessToken,
+      refreshToken: state.refreshToken,
+      message: null,
+    );
   }
 }
 

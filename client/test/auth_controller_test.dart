@@ -24,6 +24,15 @@ class FakeAuthApi implements AuthApi {
   }
 }
 
+class FakeTokenStorage implements TokenStorage {
+  bool cleared = false;
+
+  @override
+  Future<void> clearTokens() async {
+    cleared = true;
+  }
+}
+
 void main() {
   test('login success updates state', () async {
     final controller = AuthController(FakeAuthApi());
@@ -35,5 +44,13 @@ void main() {
     final controller = AuthController(FakeAuthApi());
     await controller.loginWithGithub();
     expect(controller.state.isLoggedIn, true);
+  });
+
+  test('handle unauthorized clears tokens and logs out', () async {
+    final storage = FakeTokenStorage();
+    final controller = AuthController(FakeAuthApi(), tokenStorage: storage);
+    await controller.handleUnauthorized();
+    expect(controller.state.isLoggedIn, false);
+    expect(storage.cleared, true);
   });
 }
