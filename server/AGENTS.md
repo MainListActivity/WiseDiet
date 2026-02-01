@@ -8,18 +8,17 @@
 - Spring Data R2DBC（响应式数据库访问）
 - Reactor Core（响应式编程核心）
 - JUnit 5 + Reactor Test（测试框架）+ testcontainers（负责拉起和初始化测试pg和redis）
-- 全部测试用例从AbstractIntegrationTest继承
+- 测试用例必须从AbstractIntegrationTest继承
+- 运行测试用例的超时时间为2分钟
 ```
 
 **编码顺序规则：**
 
 1. **第一步：编写集成测试**
-   - 使用 `@SpringBootTest` 和 `WebTestClient`
    - 测试完整的 HTTP 请求/响应流程
    - 包含数据库操作的端到端验证
    - 示例模板：
    ```java
-
    class UserApiIntegrationTest extends AbstractIntegrationTest{
        @Test
        void shouldCreateUser_whenValidRequest() {
