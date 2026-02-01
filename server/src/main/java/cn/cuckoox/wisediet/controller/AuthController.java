@@ -1,6 +1,7 @@
 package cn.cuckoox.wisediet.controller;
 
 import cn.cuckoox.wisediet.controller.dto.AuthTokenResponse;
+import cn.cuckoox.wisediet.controller.dto.AuthUriResponse;
 import cn.cuckoox.wisediet.controller.dto.OAuthLoginRequest;
 import cn.cuckoox.wisediet.service.OAuthService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @PostMapping("/{authType}")
     public Mono<AuthTokenResponse> auth(@PathVariable("authType") String type, @RequestBody OAuthLoginRequest request) {
-        return oauthService.login(type, request.code());
+        return oauthService.login(type, request.code(), request.state());
     }
 
     /**
@@ -28,7 +29,7 @@ public class AuthController {
      * @return state/clientId
      */
     @GetMapping("/{authType}")
-    public Mono<AuthTokenResponse> getAuthUri(@PathVariable("authType") String type) {
+    public Mono<AuthUriResponse> getAuthUri(@PathVariable("authType") String type) {
         return oauthService.getAuthUri(type);
     }
 }

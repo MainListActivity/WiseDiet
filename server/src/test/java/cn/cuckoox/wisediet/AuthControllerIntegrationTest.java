@@ -8,7 +8,7 @@ class AuthControllerIntegrationTest extends AbstractIntegrationTest {
     @Test
     void shouldReturnTokensForGoogleLogin() {
         webTestClient.post().uri("/api/auth/google")
-                .bodyValue(new OAuthLoginRequest("code-123"))
+                .bodyValue(new OAuthLoginRequest("code-123", "state-123"))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()

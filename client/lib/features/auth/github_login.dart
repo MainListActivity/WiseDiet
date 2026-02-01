@@ -16,10 +16,10 @@ class GithubLogin {
     http.Client? httpClient,
     FlutterSecureStorage? storage,
     Future<bool> Function(Uri url)? launcher,
-  })  : _appLinks = appLinks ?? AppLinks(),
-        _httpClient = httpClient ?? http.Client(),
-        _storage = storage ?? const FlutterSecureStorage(),
-        _launcher = launcher ?? launchUrl;
+  }) : _appLinks = appLinks ?? AppLinks(),
+       _httpClient = httpClient ?? http.Client(),
+       _storage = storage ?? const FlutterSecureStorage(),
+       _launcher = launcher ?? launchUrl;
 
   final AppLinks _appLinks;
   final http.Client _httpClient;
@@ -27,22 +27,36 @@ class GithubLogin {
   final Future<bool> Function(Uri url) _launcher;
 
   Future<AuthState> loginWithGithub() async {
-    final authUrl = Uri.parse('${ApiConfig.baseUrl}/api/auth/github');
-    final launched = await _launcher(authUrl);
+    final uriResponse = await _httpClient.get(
+      Uri.parse('${ApiConfig.baseUrl}/api/auth/github'),
+    );
+
+    if (uriResponse.statusCode != 200) {
+      return AuthState.initial();
+    }
+
+    final uriBody = jsonDecode(uriResponse.body);
+    final authUriString = uriBody['authUri'];
+    if (authUriString == null) {
+      return AuthState.initial();
+    }
+
+    final launched = await _launcher(Uri.parse(authUriString));
     if (!launched) {
       return AuthState.initial();
     }
 
     final Uri callbackUri = await _appLinks.uriLinkStream.first;
     final code = callbackUri.queryParameters['code'];
-    if (code == null || code.isEmpty) {
+    final state = callbackUri.queryParameters['state'];
+    if (code == null || code.isEmpty || state == null || state.isEmpty) {
       return AuthState.initial();
     }
 
     final response = await _httpClient.post(
       Uri.parse('${ApiConfig.baseUrl}/api/auth/github'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'code': code}),
+      body: jsonEncode({'code': code, 'state': state}),
     );
 
     if (response.statusCode != 200) {

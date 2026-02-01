@@ -1,6 +1,7 @@
 package cn.cuckoox.wisediet.service;
 
 import cn.cuckoox.wisediet.controller.dto.AuthTokenResponse;
+import cn.cuckoox.wisediet.controller.dto.AuthUriResponse;
 import cn.cuckoox.wisediet.model.User;
 import cn.cuckoox.wisediet.repository.UserRepository;
 import java.time.Duration;
@@ -38,7 +39,7 @@ public class OAuthService {
         this.oauth2UserService = new DefaultReactiveOAuth2UserService();
     }
 
-    public Mono<AuthTokenResponse> login(String registrationId, String code) {
+    public Mono<AuthTokenResponse> login(String registrationId, String code, String state) {
         return clientRegistrationRepository.findByRegistrationId(registrationId)
                 .flatMap(registration -> {
                     OAuth2AuthorizationRequest authorizationRequest = OAuth2AuthorizationRequest.authorizationCode()
@@ -46,12 +47,12 @@ public class OAuthService {
                             .authorizationUri(registration.getProviderDetails().getAuthorizationUri())
                             .redirectUri(registration.getRedirectUri())
                             .scopes(registration.getScopes())
-                            .state("state")
+                            .state(state)
                             .build();
 
                     OAuth2AuthorizationResponse authorizationResponse = OAuth2AuthorizationResponse.success(code)
                             .redirectUri(registration.getRedirectUri())
-                            .state("state")
+                            .state(state)
                             .build();
 
                     OAuth2AuthorizationExchange exchange = new OAuth2AuthorizationExchange(authorizationRequest, authorizationResponse);
@@ -87,7 +88,18 @@ public class OAuthService {
                                 .thenReturn(new AuthTokenResponse(accessToken, UUID.randomUUID().toString()))));
     }
 
-    public Mono<AuthTokenResponse> getAuthUri(String authType) {
-        return null;
+    public Mono<AuthUriResponse> getAuthUri(String authType) {
+        return clientRegistrationRepository.findByRegistrationId(authType)
+                .map(registration -> {
+                    String state = UUID.randomUUID().toString();
+                    String authorizationUri = org.springframework.web.util.UriComponentsBuilder.fromUriString(registration.getProviderDetails().getAuthorizationUri())
+                            .queryParam("response_type", "code")
+                            .queryParam("client_id", registration.getClientId())
+                            .queryParam("scope", String.join(" ", registration.getScopes()))
+                            .queryParam("state", state)
+                            .build().toUriString();
+
+                    return new AuthUriResponse(authorizationUri, state, registration.getClientId(), registration.getRedirectUri(), registration.getScopes());
+                });
     }
 }
