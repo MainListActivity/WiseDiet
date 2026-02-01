@@ -7,7 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-@SpringBootTest(properties = "app.jwt.secret=dev-secret-should-change")
+@SpringBootTest(properties = {
+        "app.jwt.secret=dev-secret-should-change",
+        "spring.sql.init.mode=never"
+})
 class JwtServiceTest {
 
     @Autowired
