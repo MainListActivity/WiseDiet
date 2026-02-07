@@ -4,6 +4,8 @@
 
 **TDD 实施策略：**
 
+- 任何开发任务必须遵守`test-driven-development`技能规范
+
 1. **Widget 测试优先**
    ```dart
    testWidgets('should display user list when data loaded', 
