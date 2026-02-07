@@ -1,4 +1,5 @@
 - 执行测试用例命令需要进入对应前后端的目录
+- 任何开发任务必须遵守`test-driven-development`技能规范
 - client 目录是flutter的前端，支持android和ios
 - server 目录是基于spring-boot3 reactive技术栈的后端，要求所有请求都用reactive的语法编写
 - design 目录是设计稿文件地址
