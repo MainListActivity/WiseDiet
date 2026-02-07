@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 class AuthState {
   const AuthState({
     required this.isLoggedIn,
@@ -25,5 +23,3 @@ class AuthState {
     );
   }
 }
-
-final authStateProvider = StateProvider<AuthState>((ref) => AuthState.initial());
