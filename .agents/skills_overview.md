@@ -13,7 +13,6 @@
 5. [test-driven-development - 测试驱动开发](#5-test-driven-development---测试驱动开发)
 6. [systematic-debugging - 系统化调试](#6-systematic-debugging---系统化调试)
 7. [verification-before-completion - 完成前验证](#7-verification-before-completion---完成前验证)
-8. [using-git-worktrees - 使用 Git Worktrees](#8-using-git-worktrees---使用-git-worktrees)
 9. [finishing-a-development-branch - 完成开发分支](#9-finishing-a-development-branch---完成开发分支)
 10. [dispatching-parallel-agents - 并行调度子代理](#10-dispatching-parallel-agents---并行调度子代理)
 11. [requesting-code-review - 请求代码审查](#11-requesting-code-review---请求代码审查)
@@ -293,38 +292,6 @@ Expected: FAIL with "function not defined"
 
 ---
 
-## 8. using-git-worktrees - 使用 Git Worktrees
-
-### 核心定义
-创建隔离的 Git Worktree 工作区，允许同时在多个分支上工作。
-
-### 适用场景
-- 开始需要与当前工作区隔离的功能开发。
-- 执行实施计划之前。
-
-### 目录选择优先级
-1.  检查现有目录（`.worktrees` 或 `worktrees`）
-2.  检查 `CLAUDE.md` 中的偏好设置
-3.  询问用户（项目本地 vs 全局位置）
-
-### 安全验证
-对于项目本地目录，**必须验证目录已被 `.gitignore` 忽略**：
-```bash
-git check-ignore -q .worktrees 2>/dev/null
-```
-如果未被忽略，则添加到 `.gitignore` 并提交。
-
-### 工作流程
-1.  检测项目名称
-2.  创建 Worktree（指定分支）
-3.  运行项目设置（`npm install`, `cargo build` 等）
-4.  验证测试基线（确保测试通过）
-5.  报告就绪状态
-
-### 核心原则
-**系统化目录选择 + 安全验证 = 可靠隔离。**
-
----
 
 ## 9. finishing-a-development-branch - 完成开发分支
 
@@ -569,7 +536,6 @@ description: Use when [触发条件和症状]
 | test-driven-development        | 实现任何功能或修复 Bug   | 质量保证、回归预防      |
 | systematic-debugging           | 遇到任何 Bug 或意外行为  | 根因定位、避免瞎猜      |
 | verification-before-completion | 声称完成之前             | 证据驱动、诚实汇报      |
-| using-git-worktrees            | 需要隔离开发环境时       | 并行开发、干净基线      |
 | finishing-a-development-branch | 实施完成，测试通过       | 有序收尾、清理工作区    |
 | dispatching-parallel-agents    | 多个独立问题需同时处理   | 并行效率、节省时间      |
 | requesting-code-review         | 完成任务后、合并前       | 质量门禁、问题发现      |
