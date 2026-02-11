@@ -1,4 +1,4 @@
-package com.example.wise_diet
+package cn.cuckoox.wise_diet
 
 import io.flutter.embedding.android.FlutterActivity
 

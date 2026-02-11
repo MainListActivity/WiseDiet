@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "892055006432",
+    "project_id": "wise-diet-20f40",
+    "storage_bucket": "wise-diet-20f40.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892055006432:android:4b23b0a69207abe8b33485",
+        "android_client_info": {
+          "package_name": "cn.cuckoox.wise_diet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9F_xwBShompJvMRHn8zVWLjtRrVofKTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
