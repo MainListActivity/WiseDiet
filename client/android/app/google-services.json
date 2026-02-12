@@ -12,7 +12,20 @@
           "package_name": "cn.cuckoox.wise_diet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "892055006432-0hhr966237aiotslf8nv9fhdh0qfrvit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cn.cuckoox.wise_diet",
+            "certificate_hash": "0cc6f16df440c9b677055f98de971fff1a56560f"
+          }
+        },
+        {
+          "client_id": "892055006432-ipffhe9k00ur868gd9q6uaspi71n4e1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB9F_xwBShompJvMRHn8zVWLjtRrVofKTc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892055006432-ipffhe9k00ur868gd9q6uaspi71n4e1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -23,6 +24,7 @@ class GoogleLogin {
     );
 
     if (uriResponse.statusCode != 200) {
+      debugPrint('[GoogleLogin] GET /api/auth/google failed: ${uriResponse.statusCode}');
       return AuthState.initial();
     }
 
@@ -30,8 +32,10 @@ class GoogleLogin {
     final clientId = uriBody['clientId'] as String?;
     final scopes = (uriBody['scopes'] as List<dynamic>?)?.cast<String>();
     final state = uriBody['state'] as String?;
+    debugPrint('[GoogleLogin] clientId=$clientId, scopes=$scopes, state=$state');
 
     if (clientId == null || state == null) {
+      debugPrint('[GoogleLogin] clientId or state is null');
       return AuthState.initial();
     }
 
@@ -41,10 +45,13 @@ class GoogleLogin {
         serverClientId: clientId,
         scopes: scopes ?? [],
       );
-    } on PlatformException {
+    } on PlatformException catch (e) {
+      debugPrint('[GoogleLogin] PlatformException: $e');
       return AuthState.initial();
     }
+    debugPrint('[GoogleLogin] serverAuthCode=$code');
     if (code == null || code.isEmpty) {
+      debugPrint('[GoogleLogin] code is null or empty');
       return AuthState.initial();
     }
 
@@ -55,6 +62,7 @@ class GoogleLogin {
     );
 
     if (response.statusCode != 200) {
+      debugPrint('[GoogleLogin] POST /api/auth/google failed: ${response.statusCode} ${response.body}');
       return AuthState.initial();
     }
 
@@ -62,6 +70,7 @@ class GoogleLogin {
     final accessToken = body['accessToken'] as String?;
     final refreshToken = body['refreshToken'] as String?;
     if (accessToken == null || refreshToken == null) {
+      debugPrint('[GoogleLogin] tokens are null: accessToken=$accessToken, refreshToken=$refreshToken');
       return AuthState.initial();
     }
 
@@ -89,8 +98,7 @@ class GoogleLogin {
       if (account == null) {
         return null;
       }
-      final auth = await account.authentication;
-      return auth.serverAuthCode;
+      return account.serverAuthCode;
     } on PlatformException {
       return null;
     }
