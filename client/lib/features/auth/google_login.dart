@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -34,16 +35,15 @@ class GoogleLogin {
       return AuthState.initial();
     }
 
-    final googleSignIn = GoogleSignIn(
-      serverClientId: clientId,
-      scopes: scopes ?? [],
-    );
-    final account = await googleSignIn.signIn();
-    if (account == null) {
+    final String? code;
+    try {
+      code = await requestServerAuthCode(
+        serverClientId: clientId,
+        scopes: scopes ?? [],
+      );
+    } on PlatformException {
       return AuthState.initial();
     }
-    final auth = await account.authentication;
-    final code = auth.serverAuthCode;
     if (code == null || code.isEmpty) {
       return AuthState.initial();
     }
@@ -74,6 +74,26 @@ class GoogleLogin {
       accessToken: accessToken,
       refreshToken: refreshToken,
     );
+  }
+
+  Future<String?> requestServerAuthCode({
+    required String serverClientId,
+    required List<String> scopes,
+  }) async {
+    try {
+      final googleSignIn = GoogleSignIn(
+        serverClientId: serverClientId,
+        scopes: scopes,
+      );
+      final account = await googleSignIn.signIn();
+      if (account == null) {
+        return null;
+      }
+      final auth = await account.authentication;
+      return auth.serverAuthCode;
+    } on PlatformException {
+      return null;
+    }
   }
 }
 
