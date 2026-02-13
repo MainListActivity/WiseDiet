@@ -21,4 +21,14 @@ class SessionStoreIntegrationTest extends AbstractIntegrationTest {
                 .expectNext(true)
                 .verifyComplete();
     }
+
+    @Test
+    void shouldSaveAndFindOAuthState() {
+        Mono<Boolean> flow = sessionStore.saveOAuthState("test-state-123")
+                .then(sessionStore.validateAndConsumeOAuthState("test-state-123"));
+
+        StepVerifier.create(flow)
+                .expectNext(true)
+                .verifyComplete();
+    }
 }

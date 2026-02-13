@@ -34,6 +34,22 @@ public class SessionStore {
                 .then();
     }
 
+    private static final Duration OAUTH_STATE_TTL = Duration.ofMinutes(5);
+
+    public Mono<Boolean> saveOAuthState(String state) {
+        return redisTemplate.opsForValue()
+                .set(oauthStateKey(state), "1", OAUTH_STATE_TTL);
+    }
+
+    public Mono<Boolean> validateAndConsumeOAuthState(String state) {
+        return redisTemplate.delete(oauthStateKey(state))
+                .map(deleted -> deleted > 0);
+    }
+
+    private String oauthStateKey(String state) {
+        return "oauth:state:" + state;
+    }
+
     private String sessionKey(String jti) {
         return "session:" + jti;
     }
