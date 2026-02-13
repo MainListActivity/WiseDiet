@@ -2,13 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../features/auth/auth_controller.dart';
 import '../features/auth/login_screen.dart';
+import '../features/auth/splash_screen.dart';
 import '../features/onboarding/screens/basic_info_screen.dart';
 
-class AppRouter extends ConsumerWidget {
+class AppRouter extends ConsumerStatefulWidget {
   const AppRouter({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AppRouter> createState() => _AppRouterState();
+}
+
+class _AppRouterState extends ConsumerState<AppRouter> {
+  bool _showSplash = true;
+
+  void _onSplashFinished() {
+    if (mounted) {
+      setState(() {
+        _showSplash = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Show splash screen on first launch
+    if (_showSplash) {
+      return SplashScreen(onFinished: _onSplashFinished);
+    }
+
     final authState = ref.watch(authControllerProvider);
     if (!authState.isLoggedIn) {
       return const LoginScreen();

@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'WiseDiet',
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system, // Adapts to system setting!
       home: const AppRouter(),
       debugShowCheckedModeBanner: false,
     );
