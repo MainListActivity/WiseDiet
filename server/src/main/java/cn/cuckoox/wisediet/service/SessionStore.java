@@ -42,6 +42,9 @@ public class SessionStore {
     }
 
     public Mono<Boolean> validateAndConsumeOAuthState(String state) {
+        if (state == null || state.isBlank()) {
+            return Mono.just(false);
+        }
         return redisTemplate.delete(oauthStateKey(state))
                 .map(deleted -> deleted > 0);
     }
