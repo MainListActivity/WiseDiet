@@ -31,4 +31,22 @@ class SessionStoreIntegrationTest extends AbstractIntegrationTest {
                 .expectNext(true)
                 .verifyComplete();
     }
+
+    @Test
+    void shouldRejectUnknownOAuthState() {
+        StepVerifier.create(sessionStore.validateAndConsumeOAuthState("never-stored"))
+                .expectNext(false)
+                .verifyComplete();
+    }
+
+    @Test
+    void shouldConsumeOAuthStateOnlyOnce() {
+        Mono<Boolean> flow = sessionStore.saveOAuthState("once-state")
+                .then(sessionStore.validateAndConsumeOAuthState("once-state"))
+                .flatMap(first -> sessionStore.validateAndConsumeOAuthState("once-state"));
+
+        StepVerifier.create(flow)
+                .expectNext(false)
+                .verifyComplete();
+    }
 }
