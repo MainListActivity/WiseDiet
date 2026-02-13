@@ -90,7 +90,7 @@ public class OAuthService {
 
     public Mono<AuthUriResponse> getAuthUri(String authType) {
         return clientRegistrationRepository.findByRegistrationId(authType)
-                .map(registration -> {
+                .flatMap(registration -> {
                     String state = UUID.randomUUID().toString();
                     String authorizationUri = org.springframework.web.util.UriComponentsBuilder.fromUriString(registration.getProviderDetails().getAuthorizationUri())
                             .queryParam("response_type", "code")
@@ -99,7 +99,8 @@ public class OAuthService {
                             .queryParam("state", state)
                             .build().toUriString();
 
-                    return new AuthUriResponse(authorizationUri, state, registration.getClientId(), registration.getRedirectUri(), registration.getScopes());
+                    AuthUriResponse response = new AuthUriResponse(authorizationUri, state, registration.getClientId(), registration.getRedirectUri(), registration.getScopes());
+                    return sessionStore.saveOAuthState(state).thenReturn(response);
                 });
     }
 }
