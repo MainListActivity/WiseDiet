@@ -23,6 +23,14 @@ class AuthControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    void shouldRejectLoginWithInvalidState() {
+        webTestClient.post().uri("/api/auth/google")
+                .bodyValue(new OAuthLoginRequest("code-123", "invalid-state"))
+                .exchange()
+                .expectStatus().isUnauthorized();
+    }
+
+    @Test
     void shouldStoreStateInRedisWhenGeneratingAuthUri() {
         webTestClient.get().uri("/api/auth/google")
                 .exchange()

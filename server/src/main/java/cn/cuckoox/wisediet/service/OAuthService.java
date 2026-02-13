@@ -14,7 +14,9 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationExchange;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -40,7 +42,13 @@ public class OAuthService {
     }
 
     public Mono<AuthTokenResponse> login(String registrationId, String code, String state) {
-        return clientRegistrationRepository.findByRegistrationId(registrationId)
+        return sessionStore.validateAndConsumeOAuthState(state)
+                .flatMap(valid -> {
+                    if (!valid) {
+                        return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired OAuth state"));
+                    }
+                    return clientRegistrationRepository.findByRegistrationId(registrationId);
+                })
                 .flatMap(registration -> {
                     OAuth2AuthorizationRequest authorizationRequest = OAuth2AuthorizationRequest.authorizationCode()
                             .clientId(registration.getClientId())
