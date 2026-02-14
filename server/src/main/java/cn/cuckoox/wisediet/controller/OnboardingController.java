@@ -1,12 +1,16 @@
 package cn.cuckoox.wisediet.controller;
 
+import cn.cuckoox.wisediet.i18n.RequestLocaleResolver;
 import cn.cuckoox.wisediet.model.UserProfile;
 import cn.cuckoox.wisediet.repository.UserProfileRepository;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -14,9 +18,15 @@ import java.util.Map;
 public class OnboardingController {
 
     private final UserProfileRepository userProfileRepository;
+    private final MessageSource messageSource;
+    private final RequestLocaleResolver requestLocaleResolver;
 
-    public OnboardingController(UserProfileRepository userProfileRepository) {
+    public OnboardingController(UserProfileRepository userProfileRepository,
+                                MessageSource messageSource,
+                                RequestLocaleResolver requestLocaleResolver) {
         this.userProfileRepository = userProfileRepository;
+        this.messageSource = messageSource;
+        this.requestLocaleResolver = requestLocaleResolver;
     }
 
     @PostMapping("/profile")
@@ -25,17 +35,26 @@ public class OnboardingController {
     }
 
     @GetMapping("/strategy")
-    public Mono<Map<String, Object>> getStrategy() {
-        // Mock Strategy Report
+    public Mono<Map<String, Object>> getStrategy(ServerWebExchange exchange) {
+        var locale = requestLocaleResolver.resolve(exchange);
         Map<String, Object> response = new HashMap<>();
         response.put("date", LocalDate.now().toString());
-        response.put("title", "Personalized Health Strategy");
-        response.put("summary", "Based on your occupation as a Programmer (Sedentary), we have tailored a Low-GI diet plan to maintain your energy levels throughout the day and protect your eyes.");
+        response.put("title", messageSource.getMessage("onboarding.strategy.title", null, locale));
+        response.put("summary", messageSource.getMessage("onboarding.strategy.summary", null, locale));
 
-        Map<String, String> keyPoints = new HashMap<>();
-        keyPoints.put("Energy", "Stable release carbs to avoid afternoon crash.");
-        keyPoints.put("Eyes", "Lutein-rich foods for screen time protection.");
-        keyPoints.put("Stress", "Magnesium-rich ingredients for nervous system support.");
+        Map<String, String> keyPoints = new LinkedHashMap<>();
+        keyPoints.put(
+                messageSource.getMessage("onboarding.strategy.key.energy", null, locale),
+                messageSource.getMessage("onboarding.strategy.value.energy", null, locale)
+        );
+        keyPoints.put(
+                messageSource.getMessage("onboarding.strategy.key.eyes", null, locale),
+                messageSource.getMessage("onboarding.strategy.value.eyes", null, locale)
+        );
+        keyPoints.put(
+                messageSource.getMessage("onboarding.strategy.key.stress", null, locale),
+                messageSource.getMessage("onboarding.strategy.value.stress", null, locale)
+        );
 
         response.put("key_points", keyPoints);
 

@@ -47,6 +47,31 @@ class OnboardingI18nIntegrationTest extends AbstractIntegrationTest {
                 .verifyComplete();
     }
 
+    @Test
+    void shouldReturnChineseStrategyWhenLocaleIsZh() {
+        Mono<Boolean> response = issueAuthenticatedToken(0)
+                .flatMap(token -> Mono.fromCallable(() -> {
+                    webTestClient.get()
+                            .uri("/api/onboarding/strategy")
+                            .header("Authorization", "Bearer " + token)
+                            .header("Accept-Language", "zh")
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody(Map.class)
+                            .value(payload -> {
+                                Map<?, ?> keyPoints = (Map<?, ?>) payload.get("key_points");
+                                if (!"个性化健康策略".equals(payload.get("title")) || keyPoints == null || !keyPoints.containsKey("能量")) {
+                                    throw new AssertionError("unexpected i18n strategy payload");
+                                }
+                            });
+                    return true;
+                }).subscribeOn(Schedulers.boundedElastic()));
+
+        StepVerifier.create(response)
+                .expectNext(true)
+                .verifyComplete();
+    }
+
     private Mono<String> issueAuthenticatedToken(Integer onboardingStep) {
         return userRepository.save(new User(null, "onboarding-i18n@test.com", "google", "onboarding-i18n-provider", onboardingStep))
                 .flatMap(user -> jwtService.createAccessToken(user.getId())
