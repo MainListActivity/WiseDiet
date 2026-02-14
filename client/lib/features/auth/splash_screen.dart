@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,93 +78,110 @@ class _SplashScreenState extends State<SplashScreen>
 
     // --- Responsive scaling ---
     final scaleFactor = (shortestSide / 390).clamp(0.7, 1.6);
-    final logoSize = (192 * scaleFactor).clamp(120.0, 280.0);
-    final haloSize = logoSize * 1.25;
-    final logoInnerPadding = logoSize * 0.083; // ~16/192
+    final logoSize = (160 * scaleFactor).clamp(100.0, 240.0);
+    final haloSize = logoSize * 1.3;
+    final logoInnerPadding = logoSize * 0.083;
 
-    final titleSize = (40 * scaleFactor).clamp(28.0, 56.0);
-    final sloganSize = (18 * scaleFactor).clamp(14.0, 26.0);
-    final loadingBarWidth = (140 * scaleFactor).clamp(100.0, 200.0);
+    final titleSize = (36 * scaleFactor).clamp(26.0, 52.0);
+    final sloganSize = (15 * scaleFactor).clamp(12.0, 22.0);
+    final loadingBarWidth = (160 * scaleFactor).clamp(100.0, 220.0);
     final loadingTextSize = (11 * scaleFactor).clamp(9.0, 15.0);
 
     // Spacing
-    final logoToTextGap = (40 * scaleFactor).clamp(24.0, 60.0);
-    final bottomPadding = (32 * scaleFactor).clamp(16.0, 48.0);
+    final logoToTextGap = (28 * scaleFactor).clamp(18.0, 44.0);
+    final bottomPadding = (40 * scaleFactor).clamp(24.0, 56.0);
 
-    // Text offset calculation for Stack layout
-    final textTopOffset = haloSize / 2 + logoToTextGap;
-
-    final topBlobSize = screenWidth * 0.8;
-    final bottomBlobSize = screenWidth * 0.65;
+    final topBlobSize = screenWidth * 0.75;
+    final bottomBlobSize = screenWidth * 0.6;
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor, // Theme aware
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          // --- Decorative Background Blobs ---
-          Positioned(
-            top: -screenHeight * 0.1,
-            right: -screenWidth * 0.1,
-            child: Container(
-              width: topBlobSize,
-              height: topBlobSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: theme.colorScheme.primary.withValues(alpha: 0.08),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SizedBox.expand(
+        child: Stack(
+          children: [
+            // --- Decorative Background Blobs ---
+            Positioned(
+              top: -screenHeight * 0.12,
+              right: -screenWidth * 0.15,
+              child: Container(
+                width: topBlobSize,
+                height: topBlobSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      theme.colorScheme.primary.withValues(alpha: 0.10),
+                      theme.colorScheme.primary.withValues(alpha: 0.02),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: -screenHeight * 0.1,
-            left: -screenWidth * 0.1,
-            child: Container(
-              width: bottomBlobSize,
-              height: bottomBlobSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: theme.colorScheme.secondary.withValues(alpha: 0.04),
+            Positioned(
+              bottom: -screenHeight * 0.08,
+              left: -screenWidth * 0.15,
+              child: Container(
+                width: bottomBlobSize,
+                height: bottomBlobSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      theme.colorScheme.secondary.withValues(alpha: 0.06),
+                      theme.colorScheme.secondary.withValues(alpha: 0.01),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
 
-          // --- Logo Section (Absolute Center) ---
-          ScaleTransition(
-            scale: _logoScaleAnimation,
-            child: _buildLogoSection(
-              context,
-              logoSize: logoSize,
-              haloSize: haloSize,
-              innerPadding: logoInnerPadding,
-            ),
-          ),
+            // --- Main Content ---
+            SafeArea(
+              child: Center(
+                child: Column(
+                  children: [
+                    // Top spacer
+                    const Expanded(flex: 3, child: SizedBox.shrink()),
 
-          // --- Text Section ---
-          FadeTransition(
-            opacity: _fadeAnimation,
-            child: Transform.translate(
-              offset: Offset(0, textTopOffset + logoSize / 4),
-              child: _buildTextSection(
-                context,
-                titleSize: titleSize,
-                sloganSize: sloganSize,
+                    // Logo + Text group, centered
+                    ScaleTransition(
+                      scale: _logoScaleAnimation,
+                      child: _buildLogoSection(
+                        context,
+                        logoSize: logoSize,
+                        haloSize: haloSize,
+                        innerPadding: logoInnerPadding,
+                      ),
+                    ),
+                    SizedBox(height: logoToTextGap),
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: _buildTextSection(
+                        context,
+                        titleSize: titleSize,
+                        sloganSize: sloganSize,
+                      ),
+                    ),
+
+                    // Bottom spacer
+                    const Expanded(flex: 3, child: SizedBox.shrink()),
+
+                    // Footer / Loading at bottom — CENTERED
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: _buildFooterSection(
+                        context,
+                        barWidth: loadingBarWidth,
+                        textSize: loadingTextSize,
+                      ),
+                    ),
+                    SizedBox(height: bottomPadding),
+                  ],
+                ),
               ),
             ),
-          ),
-
-          // --- Footer / Loading ---
-          Positioned(
-            bottom: bottomPadding,
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: _buildFooterSection(
-                context,
-                barWidth: loadingBarWidth,
-                textSize: loadingTextSize,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -179,66 +195,50 @@ class _SplashScreenState extends State<SplashScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
+    // Use separate SVGs with hardcoded colors (flutter_svg doesn't support CSS var())
+    final logoAsset = isDark
+        ? 'assets/images/logo_dark.svg'
+        : 'assets/images/logo_light.svg';
+
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Halo
+        // Outer halo glow
         Container(
           width: haloSize,
           height: haloSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: theme.colorScheme.primary.withValues(alpha: 0.04),
+            gradient: RadialGradient(
+              colors: [
+                theme.colorScheme.primary.withValues(alpha: 0.06),
+                theme.colorScheme.primary.withValues(alpha: 0.0),
+              ],
+            ),
           ),
         ),
-        // Logo Container
+        // Logo — SVG already contains its own circular background & border
         Container(
           width: logoSize,
           height: logoSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            // In dark mode use dark surface, light mode use white
-            color: isDark ? const Color(0xFF1E2621) : Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.12),
-                blurRadius: logoSize * 0.21,
-                spreadRadius: 2,
-                offset: Offset(0, logoSize * 0.042),
+                color: theme.colorScheme.primary.withValues(
+                  alpha: isDark ? 0.15 : 0.08,
+                ),
+                blurRadius: logoSize * 0.3,
+                spreadRadius: 4,
+              ),
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
+                blurRadius: logoSize * 0.15,
+                offset: Offset(0, logoSize * 0.03),
               ),
             ],
-            border: Border.all(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.1)
-                  : Colors.black.withValues(alpha: 0.05),
-              width: 1,
-            ),
           ),
-          child: ClipOval(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                CustomPaint(
-                  size: Size(logoSize, logoSize),
-                  painter: _DotGridPainter(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.03),
-                    spacing: math.max(12, logoSize * 0.083),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(innerPadding),
-                  child: SvgPicture.asset(
-                    'assets/images/logo.svg',
-                    width: logoSize - innerPadding * 2,
-                    height: logoSize - innerPadding * 2,
-                    // If flutter_svg doesn't respect media query, this might need manual ColorFilter.
-                    // But standard logo.svg usually has dark mode classes.
-                    // For safety, we can trust the SVG or if needed use a ColorFilter in future.
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child: SvgPicture.asset(logoAsset, width: logoSize, height: logoSize),
         ),
       ],
     );
@@ -254,26 +254,28 @@ class _SplashScreenState extends State<SplashScreen>
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           'WiseDiet',
-          style: GoogleFonts.spaceGrotesk(
+          style: GoogleFonts.inter(
             fontSize: titleSize,
-            fontWeight: FontWeight.bold,
-            // Adaptive text color
+            fontWeight: FontWeight.w700,
             color: isDark ? Colors.white : const Color(0xFF131514),
             letterSpacing: -0.5,
             height: 1.0,
           ),
         ),
-        SizedBox(height: titleSize * 0.2),
+        SizedBox(height: titleSize * 0.25),
         Text(
           'Smart Diet, Smart You',
-          style: GoogleFonts.spaceGrotesk(
+          style: GoogleFonts.inter(
             fontSize: sloganSize,
-            fontWeight: FontWeight.w500,
-            color: theme.colorScheme.secondary.withValues(alpha: 0.9),
-            letterSpacing: 1.2,
+            fontWeight: FontWeight.w400,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.5)
+                : theme.colorScheme.secondary.withValues(alpha: 0.6),
+            letterSpacing: 1.5,
           ),
         ),
       ],
@@ -288,90 +290,85 @@ class _SplashScreenState extends State<SplashScreen>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Column(
-      children: [
-        SizedBox(
-          width: barWidth,
-          child: AnimatedBuilder(
-            animation: _progressAnimation,
-            builder: (context, child) {
-              return Column(
-                children: [
-                  Container(
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.grey.shade800
-                          : const Color(0xFFE5E7EB),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: _progressAnimation.value,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primary,
-                          borderRadius: BorderRadius.circular(2),
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Loading progress bar
+          SizedBox(
+            width: barWidth,
+            child: AnimatedBuilder(
+              animation: _progressAnimation,
+              builder: (context, child) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: SizedBox(
+                    height: 3,
+                    child: Stack(
+                      children: [
+                        // Track
+                        Container(
+                          decoration: BoxDecoration(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.06)
+                                : Colors.black.withValues(alpha: 0.06),
+                          ),
                         ),
-                      ),
+                        // Fill
+                        FractionallySizedBox(
+                          alignment: Alignment.centerLeft,
+                          widthFactor: _progressAnimation.value,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  theme.colorScheme.primary.withValues(
+                                    alpha: 0.7,
+                                  ),
+                                  theme.colorScheme.primary,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: textSize * 1.1),
-                  Text(
-                    'LOADING',
-                    style: TextStyle(
-                      fontSize: textSize,
-                      fontWeight: FontWeight.w600,
-                      color: isDark
-                          ? Colors.grey.shade500
-                          : Colors.grey.shade400,
-                      letterSpacing: 3.0,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 16),
-        Opacity(
-          opacity: 0.3,
-          child: Text(
-            'v1.0.0',
-            style: TextStyle(
-              fontSize: textSize * 0.9,
-              fontFamily: 'monospace',
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.6)
-                  : Colors.black.withValues(alpha: 0.6),
+                );
+              },
             ),
           ),
-        ),
-      ],
+          SizedBox(height: textSize * 1.2),
+          // Loading text
+          Text(
+            'LOADING',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              fontSize: textSize,
+              fontWeight: FontWeight.w500,
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.25)
+                  : Colors.black.withValues(alpha: 0.25),
+              letterSpacing: 4.0,
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Version
+          Text(
+            'v1.0.0',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              fontSize: textSize * 0.85,
+              fontWeight: FontWeight.w400,
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.15)
+                  : Colors.black.withValues(alpha: 0.15),
+              letterSpacing: 1.0,
+            ),
+          ),
+        ],
+      ),
     );
   }
-}
-
-class _DotGridPainter extends CustomPainter {
-  final Color color;
-  final double spacing;
-
-  _DotGridPainter({required this.color, this.spacing = 16.0});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x, y), 1, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _DotGridPainter oldDelegate) =>
-      color != oldDelegate.color || spacing != oldDelegate.spacing;
 }

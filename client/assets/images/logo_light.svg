@@ -1,0 +1,19 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle with Ring -->
+  <circle cx="96" cy="96" r="95.5" fill="#FFFFFF" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+
+  <!-- Left Line: 10x32 -->
+  <rect x="69" y="72" width="10" height="32" rx="5" fill="#2C3E50" opacity="0.8"/>
+  
+  <!-- Center Line: 12x56 -->
+  <rect x="91" y="48" width="12" height="56" rx="6" fill="#4b7c5a"/>
+  
+  <!-- Right Line: 10x32 -->
+  <rect x="115" y="72" width="10" height="32" rx="5" fill="#2C3E50" opacity="0.8"/>
+  
+  <!-- Bowl -->
+  <path d="M 50 112 A 46 46 0 0 0 142 112" stroke="#4b7c5a" stroke-width="4" stroke-linecap="butt" fill="none"/>
+  
+  <!-- Dot -->
+  <circle cx="96" cy="140" r="3" fill="#2C3E50"/>
+</svg>
