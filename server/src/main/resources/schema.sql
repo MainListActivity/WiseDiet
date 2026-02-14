@@ -27,3 +27,24 @@ CREATE TABLE IF NOT EXISTS "admin_whitelist" (
     id SERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS "meal_plans" (
+    id SERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    date DATE NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'pending'
+);
+
+CREATE TABLE IF NOT EXISTS "dishes" (
+    id SERIAL PRIMARY KEY,
+    meal_plan_id BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    recommendation_reason TEXT,
+    image_url TEXT,
+    difficulty INT DEFAULT 3,
+    prep_min INT DEFAULT 10,
+    cook_min INT DEFAULT 10,
+    nutrient_tags TEXT,
+    selected BOOLEAN DEFAULT FALSE,
+    meal_type VARCHAR(20) NOT NULL
+);
