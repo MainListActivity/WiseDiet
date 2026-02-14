@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_theme.dart';
+import '../../l10n/l10n.dart';
 
 class SplashScreen extends StatefulWidget {
   final VoidCallback onFinished;
@@ -249,6 +250,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double titleSize,
     required double sloganSize,
   }) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -257,7 +259,7 @@ class _SplashScreenState extends State<SplashScreen>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'WiseDiet',
+          l10n.appTitle,
           style: GoogleFonts.inter(
             fontSize: titleSize,
             fontWeight: FontWeight.w700,
@@ -268,7 +270,7 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         SizedBox(height: titleSize * 0.25),
         Text(
-          'Smart Diet, Smart You',
+          l10n.slogan,
           style: GoogleFonts.inter(
             fontSize: sloganSize,
             fontWeight: FontWeight.w400,
@@ -287,6 +289,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double barWidth,
     required double textSize,
   }) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -342,7 +345,7 @@ class _SplashScreenState extends State<SplashScreen>
           SizedBox(height: textSize * 1.2),
           // Loading text
           Text(
-            'LOADING',
+            l10n.loading,
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               fontSize: textSize,

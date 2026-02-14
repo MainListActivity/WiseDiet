@@ -4,6 +4,7 @@ import '../features/auth/auth_controller.dart';
 import '../features/auth/login_screen.dart';
 import '../features/auth/splash_screen.dart';
 import '../features/onboarding/screens/basic_info_screen.dart';
+import '../l10n/l10n.dart';
 
 class AppRouter extends ConsumerStatefulWidget {
   const AppRouter({super.key});
@@ -37,6 +38,6 @@ class _AppRouterState extends ConsumerState<AppRouter> {
     if (authState.onboardingStep > 0) {
       return const BasicInfoScreen();
     }
-    return const Scaffold(body: Center(child: Text('Welcome back')));
+    return Scaffold(body: Center(child: Text(context.l10n.welcomeBack)));
   }
 }

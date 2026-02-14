@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+  "appTitle": "WiseDiet",
+  "helloWorld": "Hello, World!",
+  "welcomeBack": "Welcome back",
+  "slogan": "Smart Diet, Smart You",
+  "joinWiseDiet": "Join WiseDiet",
+  "continueWithGoogle": "Continue with Google",
+  "continueWithGithub": "Continue with GitHub",
+  "orLoginWithEmail": "OR LOGIN WITH EMAIL",
+  "signInWithEmail": "Sign in with Email",
+  "termsPrefix": "By continuing, you acknowledge that you have\\nread and agree to our ",
+  "termsOfService": "Terms of Service",
+  "and": " & ",
+  "privacyPolicy": "Privacy Policy",
+  "period": ".",
+  "loading": "LOADING"
+}

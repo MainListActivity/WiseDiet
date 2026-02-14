@@ -16,5 +16,6 @@ migrate_working_dir/
 *.iml
 *.ipr
 *.iws
+out/
 .idea/
 .worktrees/

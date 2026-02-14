@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'auth_controller.dart';
+import '../../l10n/l10n.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -65,6 +66,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final mq = MediaQuery.of(context);
@@ -129,7 +131,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
 
                   // ═══ Title & Slogan ═══
                   Text(
-                    'Join WiseDiet',
+                    l10n.joinWiseDiet,
                     style: GoogleFonts.inter(
                       fontSize: titleSize,
                       fontWeight: FontWeight.w700,
@@ -140,7 +142,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                   ),
                   SizedBox(height: 8 * scaleFactor),
                   Text(
-                    'Smart Diet, Smart You',
+                    l10n.slogan,
                     style: GoogleFonts.inter(
                       fontSize: sloganSize,
                       fontWeight: FontWeight.w500,
@@ -154,7 +156,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                   // ═══ Google Button ═══
                   _buildSocialButton(
                     context,
-                    label: 'Continue with Google',
+                    label: l10n.continueWithGoogle,
                     icon: FaIcon(
                       FontAwesomeIcons.google,
                       size: iconSize,
@@ -173,7 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                   // ═══ GitHub Button ═══
                   _buildSocialButton(
                     context,
-                    label: 'Continue with GitHub',
+                    label: l10n.continueWithGithub,
                     icon: FaIcon(
                       FontAwesomeIcons.github,
                       size: iconSize,
@@ -204,7 +206,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                             horizontal: 12 * scaleFactor,
                           ),
                           child: Text(
-                            'OR LOGIN WITH EMAIL',
+                            l10n.orLoginWithEmail,
                             style: GoogleFonts.inter(
                               fontSize: footerSize,
                               fontWeight: FontWeight.w500,
@@ -231,7 +233,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       color: textPrimary,
                     ),
                     label: Text(
-                      'Sign in with Email',
+                      l10n.signInWithEmail,
                       style: GoogleFonts.inter(
                         fontSize: buttonTextSize * 0.9,
                         fontWeight: FontWeight.w600,
@@ -267,28 +269,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           height: 1.6,
                         ),
                         children: [
-                          const TextSpan(
-                            text:
-                                'By continuing, you acknowledge that you have\nread and agree to our ',
-                          ),
+                          TextSpan(text: l10n.termsPrefix),
                           TextSpan(
-                            text: 'Terms of Service',
+                            text: l10n.termsOfService,
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               decorationColor: textMuted.withValues(alpha: 0.5),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const TextSpan(text: ' & '),
+                          TextSpan(text: l10n.and),
                           TextSpan(
-                            text: 'Privacy Policy',
+                            text: l10n.privacyPolicy,
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               decorationColor: textMuted.withValues(alpha: 0.5),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const TextSpan(text: '.'),
+                          TextSpan(text: l10n.period),
                         ],
                       ),
                       textAlign: TextAlign.center,
@@ -394,12 +393,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                   : [
                       icon,
                       const SizedBox(width: 12),
-                      Text(
-                        label,
-                        style: GoogleFonts.inter(
-                          fontSize: textSize,
-                          fontWeight: FontWeight.w600,
-                          color: textColor,
+                      Flexible(
+                        child: Text(
+                          label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.inter(
+                            fontSize: textSize,
+                            fontWeight: FontWeight.w600,
+                            color: textColor,
+                          ),
                         ),
                       ),
                     ],

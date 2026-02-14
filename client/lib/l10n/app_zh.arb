@@ -1,0 +1,18 @@
+{
+  "@@locale": "zh",
+  "appTitle": "WiseDiet",
+  "helloWorld": "你好，世界！",
+  "welcomeBack": "欢迎回来",
+  "slogan": "智慧饮食，智慧你",
+  "joinWiseDiet": "加入 WiseDiet",
+  "continueWithGoogle": "使用 Google 继续",
+  "continueWithGithub": "使用 GitHub 继续",
+  "orLoginWithEmail": "或使用邮箱登录",
+  "signInWithEmail": "使用邮箱登录",
+  "termsPrefix": "继续即表示你已阅读并同意我们的",
+  "termsOfService": "服务条款",
+  "and": "与",
+  "privacyPolicy": "隐私政策",
+  "period": "。",
+  "loading": "加载中"
+}
