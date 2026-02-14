@@ -20,4 +20,20 @@ class HelloControllerI18nIntegrationTest extends AbstractIntegrationTest {
                 .expectNext("你好，世界！")
                 .verifyComplete();
     }
+
+    @Test
+    void shouldReturnChineseGreetingWhenLocaleIsZh() {
+        Flux<String> response = webTestClient.get()
+                .uri("/api/hello")
+                .header("Accept-Language", "zh")
+                .exchange()
+                .expectStatus().isOk()
+                .returnResult(String.class)
+                .getResponseBody();
+
+        StepVerifier.create(response)
+                .expectNext("你好，世界！")
+                .verifyComplete();
+    }
+
 }

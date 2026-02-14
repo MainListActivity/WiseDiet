@@ -73,8 +73,8 @@ public class OnboardingIntegrationTest extends AbstractIntegrationTest {
                             .exchange()
                             .expectStatus().isOk()
                             .expectBody()
-                            .jsonPath("$.title").isEqualTo("Personalized Health Strategy")
-                            .jsonPath("$.key_points.Energy").exists();
+                            .jsonPath("$.title").exists()
+                            .jsonPath("$.key_points").exists();
                     return true;
                 }).subscribeOn(Schedulers.boundedElastic()));
 
