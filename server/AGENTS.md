@@ -1,7 +1,12 @@
 
+## 实现约束
+
+- Controller/Filter 禁止手动解析 token，统一通过 `CurrentUserService` 获取当前登录用户信息。
+- 任何权限校验逻辑必须基于 `CurrentUserService` 或 `AuthenticatedUser`，不得在业务层直接读取 Header。
+- 新增受保护 endpoint 时，先补集成测试（未登录 401、登录后 200/业务码）再实现。
 
 
-**技术栈要求：**
+## 技术栈要求
 ```
 - Spring Boot 4.x
 - Spring WebFlux（响应式 Web）
@@ -12,7 +17,7 @@
 - 运行测试用例的超时时间为2分钟
 ```
 
-**编码顺序规则：**
+## 编码顺序规则
 
 1. **第一步：编写集成测试**
    - 测试完整的 HTTP 请求/响应流程
@@ -44,12 +49,7 @@
    - 保持方法的纯函数特性（可测试性）
    - 错误处理使用 `onErrorResume`、`onErrorMap`
 
-5. **第五步：编写 Repository 层测试**
-   - 使用 `@DataR2dbcTest`
-   - 测试数据库查询的正确性
-   - 使用测试容器（Testcontainers）模拟真实数据库
-
-6. **第六步：实现 Repository 层**
+5. **实现 Repository 层**
    - 继承 `ReactiveCrudRepository` 或 `R2dbcRepository`
    - 自定义查询使用 `@Query` 注解
 

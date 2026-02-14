@@ -1,21 +1,34 @@
 package cn.cuckoox.wisediet;
 
 import cn.cuckoox.wisediet.model.OccupationTag;
+import cn.cuckoox.wisediet.model.User;
 import cn.cuckoox.wisediet.model.UserProfile;
 import cn.cuckoox.wisediet.repository.UserProfileRepository;
+import cn.cuckoox.wisediet.repository.UserRepository;
+import cn.cuckoox.wisediet.service.JwtService;
+import cn.cuckoox.wisediet.service.SessionStore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
+import java.time.Duration;
 
 @Testcontainers
 class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private SessionStore sessionStore;
 
     @Test
     void shouldReturnSeededOccupationTags() {
@@ -48,19 +61,28 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
         );
 
         // When: 提交 onboarding 资料
-        Flux<UserProfile> response = webTestClient.post()
-                .uri("/api/onboarding/profile")
-                .bodyValue(request)
-                .exchange()
-                .expectStatus().isOk()
-                .returnResult(UserProfile.class)
-                .getResponseBody();
+        Mono<Boolean> requestFlow = issueAuthenticatedToken(0)
+                .flatMap(authToken -> Mono.fromCallable(() -> {
+                    webTestClient.post()
+                            .uri("/api/onboarding/profile")
+                            .header("Authorization", "Bearer " + authToken)
+                            .bodyValue(request)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody(UserProfile.class)
+                            .value(profile -> {
+                                if (profile.getId() == null
+                                        || !"Male".equals(profile.getGender())
+                                        || !Integer.valueOf(2).equals(profile.getFamilyMembers())) {
+                                    throw new AssertionError("unexpected saved profile payload");
+                                }
+                            });
+                    return true;
+                }).subscribeOn(Schedulers.boundedElastic()));
 
         // Then: 返回持久化数据并写入数据库
-        StepVerifier.create(response)
-                .expectNextMatches(profile -> profile.getId() != null
-                        && "Male".equals(profile.getGender())
-                        && Integer.valueOf(2).equals(profile.getFamilyMembers()))
+        StepVerifier.create(requestFlow)
+                .expectNext(true)
                 .verifyComplete();
 
         StepVerifier.create(userProfileRepository.findAll()
@@ -68,5 +90,12 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
                         .take(1))
                 .expectNextMatches(profile -> "1,2".equals(profile.getOccupationTagIds()))
                 .verifyComplete();
+    }
+
+    private Mono<String> issueAuthenticatedToken(Integer onboardingStep) {
+        return userRepository.save(new User(null, "onboarding-api@test.com", "google", "onboarding-api-provider", onboardingStep))
+                .flatMap(user -> jwtService.createAccessToken(user.getId())
+                        .flatMap(token -> sessionStore.saveSession(jwtService.extractJti(token), user.getId(), Duration.ofMinutes(15))
+                                .thenReturn(token)));
     }
 }

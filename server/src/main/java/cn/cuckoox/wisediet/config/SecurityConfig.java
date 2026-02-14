@@ -18,7 +18,8 @@ public class SecurityConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/api/secure/**").authenticated()
+                        .pathMatchers("/api/auth/**", "/api/tags/**", "/api/hello").permitAll()
+                        .pathMatchers("/api/**").authenticated()
                         .anyExchange().permitAll()
                 )
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)

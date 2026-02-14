@@ -25,6 +25,18 @@ public class SessionStore {
         return redisTemplate.hasKey(sessionKey(jti));
     }
 
+    public Mono<Long> userIdBySession(String jti) {
+        return redisTemplate.opsForValue()
+                .get(sessionKey(jti))
+                .flatMap(value -> {
+                    try {
+                        return Mono.just(Long.parseLong(value));
+                    } catch (NumberFormatException ex) {
+                        return Mono.empty();
+                    }
+                });
+    }
+
     public Mono<Void> revokeUserSessions(Long userId) {
         String userKey = userKey(userId);
         return redisTemplate.opsForSet()
