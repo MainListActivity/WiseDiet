@@ -57,7 +57,10 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
                 180.0,
                 70.0,
                 "1,2",
-                2
+                2,
+                null,
+                null,
+                null
         );
 
         // When: 提交 onboarding 资料

@@ -40,4 +40,7 @@ public class UserProfile {
     @Min(1)
     @Max(12)
     private Integer familyMembers;
+    private String allergenTagIds;
+    private String dietaryPreferenceTagIds;
+    private String customAvoidedIngredients;
 }
