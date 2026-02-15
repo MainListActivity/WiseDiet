@@ -58,6 +58,20 @@ public class OnboardingController {
         );
 
         response.put("key_points", keyPoints);
+        Map<String, String> projectedImpact = new LinkedHashMap<>();
+        projectedImpact.put("focus_boost", messageSource.getMessage("onboarding.strategy.impact.focusBoost", null, locale));
+        projectedImpact.put("calorie_target", messageSource.getMessage("onboarding.strategy.impact.calorieTarget", null, locale));
+        response.put("projected_impact", projectedImpact);
+
+        Map<String, String> preferences = new LinkedHashMap<>();
+        preferences.put("daily_focus", messageSource.getMessage("onboarding.strategy.preference.dailyFocus", null, locale));
+        preferences.put("meal_frequency", messageSource.getMessage("onboarding.strategy.preference.mealFrequency", null, locale));
+        preferences.put("cooking_level", messageSource.getMessage("onboarding.strategy.preference.cookingLevel", null, locale));
+        preferences.put("budget", messageSource.getMessage("onboarding.strategy.preference.budget", null, locale));
+        response.put("preferences", preferences);
+
+        response.put("info_hint", messageSource.getMessage("onboarding.strategy.infoHint", null, locale));
+        response.put("cta_text", messageSource.getMessage("onboarding.strategy.ctaText", null, locale));
 
         return Mono.just(response);
     }

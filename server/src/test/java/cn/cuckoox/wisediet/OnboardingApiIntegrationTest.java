@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 import java.time.Duration;
+import java.util.Map;
 
 @Testcontainers
 class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
@@ -97,29 +98,35 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void shouldRejectInvalidBasicInfoPayload() {
-        UserProfile invalidRequest = new UserProfile(
-                null,
-                "Unknown",
-                10,
-                100.0,
-                20.0,
-                "1,2",
-                0
-        );
-
-        Mono<Boolean> requestFlow = issueAuthenticatedToken(0)
-                .flatMap(authToken -> Mono.fromCallable(() -> {
-                    webTestClient.post()
-                            .uri("/api/onboarding/profile")
-                            .header("Authorization", "Bearer " + authToken)
-                            .bodyValue(invalidRequest)
+    void shouldReturnEnhancedStrategyPayload() {
+        Mono<Boolean> response = issueAuthenticatedToken(0)
+                .flatMap(token -> Mono.fromCallable(() -> {
+                    webTestClient.get()
+                            .uri("/api/onboarding/strategy")
+                            .header("Authorization", "Bearer " + token)
                             .exchange()
-                            .expectStatus().isBadRequest();
+                            .expectStatus().isOk()
+                            .expectBody(Map.class)
+                            .value(payload -> {
+                                Map<?, ?> projectedImpact = (Map<?, ?>) payload.get("projected_impact");
+                                Map<?, ?> preferences = (Map<?, ?>) payload.get("preferences");
+                                if (projectedImpact == null
+                                        || !projectedImpact.containsKey("focus_boost")
+                                        || !projectedImpact.containsKey("calorie_target")
+                                        || preferences == null
+                                        || !preferences.containsKey("daily_focus")
+                                        || !preferences.containsKey("meal_frequency")
+                                        || !preferences.containsKey("cooking_level")
+                                        || !preferences.containsKey("budget")
+                                        || payload.get("info_hint") == null
+                                        || payload.get("cta_text") == null) {
+                                    throw new AssertionError("missing enhanced strategy fields");
+                                }
+                            });
                     return true;
                 }).subscribeOn(Schedulers.boundedElastic()));
 
-        StepVerifier.create(requestFlow)
+        StepVerifier.create(response)
                 .expectNext(true)
                 .verifyComplete();
     }

@@ -5,7 +5,7 @@ import '../providers/tag_provider.dart';
 import '../providers/onboarding_provider.dart';
 import '../widgets/neural_background.dart';
 import '../widgets/tag_item.dart';
-import 'loading_analysis_screen.dart';
+import 'family_params_screen.dart';
 
 class OccupationProfileScreen extends ConsumerWidget {
   const OccupationProfileScreen({super.key});
@@ -26,10 +26,7 @@ class OccupationProfileScreen extends ConsumerWidget {
               children: [
                 // Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 24,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                   child: Row(
                     children: [
                       IconButton(
@@ -103,64 +100,61 @@ class OccupationProfileScreen extends ConsumerWidget {
                   ),
                 ),
 
-                const Spacer(),
-
                 // Tag Cloud
-                tagsAsync.when(
-                  data: (tags) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Wrap(
-                      spacing: 12,
-                      runSpacing: 16,
-                      alignment: WrapAlignment.center,
-                      children: tags.map((tag) {
-                        final isSelected = selectedTags.contains(tag.id);
-                        return TagItem(
-                          tag: tag,
-                          isSelected: isSelected,
-                          onTap: () {
-                            final current = ref.read(selectedTagsProvider);
-                            if (isSelected) {
-                              ref.read(selectedTagsProvider.notifier).state = {
-                                ...current,
-                              }..remove(tag.id);
-                            } else {
-                              ref.read(selectedTagsProvider.notifier).state = {
-                                ...current,
-                              }..add(tag.id);
-                            }
-                          },
-                        );
-                      }).toList(),
+                Expanded(
+                  child: Center(
+                    child: tagsAsync.when(
+                      data: (tags) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Wrap(
+                          spacing: 12,
+                          runSpacing: 16,
+                          alignment: WrapAlignment.center,
+                          children: tags.map((tag) {
+                            final isSelected = selectedTags.contains(tag.id);
+                            return TagItem(
+                              tag: tag,
+                              isSelected: isSelected,
+                              onTap: () {
+                                final current = ref.read(selectedTagsProvider);
+                                if (isSelected) {
+                                  ref.read(selectedTagsProvider.notifier).state = {...current}..remove(tag.id);
+                                } else {
+                                  ref.read(selectedTagsProvider.notifier).state = {...current}..add(tag.id);
+                                }
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      loading: () => const Center(child: CircularProgressIndicator()),
+                      error: (err, stack) => Center(child: Text('Error: $err')),
                     ),
                   ),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (err, stack) => Center(child: Text('Error: $err')),
                 ),
 
-                const Spacer(),
-
                 // AI Analyzing Indicator
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.psychology,
-                      color: AppTheme.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'AI ANALYZING METABOLIC NEEDS...',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.primary.withOpacity(0.8),
-                        letterSpacing: 1.0,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.psychology, color: AppTheme.primary, size: 20),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          'AI ANALYZING METABOLIC NEEDS...',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.primary.withOpacity(0.8),
+                            letterSpacing: 1.0,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
                 const SizedBox(height: 32),
@@ -176,17 +170,12 @@ class OccupationProfileScreen extends ConsumerWidget {
                           onPressed: selectedTags.isNotEmpty
                               ? () {
                                   // Update global profile state
-                                  ref
-                                      .read(onboardingProvider.notifier)
-                                      .updateTags(selectedTags);
+                                  ref.read(onboardingProvider.notifier).updateTags(selectedTags);
 
                                   // Navigate to next step
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoadingAnalysisScreen(),
-                                    ),
+                                    MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
                                   );
                                 }
                               : null,
@@ -207,7 +196,12 @@ class OccupationProfileScreen extends ConsumerWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
+                          );
+                        },
                         child: Text(
                           'Skip for now',
                           style: TextStyle(
