@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WiseDiet - Allergies & Restrictions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "secondary": "#2C3E50",
+                        "danger": "#DC3545",
+                        "warning": "#F59E0B",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e2420",
+                    },
+                    fontFamily: { "display": ["Inter", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                    boxShadow: { "glow": "0 0 15px -3px rgba(75, 124, 90, 0.4)" }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        @keyframes pulse-warning {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-secondary dark:text-gray-100 transition-colors duration-200">
+    <div
+        class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl">
+
+        <!-- Header -->
+        <header
+            class="flex items-center px-6 pt-6 pb-2 justify-between z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm sticky top-0">
+            <button
+                class="text-secondary dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded-full transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+            </button>
+            <h2 class="text-secondary dark:text-gray-100 text-lg font-semibold tracking-tight text-center">Profile Setup
+            </h2>
+            <div class="w-10"></div>
+        </header>
+
+        <!-- Progress: Step 3 of 4 -->
+        <div class="flex w-full flex-row items-center justify-center gap-2 py-4 px-6 z-10">
+            <div class="h-1.5 w-8 rounded-full bg-primary"></div>
+            <div class="h-1.5 w-8 rounded-full bg-primary"></div>
+            <div class="h-1.5 w-8 rounded-full bg-primary"></div>
+            <div class="h-1.5 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+        </div>
+
+        <main class="flex-1 flex flex-col px-6 pb-28 z-10 overflow-y-auto">
+            <!-- Title -->
+            <div class="pt-2 pb-4">
+                <h1 class="text-secondary dark:text-white text-[32px] font-bold leading-[1.2] tracking-tight mb-3">
+                    Safety <span class="text-danger">First</span>
+                </h1>
+                <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed">
+                    Select any allergies or dietary restrictions. This is critical — we'll <strong>never</strong>
+                    recommend ingredients that could harm you.
+                </p>
+            </div>
+
+            <!-- Safety Badge -->
+            <div class="flex items-center gap-2 mb-6 bg-danger/5 border border-danger/15 rounded-xl px-4 py-3">
+                <span class="material-symbols-outlined text-danger text-[20px]">shield</span>
+                <p class="text-xs font-medium text-danger/80">Allergen protection is always active. Flagged ingredients
+                    will be permanently excluded.</p>
+            </div>
+
+            <!-- Common Allergens -->
+            <div class="mb-6">
+                <label
+                    class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 block">Common
+                    Allergens</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Selected allergen -->
+                    <button
+                        class="flex items-center gap-3 rounded-2xl bg-danger/10 border-2 border-danger/40 p-4 transition-all duration-200">
+                        <span class="text-2xl">🥜</span>
+                        <div class="flex flex-col items-start flex-1">
+                            <span class="text-sm font-semibold text-danger">Peanuts</span>
+                            <span class="text-[10px] text-danger/60">Tree nuts included</span>
+                        </div>
+                        <span class="material-symbols-outlined text-danger text-[18px]">check_circle</span>
+                    </button>
+                    <!-- Unselected allergen -->
+                    <button
+                        class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 p-4 hover:border-danger/30 transition-all duration-200">
+                        <span class="text-2xl">🥛</span>
+                        <div class="flex flex-col items-start flex-1">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dairy</span>
+                            <span class="text-[10px] text-gray-400">Milk, cheese, butter</span>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 p-4 hover:border-danger/30 transition-all duration-200">
+                        <span class="text-2xl">🦐</span>
+                        <div class="flex flex-col items-start flex-1">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Shellfish</span>
+                            <span class="text-[10px] text-gray-400">Shrimp, crab, lobster</span>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 rounded-2xl bg-danger/10 border-2 border-danger/40 p-4 transition-all duration-200">
+                        <span class="text-2xl">🥚</span>
+                        <div class="flex flex-col items-start flex-1">
+                            <span class="text-sm font-semibold text-danger">Eggs</span>
+                            <span class="text-[10px] text-danger/60">All forms</span>
+                        </div>
+                        <span class="material-symbols-outlined text-danger text-[18px]">check_circle</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 p-4 hover:border-danger/30 transition-all duration-200">
+                        <span class="text-2xl">🌾</span>
+                        <div class="flex flex-col items-start flex-1">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Gluten</span>
+                            <span class="text-[10px] text-gray-400">Wheat, barley, rye</span>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 p-4 hover:border-danger/30 transition-all duration-200">
+                        <span class="text-2xl">🫘</span>
+                        <div class="flex flex-col items-start flex-1">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Soy</span>
+                            <span class="text-[10px] text-gray-400">Soy sauce, tofu</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dietary Restrictions -->
+            <div class="mb-6">
+                <label
+                    class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 block">Dietary
+                    Preferences</label>
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        class="flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/25 px-4 py-2.5 transition-all">
+                        <span class="text-base">🌿</span>
+                        <span class="text-sm font-semibold text-primary">Vegetarian</span>
+                        <span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-4 py-2.5 hover:border-primary/40 transition-all">
+                        <span class="text-base">🌱</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Vegan</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-4 py-2.5 hover:border-primary/40 transition-all">
+                        <span class="text-base">🕌</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Halal</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-4 py-2.5 hover:border-primary/40 transition-all">
+                        <span class="text-base">✡️</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Kosher</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-4 py-2.5 hover:border-primary/40 transition-all">
+                        <span class="text-base">🔥</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Keto</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-4 py-2.5 hover:border-primary/40 transition-all">
+                        <span class="text-base">🥩</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Paleo</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Input -->
+            <div class="mb-4">
+                <label
+                    class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 block">Other
+                    Ingredients to Avoid</label>
+                <div
+                    class="flex items-center gap-2 bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 px-4 py-3">
+                    <span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+                    <input type="text" placeholder='Type ingredient name, e.g. "cilantro"'
+                        class="flex-1 border-none bg-transparent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:ring-0 focus:outline-none" />
+                    <button
+                        class="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">add</span>
+                    </button>
+                </div>
+                <!-- Added custom items -->
+                <div class="flex flex-wrap gap-2 mt-3">
+                    <div
+                        class="flex items-center gap-1.5 rounded-full bg-warning/10 border border-warning/25 px-3 py-1.5">
+                        <span class="text-xs font-medium text-warning">Cilantro (香菜)</span>
+                        <button class="text-warning/60 hover:text-warning transition-colors">
+                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        </button>
+                    </div>
+                    <div
+                        class="flex items-center gap-1.5 rounded-full bg-warning/10 border border-warning/25 px-3 py-1.5">
+                        <span class="text-xs font-medium text-warning">Bitter melon (苦瓜)</span>
+                        <button class="text-warning/60 hover:text-warning transition-colors">
+                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer
+            class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark z-30 max-w-md mx-auto">
+            <div class="flex flex-col gap-3">
+                <button
+                    class="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary p-4 shadow-lg shadow-primary/25 hover:bg-primary/90 hover:shadow-primary/40 active:scale-[0.98] transition-all duration-200">
+                    <span class="text-white text-base font-bold">Next Step</span>
+                    <span class="material-symbols-outlined text-white text-[20px]">arrow_forward</span>
+                </button>
+                <div class="text-center">
+                    <button
+                        class="text-xs text-gray-400 dark:text-gray-500 font-medium hover:text-secondary dark:hover:text-gray-300 transition-colors">Skip
+                        for now</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

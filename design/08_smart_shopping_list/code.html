@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Smart Shopping List</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "gray-surface": "#f5f5f5",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none
+        }
+
+        .custom-checkbox:checked {
+            background-color: #4b7c5a;
+            border-color: #4b7c5a;
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCxXBpe4WC1xQ2hWZfy-6ekzK_2XenfK3lzbu2ZPTpFrMpUfPwAPT0qdBjOEq40kz21An6mVFvA8LAJmsTW6zBePO-tjfe3CVAaHsJZxA4yzh77HrzcFlz6drl82ISGBRZtbXN5UAcWdN1yb9KVE7pnBfIcAdd9tes50Wi2jc48zC8QFnDR3E7g3zmQsR0mBpV7wPUJvv-hdY39npKwcAQTh8wO6YEGsgJQOI_DffQDffwcwBE_O9OC5QhSitd-XJF5I55smOAdfntk)
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-[#131514] dark:text-white antialiased selection:bg-primary/20">
+    <div
+        class="mx-auto flex h-screen max-h-screen w-full max-w-md flex-col bg-white dark:bg-background-dark overflow-hidden shadow-2xl relative">
+        <header
+            class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between z-20 border-b border-gray-100 dark:border-white/10 shrink-0">
+            <h2 class="text-[#131514] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] flex-1">Smart
+                Market</h2>
+            <div class="flex items-center gap-3">
+                <button
+                    class="flex items-center justify-center rounded-full w-10 h-10 bg-gray-50 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition-colors">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">search</span>
+                </button>
+                <button
+                    class="flex items-center justify-center rounded-full w-10 h-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">add</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex-1 overflow-y-auto no-scrollbar pb-24 relative">
+            <div class="relative group">
+                <div
+                    class="sticky top-0 z-10 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-white/5 py-3 px-4 shadow-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" style="font-size: 20px;">eco</span>
+                        <h3 class="text-[#131514] dark:text-white text-sm uppercase tracking-wider font-bold">Vegetables
+                            &amp; Fungi</h3>
+                        <span
+                            class="ml-auto text-xs font-medium text-gray-400 bg-gray-100 dark:bg-white/10 px-2 py-0.5 rounded-full">3</span>
+                    </div>
+                </div>
+                <div class="px-4 py-2 relative">
+                    <div class="absolute left-[26px] top-0 bottom-0 w-[1px] bg-gray-100 dark:bg-white/10 -z-10"></div>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-primary shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">spa</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Spinach</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">200g • Organic</span>
+                            </div>
+                        </div>
+                    </label>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-primary shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">forest</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Shiitake Mushrooms</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">1 pack</span>
+                            </div>
+                        </div>
+                    </label>
+                    <div class="relative overflow-hidden py-0 my-2 rounded-lg">
+                        <div class="absolute inset-y-0 right-0 flex w-full justify-end">
+                            <button
+                                class="bg-yellow-400 text-yellow-900 w-16 flex flex-col items-center justify-center gap-1 font-medium text-[10px] hover:bg-yellow-500 transition-colors">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">autorenew</span>
+                                Replace
+                            </button>
+                            <button
+                                class="bg-red-500 text-white w-16 rounded-r-lg flex flex-col items-center justify-center gap-1 font-medium text-[10px] hover:bg-red-600 transition-colors">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">delete</span>
+                                Delete
+                            </button>
+                        </div>
+                        <div
+                            class="relative bg-white dark:bg-background-dark flex items-center gap-4 p-4 pr-0 rounded-lg shadow-[0_0_10px_rgba(0,0,0,0.05)] border border-gray-100 dark:border-white/5 translate-x-[-128px] transition-transform w-full z-10">
+                            <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                                <input
+                                    class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                    type="checkbox" />
+                            </div>
+                            <div class="flex-1 flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-primary shrink-0">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 22px; font-weight: 300;">nutrition</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p class="text-[#131514] dark:text-white text-base font-medium leading-tight">
+                                        Carrots</p>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">3 items</span>
+                                </div>
+                            </div>
+                            <div class="w-1 h-8 bg-gray-200 rounded-full absolute right-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="h-4 bg-transparent"></div>
+            <div class="relative group">
+                <div
+                    class="sticky top-0 z-10 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-white/5 py-3 px-4 shadow-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-red-400" style="font-size: 20px;">skillet</span>
+                        <h3 class="text-[#131514] dark:text-white text-sm uppercase tracking-wider font-bold">Meat &amp;
+                            Poultry</h3>
+                        <span
+                            class="ml-auto text-xs font-medium text-gray-400 bg-gray-100 dark:bg-white/10 px-2 py-0.5 rounded-full">3</span>
+                    </div>
+                </div>
+                <div class="px-4 py-2 relative">
+                    <div class="absolute left-[26px] top-0 bottom-0 w-[1px] bg-gray-100 dark:bg-white/10 -z-10"></div>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-400 shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">egg_alt</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Chicken Breast</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">500g •
+                                    Skinless</span>
+                            </div>
+                        </div>
+                    </label>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-400 shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">restaurant</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Lean Beef</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">300g • Minced</span>
+                            </div>
+                        </div>
+                    </label>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-400 shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">egg</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Eggs</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">1 carton (12)</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="h-4 bg-transparent"></div>
+            <div class="relative group">
+                <div
+                    class="sticky top-0 z-10 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-white/5 py-3 px-4 shadow-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-yellow-500"
+                            style="font-size: 20px;">soup_kitchen</span>
+                        <h3 class="text-[#131514] dark:text-white text-sm uppercase tracking-wider font-bold">Seasoning
+                            &amp; Pantry</h3>
+                        <span
+                            class="ml-auto text-xs font-medium text-gray-400 bg-gray-100 dark:bg-white/10 px-2 py-0.5 rounded-full">2</span>
+                    </div>
+                </div>
+                <div class="px-4 py-2 relative">
+                    <div class="absolute left-[26px] top-0 bottom-0 w-[1px] bg-gray-100 dark:bg-white/10 -z-10"></div>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center text-yellow-600 shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">water_drop</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Olive Oil</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">Extra Virgin</span>
+                            </div>
+                        </div>
+                    </label>
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-white dark:bg-background-dark border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-500 shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">grain</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight group-has-[:checked]/item:line-through group-has-[:checked]/item:text-gray-400 transition-all">
+                                    Sea Salt</p>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">Fine</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="h-4 bg-transparent"></div>
+            <div class="relative group opacity-60">
+                <div
+                    class="sticky top-0 z-10 bg-gray-50/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-white/5 py-2 px-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400"
+                            style="font-size: 18px;">check_circle</span>
+                        <h3 class="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider font-bold">Picked
+                            Up</h3>
+                    </div>
+                </div>
+                <div class="px-4 py-2 relative">
+                    <label
+                        class="group/item flex items-center gap-4 py-4 bg-transparent border-b border-gray-50 dark:border-white/5 last:border-0 relative cursor-pointer">
+                        <div class="relative z-10 flex items-center justify-center w-6 h-6">
+                            <input checked=""
+                                class="custom-checkbox h-5 w-5 rounded border-gray-300 dark:border-gray-600 border-2 bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all"
+                                type="checkbox" />
+                        </div>
+                        <div class="flex-1 flex items-center gap-3 opacity-60">
+                            <div
+                                class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400 shrink-0">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 22px; font-weight: 300;">nutrition</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <p
+                                    class="text-[#131514] dark:text-white text-base font-medium leading-tight line-through text-gray-400">
+                                    Apples</p>
+                                <span class="text-xs text-gray-400 font-normal">Granny Smith</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="h-20"></div>
+        </main>
+        <!-- ★ Floating Bottom Bar - Shopping Progress + Start Cooking CTA ★ -->
+        <div
+            class="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-white via-white to-transparent dark:from-background-dark dark:via-background-dark pt-8 pb-5 px-4">
+            <div
+                class="bg-white dark:bg-[#1e2420] rounded-2xl shadow-[0_-4px_30px_rgb(0,0,0,0.08)] border border-gray-100 dark:border-gray-700/50 p-4">
+                <!-- Progress -->
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-[18px]">shopping_cart</span>
+                        <span class="text-sm font-bold text-[#131514] dark:text-white">5 of 8 items</span>
+                    </div>
+                    <span class="text-xs font-medium text-gray-400">63% complete</span>
+                </div>
+                <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
+                    <div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 63%"></div>
+                </div>
+                <!-- CTA Button -->
+                <button
+                    class="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-base font-bold text-white shadow-lg shadow-primary/30 transition-all active:scale-[0.98] hover:bg-primary/90">
+                    <span class="material-symbols-outlined text-[20px]">soup_kitchen</span>
+                    Done Shopping · Start Cooking
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

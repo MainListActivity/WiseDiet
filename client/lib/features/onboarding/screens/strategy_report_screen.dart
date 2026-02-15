@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../today/screens/today_smart_menu_feed_screen.dart';
 
 class StrategyReportScreen extends StatelessWidget {
   final Map<String, dynamic> strategy;
@@ -48,39 +49,48 @@ class StrategyReportScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            ...keyPoints.entries.map((entry) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(Icons.check_circle, color: AppTheme.primary),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          entry.key,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+            ...keyPoints.entries.map(
+              (entry) => Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.check_circle, color: AppTheme.primary),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            entry.key,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        Text(entry.value),
-                      ],
+                          Text(entry.value),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )),
+            ),
             const SizedBox(height: 48),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigate to Home Dashboard (out of scope for this task)
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Welcome to WiseDiet!')),
+                  final requiredSelections = strategy['family_members'] is int
+                      ? strategy['family_members'] as int
+                      : 1;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TodaySmartMenuFeedScreen(
+                        requiredSelections: requiredSelections,
+                      ),
+                    ),
                   );
                 },
                 child: const Text('Start My Journey'),

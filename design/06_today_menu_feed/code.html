@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WiseDiet - Today's Meal Timeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "secondary": "#2C3E50",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e2420",
+                        "breakfast": "#E8913A",
+                        "lunch": "#4b7c5a",
+                        "dinner": "#5B6BBF",
+                        "snack": "#D4733A",
+                    },
+                    fontFamily: { "display": ["Inter", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 19px;
+            top: 20px;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #4b7c5a22, #4b7c5a44, #4b7c5a22);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-secondary dark:text-gray-100 antialiased selection:bg-primary/30">
+    <div
+        class="relative mx-auto flex h-full min-h-screen w-full max-w-md flex-col overflow-hidden bg-background-light dark:bg-background-dark shadow-xl">
+
+        <!-- Sticky Header -->
+        <header
+            class="sticky top-0 z-20 flex items-center justify-between bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 py-3">
+            <h2 class="flex-1 text-lg font-bold leading-tight tracking-tight text-secondary dark:text-white">Today</h2>
+            <div class="flex gap-4">
+                <span
+                    class="material-symbols-outlined text-secondary dark:text-white cursor-pointer hover:text-primary transition-colors">search</span>
+                <span
+                    class="material-symbols-outlined text-secondary dark:text-white cursor-pointer hover:text-primary transition-colors">notifications</span>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto pb-44 no-scrollbar px-4 pt-1">
+            <!-- Date & Context -->
+            <div class="mb-4">
+                <h1 class="text-[28px] font-bold leading-tight tracking-tight text-secondary dark:text-white mb-1">
+                    Monday, Oct 24</h1>
+                <!-- N+1 Selection Guide -->
+                <div class="flex items-center gap-2 bg-primary/8 rounded-xl px-4 py-3 mt-3 border border-primary/15">
+                    <span class="material-symbols-outlined text-primary text-[20px]">group</span>
+                    <p class="text-sm text-gray-700 dark:text-gray-300 flex-1">
+                        Cooking for <span class="font-bold text-primary">2 people</span> · Select <span
+                            class="font-bold text-primary">2 dishes</span> per meal from 3 options
+                    </p>
+                </div>
+            </div>
+
+            <!-- Daily Insight -->
+            <div
+                class="flex items-start gap-3 rounded-xl bg-secondary/8 dark:bg-secondary/20 p-4 border border-secondary/15 mb-6">
+                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-white">
+                    <span class="material-symbols-outlined text-sm">lightbulb</span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-secondary dark:text-blue-200">Daily Insight</p>
+                    <p class="text-sm leading-snug text-slate-600 dark:text-slate-300">Your schedule shows overtime
+                        tonight. We've prioritized B-vitamins and sustained energy foods.</p>
+                </div>
+            </div>
+
+            <!-- ★ Meal Timeline ★ -->
+            <div class="relative">
+                <!-- Timeline connector line -->
+                <div class="timeline-line"></div>
+
+                <!-- ═══ BREAKFAST ═══ -->
+                <div class="relative mb-8">
+                    <!-- Timeline dot -->
+                    <div
+                        class="absolute left-2.5 top-1 z-10 h-5 w-5 rounded-full bg-breakfast border-[3px] border-background-light dark:border-background-dark flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-[12px]">wb_sunny</span>
+                    </div>
+                    <!-- Meal header -->
+                    <div class="ml-12 mb-3">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-base font-bold text-breakfast">Breakfast</h3>
+                            <span class="text-xs text-gray-400 font-medium">7:30 AM</span>
+                            <div class="flex-1"></div>
+                            <span
+                                class="text-[10px] font-semibold text-primary bg-primary/10 rounded-full px-2 py-0.5">2/3
+                                selected</span>
+                        </div>
+                    </div>
+                    <!-- Cards -->
+                    <div class="ml-12 flex flex-col gap-3">
+                        <!-- Selected card -->
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark p-3 shadow-sm ring-2 ring-primary/30 transition-all">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCeR1LRo0aLteYGPZGcis9pGtyhG5pEDic-nnkdV9_PuKQs2LGOhfbqMTix5OTvI3d6fJaR7yHuly6BU9OWmtl6hLE_3trrgOMoiXmTfCQNrW1Yzt1vzKOhqKAQjYIQ8nvJpzy6wD3sbR4bz6XBNvdn_ZX-4g6GXQqJWDPaZRVoygnxsMFPGHMZPCXGMrC4_BhmjSlHQsrQ8ubXazMxzvW7DD66ZT6zumEpYSijd3IaA-xN5-HFIYhW0PLI2_SxoJ9aBJr9F-K1nloi')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white truncate">Oatmeal & Berry
+                                    Bowl</h4>
+                                <p class="text-[11px] text-primary font-medium mt-0.5">⚡ Low GI, sustained energy for
+                                    coding</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>15 min</span><span>·</span><span>320 kcal</span><span>·</span><span>High
+                                        Fiber</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input checked type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-primary bg-primary transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                        <!-- Selected card 2 -->
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark p-3 shadow-sm ring-2 ring-primary/30 transition-all">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtCtIVPJDPIlaTGejbYl_nVFudxwcmW2xhJZY551DKxfPWkrw-vXBiDOWT0_hIMVO920JWUHvnPNjfqRGUiREVLfuJsQUg2A4xYovdAcwSdI_GafRm1JAm9-vJL0NNS6gyPeoeKACu4FEPB0P_BaehiADvNDkwBT3CkzUJQGFDQHevKd0-bna8DfjJj1MvAR1-1GE30jRiIpbFzgddZihVAUyXdToykadBXlOu-lBG32w70BZdhQo6O5MsQzeDBK5D_OQPCiQLYXCE')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white truncate">Green Smoothie
+                                </h4>
+                                <p class="text-[11px] text-primary font-medium mt-0.5">🥬 Lutein-rich for programmer eye
+                                    care</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>5 min</span><span>·</span><span>180 kcal</span><span>·</span><span>Vitamin
+                                        A</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input checked type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-primary bg-primary transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                        <!-- Unselected card -->
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white/60 dark:bg-surface-dark/60 p-3 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700 opacity-70 transition-all hover:opacity-100">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0 grayscale-[30%]"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOjeyqYVvz2rB_gOKpKG08wE_UZpRuqNUXEeCxCMpIrvcxXYwef-0LZ9LbJRQdqk8EvGuIaZeJ_Lynnr7yPn4IeE0bRisql_BALXBfpetp_Ecgo6Dz8kzqjqr9DQNSYMgYz7pQwnV9XHZr-88PMfFryGJaY44D23v7yR8YkUqpNjTybU-DDLMgqHtOZgfO6RQnCAGMe1tMQNDxuBFBByZDycNM7SODOUlmZORXzwWiHt2sL57bpij3fS_rco_J6x3q_4B_jV85gvq8')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 truncate">Avocado
+                                    Toast</h4>
+                                <p class="text-[11px] text-gray-400 font-medium mt-0.5">🥑 Healthy fats for brain
+                                    function</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>10 min</span><span>·</span><span>280
+                                        kcal</span><span>·</span><span>Omega-3</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-gray-300 bg-transparent transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ LUNCH ═══ -->
+                <div class="relative mb-8">
+                    <div
+                        class="absolute left-2.5 top-1 z-10 h-5 w-5 rounded-full bg-lunch border-[3px] border-background-light dark:border-background-dark flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-[12px]">restaurant</span>
+                    </div>
+                    <div class="ml-12 mb-3">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-base font-bold text-lunch">Lunch</h3>
+                            <span class="text-xs text-gray-400 font-medium">12:00 PM</span>
+                            <div class="flex-1"></div>
+                            <span
+                                class="text-[10px] font-semibold text-primary bg-primary/10 rounded-full px-2 py-0.5">2/3
+                                selected</span>
+                        </div>
+                    </div>
+                    <div class="ml-12 flex flex-col gap-3">
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark p-3 shadow-sm ring-2 ring-primary/30">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtCtIVPJDPIlaTGejbYl_nVFudxwcmW2xhJZY551DKxfPWkrw-vXBiDOWT0_hIMVO920JWUHvnPNjfqRGUiREVLfuJsQUg2A4xYovdAcwSdI_GafRm1JAm9-vJL0NNS6gyPeoeKACu4FEPB0P_BaehiADvNDkwBT3CkzUJQGFDQHevKd0-bna8DfjJj1MvAR1-1GE30jRiIpbFzgddZihVAUyXdToykadBXlOu-lBG32w70BZdhQo6O5MsQzeDBK5D_OQPCiQLYXCE')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white truncate">Grilled Salmon &
+                                    Asparagus</h4>
+                                <p class="text-[11px] text-primary font-medium mt-0.5">⚡ Rich in B vitamins for overtime
+                                </p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>20 min</span><span>·</span><span>420 kcal</span><span>·</span><span>High
+                                        Protein</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input checked type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-primary bg-primary transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark p-3 shadow-sm ring-2 ring-primary/30">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCeR1LRo0aLteYGPZGcis9pGtyhG5pEDic-nnkdV9_PuKQs2LGOhfbqMTix5OTvI3d6fJaR7yHuly6BU9OWmtl6hLE_3trrgOMoiXmTfCQNrW1Yzt1vzKOhqKAQjYIQ8nvJpzy6wD3sbR4bz6XBNvdn_ZX-4g6GXQqJWDPaZRVoygnxsMFPGHMZPCXGMrC4_BhmjSlHQsrQ8ubXazMxzvW7DD66ZT6zumEpYSijd3IaA-xN5-HFIYhW0PLI2_SxoJ9aBJr9F-K1nloi')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white truncate">Quinoa Avocado
+                                    Salad</h4>
+                                <p class="text-[11px] text-primary font-medium mt-0.5">🧠 Light lunch for focus</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>10 min</span><span>·</span><span>350 kcal</span><span>·</span><span>Low
+                                        GI</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input checked type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-primary bg-primary transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white/60 dark:bg-surface-dark/60 p-3 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700 opacity-70 hover:opacity-100">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0 grayscale-[30%]"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5hDZfayyBziEYqFvUJTZfPHNh811XyXfXWcZf9hmSIqu32RvusgIh9P9Ot4JXzAI_rltQChEQFUu5xvJUGshpGBSm9wmoSWS7KPvbHa0K4WZ8NGssyWFrhwmNBl3MhzsFcgT7yG_gL5Y7QGrxTBEmkvZHUTe5LckFn_ICI4wELAggF7AupVZR8ELSnD3negsmRlsMSJd26Dm1f2COQ0PPEyiOMoCEjt2FCXd4YBOZviLgVElwLllVAvNL4viifCacelV_2bmcBSBE')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 truncate">Zucchini
+                                    Noodles Pesto</h4>
+                                <p class="text-[11px] text-gray-400 font-medium mt-0.5">🌿 Low carb, vitamin-rich</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>15 min</span><span>·</span><span>280 kcal</span><span>·</span><span>Low
+                                        Carb</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-gray-300 bg-transparent transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ SNACK ═══ -->
+                <div class="relative mb-8">
+                    <div
+                        class="absolute left-2.5 top-1 z-10 h-5 w-5 rounded-full bg-snack border-[3px] border-background-light dark:border-background-dark flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-[12px]">coffee</span>
+                    </div>
+                    <div class="ml-12 mb-3">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-base font-bold text-snack">Afternoon Snack</h3>
+                            <span class="text-xs text-gray-400 font-medium">3:30 PM</span>
+                            <div class="flex-1"></div>
+                            <span
+                                class="text-[10px] font-semibold text-gray-400 bg-gray-100 rounded-full px-2 py-0.5">Auto-included</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400 mt-1">Based on your Sugar Control profile, a snack is
+                            auto-added to stabilize blood sugar.</p>
+                    </div>
+                    <div class="ml-12">
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-snack/5 dark:bg-snack/10 p-3 border border-snack/15">
+                            <div class="h-12 w-12 rounded-xl bg-snack/15 flex items-center justify-center">
+                                <span class="text-xl">🥜</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white">Mixed Nuts & Apple</h4>
+                                <div class="flex items-center gap-2 mt-0.5 text-[11px] text-gray-400">
+                                    <span>0 min prep</span><span>·</span><span>180 kcal</span><span>·</span><span>Low
+                                        GI</span>
+                                </div>
+                            </div>
+                            <span class="material-symbols-outlined text-snack text-[18px]">lock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ DINNER ═══ -->
+                <div class="relative mb-4">
+                    <div
+                        class="absolute left-2.5 top-1 z-10 h-5 w-5 rounded-full bg-dinner border-[3px] border-background-light dark:border-background-dark flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-[12px]">nightlight</span>
+                    </div>
+                    <div class="ml-12 mb-3">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-base font-bold text-dinner">Dinner</h3>
+                            <span class="text-xs text-gray-400 font-medium">7:00 PM</span>
+                            <div class="flex-1"></div>
+                            <span
+                                class="text-[10px] font-semibold text-primary bg-primary/10 rounded-full px-2 py-0.5">1/3
+                                selected</span>
+                        </div>
+                    </div>
+                    <div class="ml-12 flex flex-col gap-3">
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white dark:bg-surface-dark p-3 shadow-sm ring-2 ring-primary/30">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtCtIVPJDPIlaTGejbYl_nVFudxwcmW2xhJZY551DKxfPWkrw-vXBiDOWT0_hIMVO920JWUHvnPNjfqRGUiREVLfuJsQUg2A4xYovdAcwSdI_GafRm1JAm9-vJL0NNS6gyPeoeKACu4FEPB0P_BaehiADvNDkwBT3CkzUJQGFDQHevKd0-bna8DfjJj1MvAR1-1GE30jRiIpbFzgddZihVAUyXdToykadBXlOu-lBG32w70BZdhQo6O5MsQzeDBK5D_OQPCiQLYXCE')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white truncate">Steamed Fish &
+                                    Vegetables</h4>
+                                <p class="text-[11px] text-primary font-medium mt-0.5">🌙 Light dinner, easy to digest
+                                </p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>25 min</span><span>·</span><span>350
+                                        kcal</span><span>·</span><span>Omega-3</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input checked type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-primary bg-primary transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white/60 dark:bg-surface-dark/60 p-3 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700 opacity-70 hover:opacity-100">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0 grayscale-[30%]"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5hDZfayyBziEYqFvUJTZfPHNh811XyXfXWcZf9hmSIqu32RvusgIh9P9Ot4JXzAI_rltQChEQFUu5xvJUGshpGBSm9wmoSWS7KPvbHa0K4WZ8NGssyWFrhwmNBl3MhzsFcgT7yG_gL5Y7QGrxTBEmkvZHUTe5LckFn_ICI4wELAggF7AupVZR8ELSnD3negsmRlsMSJd26Dm1f2COQ0PPEyiOMoCEjt2FCXd4YBOZviLgVElwLllVAvNL4viifCacelV_2bmcBSBE')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 truncate">Chicken
+                                    Stir-fry</h4>
+                                <p class="text-[11px] text-gray-400 font-medium mt-0.5">🍗 High protein post-work
+                                    recovery</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>20 min</span><span>·</span><span>380
+                                        kcal</span><span>·</span><span>Iron</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-gray-300 bg-transparent transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-3 rounded-2xl bg-white/60 dark:bg-surface-dark/60 p-3 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700 opacity-70 hover:opacity-100">
+                            <div class="h-16 w-16 rounded-xl bg-gray-200 bg-cover bg-center shrink-0 grayscale-[30%]"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCeR1LRo0aLteYGPZGcis9pGtyhG5pEDic-nnkdV9_PuKQs2LGOhfbqMTix5OTvI3d6fJaR7yHuly6BU9OWmtl6hLE_3trrgOMoiXmTfCQNrW1Yzt1vzKOhqKAQjYIQ8nvJpzy6wD3sbR4bz6XBNvdn_ZX-4g6GXQqJWDPaZRVoygnxsMFPGHMZPCXGMrC4_BhmjSlHQsrQ8ubXazMxzvW7DD66ZT6zumEpYSijd3IaA-xN5-HFIYhW0PLI2_SxoJ9aBJr9F-K1nloi')">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 truncate">Brown Rice
+                                    Bibimbap</h4>
+                                <p class="text-[11px] text-gray-400 font-medium mt-0.5">🍚 Balanced macro dinner</p>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-400">
+                                    <span>30 min</span><span>·</span><span>450
+                                        kcal</span><span>·</span><span>Balanced</span>
+                                </div>
+                            </div>
+                            <div class="relative h-7 w-7 shrink-0">
+                                <input type="checkbox"
+                                    class="peer h-7 w-7 appearance-none rounded-full border-2 border-gray-300 bg-transparent transition-all cursor-pointer focus:ring-0" />
+                                <span
+                                    class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Footer Summary -->
+        <div class="absolute bottom-6 left-4 right-4 z-30">
+            <div
+                class="flex flex-col items-center gap-3 rounded-2xl bg-white dark:bg-[#252f28] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 dark:border-gray-700/50 backdrop-blur-xl">
+                <div class="flex w-full items-center justify-between px-1">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-medium uppercase tracking-wider text-gray-400">Today's Plan</span>
+                        <p class="text-sm font-bold text-secondary dark:text-white">5 Dishes · 1,450 kcal · 75 min total
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-1 bg-primary/10 rounded-full px-2 py-1">
+                        <span class="material-symbols-outlined text-primary text-[14px]">group</span>
+                        <span class="text-xs font-bold text-primary">×2</span>
+                    </div>
+                </div>
+                <!-- Progress for each meal -->
+                <div class="flex w-full gap-1">
+                    <div class="flex-1 h-1.5 rounded-full bg-breakfast"></div>
+                    <div class="flex-1 h-1.5 rounded-full bg-lunch"></div>
+                    <div class="flex-1 h-1.5 rounded-full bg-snack/50"></div>
+                    <div class="flex-1 h-1.5 rounded-full bg-dinner/40"></div>
+                </div>
+                <button
+                    class="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-base font-bold text-white shadow-lg shadow-primary/30 transition-transform active:scale-[0.98] hover:bg-primary/90">
+                    Confirm Menu
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

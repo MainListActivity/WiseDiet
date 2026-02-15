@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WiseDiet - Basic Info</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#4b7c5a",
+                    "secondary": "#2C3E50",
+                    "background-light": "#f6f7f7",
+                    "background-dark": "#161c18",
+                    "surface-light": "#ffffff",
+                    "surface-dark": "#1e2420",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"
+                },
+                boxShadow: {
+                    "glow": "0 0 15px -3px rgba(75, 124, 90, 0.4)",
+                }
+            },
+        },
+    }
+</script>
+<style>
+    body { min-height: max(884px, 100dvh); }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 28px; height: 28px;
+        background: #4b7c5a;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(75,124,90,0.4);
+        border: 3px solid white;
+    }
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 999px;
+        outline: none;
+    }
+    .gender-btn.active {
+        background: #4b7c5a;
+        color: white;
+        border-color: #4b7c5a;
+        box-shadow: 0 0 15px -3px rgba(75, 124, 90, 0.4);
+    }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-secondary dark:text-gray-100 transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl">
+
+<!-- Header -->
+<header class="flex items-center px-6 pt-6 pb-2 justify-between z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm sticky top-0">
+    <button class="text-secondary dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded-full transition-colors flex items-center justify-center">
+        <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+    </button>
+    <h2 class="text-secondary dark:text-gray-100 text-lg font-semibold tracking-tight text-center">Profile Setup</h2>
+    <div class="w-10"></div>
+</header>
+
+<!-- Progress Bar: Step 1 of 4 -->
+<div class="flex w-full flex-row items-center justify-center gap-2 py-4 px-6 z-10">
+    <div class="h-1.5 w-8 rounded-full bg-primary"></div>
+    <div class="h-1.5 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+    <div class="h-1.5 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+    <div class="h-1.5 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+</div>
+
+<main class="flex-1 flex flex-col px-6 pb-28 z-10">
+    <!-- Title -->
+    <div class="pt-2 pb-6">
+        <h1 class="text-secondary dark:text-white text-[32px] font-bold leading-[1.2] tracking-tight mb-3">
+            About <span class="text-primary">You</span>
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed">
+            Tell us a bit about yourself so our AI can calculate your precise nutritional needs.
+        </p>
+    </div>
+
+    <!-- Gender Selection -->
+    <div class="mb-6">
+        <label class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 block">Gender</label>
+        <div class="grid grid-cols-3 gap-3">
+            <button class="gender-btn active flex flex-col items-center gap-2 rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-4 transition-all duration-200 hover:border-primary/50">
+                <span class="material-symbols-outlined text-[28px]">male</span>
+                <span class="text-sm font-medium">Male</span>
+            </button>
+            <button class="gender-btn flex flex-col items-center gap-2 rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-4 transition-all duration-200 hover:border-primary/50 bg-white dark:bg-surface-dark text-gray-700 dark:text-gray-300">
+                <span class="material-symbols-outlined text-[28px]">female</span>
+                <span class="text-sm font-medium">Female</span>
+            </button>
+            <button class="gender-btn flex flex-col items-center gap-2 rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-4 transition-all duration-200 hover:border-primary/50 bg-white dark:bg-surface-dark text-gray-700 dark:text-gray-300">
+                <span class="material-symbols-outlined text-[28px]">sentiment_neutral</span>
+                <span class="text-sm font-medium">Other</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Age -->
+    <div class="mb-6">
+        <div class="flex items-center justify-between mb-3">
+            <label class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Age</label>
+            <div class="flex items-center gap-1 bg-primary/10 rounded-full px-3 py-1">
+                <span class="text-lg font-bold text-primary">28</span>
+                <span class="text-xs text-primary/70 font-medium">years</span>
+            </div>
+        </div>
+        <input type="range" min="16" max="80" value="28" class="w-full"/>
+    </div>
+
+    <!-- Height -->
+    <div class="mb-6">
+        <div class="flex items-center justify-between mb-3">
+            <label class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Height</label>
+            <div class="flex items-center gap-1 bg-primary/10 rounded-full px-3 py-1">
+                <span class="text-lg font-bold text-primary">175</span>
+                <span class="text-xs text-primary/70 font-medium">cm</span>
+            </div>
+        </div>
+        <input type="range" min="140" max="220" value="175" class="w-full"/>
+    </div>
+
+    <!-- Weight -->
+    <div class="mb-6">
+        <div class="flex items-center justify-between mb-3">
+            <label class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Weight</label>
+            <div class="flex items-center gap-1 bg-primary/10 rounded-full px-3 py-1">
+                <span class="text-lg font-bold text-primary">70</span>
+                <span class="text-xs text-primary/70 font-medium">kg</span>
+            </div>
+        </div>
+        <input type="range" min="35" max="150" value="70" class="w-full"/>
+    </div>
+
+    <!-- Family Size N -->
+    <div class="mb-4">
+        <label class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 block">Household Diners</label>
+        <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">How many people regularly eat together? This adjusts portion sizes and ingredients.</p>
+        <div class="flex items-center justify-center gap-6">
+            <button class="flex items-center justify-center h-12 w-12 rounded-full bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-primary/50 transition-all active:scale-95">
+                <span class="material-symbols-outlined text-[24px]">remove</span>
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-5xl font-bold text-primary">2</span>
+                <span class="text-xs text-gray-400 font-medium mt-1">persons</span>
+            </div>
+            <button class="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white shadow-glow hover:bg-primary/90 transition-all active:scale-95">
+                <span class="material-symbols-outlined text-[24px]">add</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- BMI Preview Card -->
+    <div class="mt-4 flex items-center gap-3 rounded-2xl bg-primary/5 border border-primary/10 p-4">
+        <div class="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
+            <span class="material-symbols-outlined text-primary text-[20px]">monitor_weight</span>
+        </div>
+        <div class="flex-1">
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Estimated BMI</p>
+            <p class="text-base font-bold text-primary">22.9 <span class="text-xs font-normal text-gray-400">Normal range</span></p>
+        </div>
+        <span class="material-symbols-outlined text-primary/40 text-[18px]">check_circle</span>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark z-30 max-w-md mx-auto">
+    <div class="flex flex-col gap-3">
+        <button class="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary p-4 shadow-lg shadow-primary/25 hover:bg-primary/90 hover:shadow-primary/40 active:scale-[0.98] transition-all duration-200">
+            <span class="text-white text-base font-bold">Next Step</span>
+            <span class="material-symbols-outlined text-white text-[20px]">arrow_forward</span>
+        </button>
+    </div>
+</footer>
+</div>
+</body></html>

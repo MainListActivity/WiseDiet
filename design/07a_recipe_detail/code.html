@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WiseDiet - Recipe Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4b7c5a",
+                        "secondary": "#2C3E50",
+                        "background-light": "#f6f7f7",
+                        "background-dark": "#161c18",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e2420",
+                    },
+                    fontFamily: { "display": ["Inter", "sans-serif"] },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .step-done {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-secondary dark:text-gray-100 antialiased">
+    <div
+        class="relative mx-auto flex h-full min-h-screen w-full max-w-md flex-col overflow-hidden bg-background-light dark:bg-background-dark shadow-xl">
+
+        <!-- Hero Image -->
+        <div class="relative h-72 w-full bg-cover bg-center"
+            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtCtIVPJDPIlaTGejbYl_nVFudxwcmW2xhJZY551DKxfPWkrw-vXBiDOWT0_hIMVO920JWUHvnPNjfqRGUiREVLfuJsQUg2A4xYovdAcwSdI_GafRm1JAm9-vJL0NNS6gyPeoeKACu4FEPB0P_BaehiADvNDkwBT3CkzUJQGFDQHevKd0-bna8DfjJj1MvAR1-1GE30jRiIpbFzgddZihVAUyXdToykadBXlOu-lBG32w70BZdhQo6O5MsQzeDBK5D_OQPCiQLYXCE')">
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-background-light dark:to-background-dark">
+            </div>
+            <!-- Back button -->
+            <div class="absolute top-4 left-4 z-20">
+                <button
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-secondary dark:text-white hover:bg-white transition-all">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+            </div>
+            <!-- Share button -->
+            <div class="absolute top-4 right-4 z-20">
+                <button
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-secondary dark:text-white hover:bg-white transition-all">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+            </div>
+        </div>
+
+        <main
+            class="flex-1 overflow-y-auto no-scrollbar -mt-8 rounded-t-3xl bg-background-light dark:bg-background-dark relative z-10 px-5 pt-6 pb-28">
+            <!-- Title -->
+            <h1 class="text-2xl font-bold text-secondary dark:text-white mb-2">Grilled Salmon & Asparagus</h1>
+
+            <!-- AI Recommendation Reason -->
+            <div class="flex items-start gap-2 bg-primary/8 rounded-xl px-4 py-3 mb-5 border border-primary/15">
+                <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">psychology</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <span class="font-semibold text-primary">Why this dish:</span> Rich in <strong>Omega-3</strong> and
+                    <strong>B-vitamins</strong> — ideal for your programmer profile with tonight's overtime. Salmon
+                    supports eye health and reduces inflammation from prolonged screen time.
+                </p>
+            </div>
+
+            <!-- Nutrition Tags -->
+            <div class="flex flex-wrap gap-2 mb-6">
+                <div class="flex items-center gap-1.5 rounded-full bg-green-100 dark:bg-green-900/30 px-3 py-1.5">
+                    <span class="material-symbols-outlined text-green-600 text-[14px]">eco</span>
+                    <span class="text-xs font-semibold text-green-700 dark:text-green-300">High Protein</span>
+                </div>
+                <div class="flex items-center gap-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 px-3 py-1.5">
+                    <span class="material-symbols-outlined text-blue-600 text-[14px]">water_drop</span>
+                    <span class="text-xs font-semibold text-blue-700 dark:text-blue-300">Omega-3</span>
+                </div>
+                <div class="flex items-center gap-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 px-3 py-1.5">
+                    <span class="material-symbols-outlined text-orange-600 text-[14px]">trending_down</span>
+                    <span class="text-xs font-semibold text-orange-700 dark:text-orange-300">Low GI</span>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-4 gap-3 mb-6">
+                <div
+                    class="flex flex-col items-center bg-white dark:bg-surface-dark rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-gray-800">
+                    <span class="material-symbols-outlined text-primary text-xl mb-1">timer</span>
+                    <span class="text-base font-bold text-secondary dark:text-white">20</span>
+                    <span class="text-[10px] text-gray-400">min total</span>
+                </div>
+                <div
+                    class="flex flex-col items-center bg-white dark:bg-surface-dark rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-gray-800">
+                    <span class="material-symbols-outlined text-orange-500 text-xl mb-1">local_fire_department</span>
+                    <span class="text-base font-bold text-secondary dark:text-white">420</span>
+                    <span class="text-[10px] text-gray-400">kcal</span>
+                </div>
+                <div
+                    class="flex flex-col items-center bg-white dark:bg-surface-dark rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-gray-800">
+                    <span class="material-symbols-outlined text-blue-500 text-xl mb-1">fitness_center</span>
+                    <span class="text-base font-bold text-secondary dark:text-white">38g</span>
+                    <span class="text-[10px] text-gray-400">protein</span>
+                </div>
+                <div
+                    class="flex flex-col items-center bg-white dark:bg-surface-dark rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-gray-800">
+                    <span class="material-symbols-outlined text-yellow-500 text-xl mb-1">speed</span>
+                    <span class="text-base font-bold text-secondary dark:text-white">Easy</span>
+                    <span class="text-[10px] text-gray-400">difficulty</span>
+                </div>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-secondary dark:text-white">Ingredients</h2>
+                    <div class="flex items-center gap-1 bg-primary/10 rounded-full px-2.5 py-1">
+                        <span class="material-symbols-outlined text-primary text-[14px]">group</span>
+                        <span class="text-xs font-bold text-primary">×2 servings</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+                    <div
+                        class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">🐟</span>
+                            <span class="text-sm font-medium text-secondary dark:text-white">Salmon fillet</span>
+                        </div>
+                        <span class="text-sm font-bold text-primary">400g</span>
+                    </div>
+                    <div
+                        class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">🌿</span>
+                            <span class="text-sm font-medium text-secondary dark:text-white">Asparagus</span>
+                        </div>
+                        <span class="text-sm font-bold text-primary">300g</span>
+                    </div>
+                    <div
+                        class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">🍋</span>
+                            <span class="text-sm font-medium text-secondary dark:text-white">Lemon</span>
+                        </div>
+                        <span class="text-sm font-bold text-primary">1 pc</span>
+                    </div>
+                    <div
+                        class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">🫒</span>
+                            <span class="text-sm font-medium text-secondary dark:text-white">Olive oil</span>
+                        </div>
+                        <span class="text-sm font-bold text-primary">2 tbsp</span>
+                    </div>
+                    <div class="flex items-center justify-between px-4 py-3">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">🧂</span>
+                            <span class="text-sm font-medium text-secondary dark:text-white">Salt & Pepper</span>
+                        </div>
+                        <span class="text-sm font-bold text-primary">to taste</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cooking Steps -->
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-secondary dark:text-white mb-4">Cooking Steps</h2>
+                <div class="flex flex-col gap-4">
+                    <!-- Step 1 - completed -->
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                                <span class="material-symbols-outlined text-[16px]">check</span>
+                            </div>
+                            <div class="w-0.5 flex-1 bg-primary/30 mt-2"></div>
+                        </div>
+                        <div class="flex-1 pb-4">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="text-sm font-bold text-gray-400 line-through">Prep the salmon</h4>
+                                <span
+                                    class="text-[10px] font-semibold bg-primary/10 text-primary rounded-full px-2 py-0.5">5
+                                    min</span>
+                            </div>
+                            <p class="text-sm text-gray-400 line-through leading-relaxed">Pat salmon fillets dry with
+                                paper towels. Season both sides with salt, pepper, and a squeeze of lemon.</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 - completed -->
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                                <span class="material-symbols-outlined text-[16px]">check</span>
+                            </div>
+                            <div class="w-0.5 flex-1 bg-primary/30 mt-2"></div>
+                        </div>
+                        <div class="flex-1 pb-4">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="text-sm font-bold text-gray-400 line-through">Prep asparagus</h4>
+                                <span
+                                    class="text-[10px] font-semibold bg-primary/10 text-primary rounded-full px-2 py-0.5">3
+                                    min</span>
+                            </div>
+                            <p class="text-sm text-gray-400 line-through leading-relaxed">Trim the woody ends of
+                                asparagus. Toss with olive oil, salt, and pepper.</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 - current -->
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/15 border-2 border-primary text-primary animate-pulse">
+                                <span class="text-sm font-bold">3</span>
+                            </div>
+                            <div class="w-0.5 flex-1 bg-gray-200 dark:bg-gray-700 mt-2"></div>
+                        </div>
+                        <div class="flex-1 pb-4">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="text-sm font-bold text-secondary dark:text-white">Grill the salmon</h4>
+                                <span
+                                    class="text-[10px] font-semibold bg-orange-100 text-orange-600 rounded-full px-2 py-0.5">7
+                                    min</span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Heat a grill pan over
+                                medium-high heat. Place salmon skin-side down. Cook for 4 minutes, then flip and cook
+                                for another 3 minutes until flaky.</p>
+                        </div>
+                    </div>
+                    <!-- Step 4 - upcoming -->
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-400">
+                                <span class="text-sm font-bold">4</span>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="text-sm font-bold text-gray-500 dark:text-gray-400">Grill asparagus & plate
+                                </h4>
+                                <span
+                                    class="text-[10px] font-semibold bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">5
+                                    min</span>
+                            </div>
+                            <p class="text-sm text-gray-400 leading-relaxed">Grill asparagus for 3-4 minutes until
+                                tender-crisp. Plate salmon and asparagus, drizzle with lemon juice and olive oil.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Timer Bar -->
+        <div class="absolute bottom-6 left-4 right-4 z-30">
+            <div class="flex items-center gap-3 rounded-2xl bg-primary p-4 shadow-lg shadow-primary/30">
+                <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-white/15">
+                    <span class="material-symbols-outlined text-white text-2xl">timer</span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-xs text-white/70 font-medium">Step 3 · Grilling</p>
+                    <p class="text-xl font-bold text-white tracking-tight">4:32 <span
+                            class="text-sm font-normal text-white/60">remaining</span></p>
+                </div>
+                <button
+                    class="flex items-center justify-center h-10 w-10 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                    <span class="material-symbols-outlined text-white">pause</span>
+                </button>
+                <button
+                    class="flex items-center justify-center h-10 w-10 rounded-full bg-white text-primary hover:bg-white/90 transition-colors">
+                    <span class="material-symbols-outlined">skip_next</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
