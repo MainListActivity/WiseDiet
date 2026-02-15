@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS "users" (
     email VARCHAR(255) NOT NULL, -- 用户邮箱
     provider VARCHAR(50),        -- 登录提供方 (如 google)
     provider_user_id VARCHAR(255), -- 第三方平台的用户ID
-    onboarding_step INT          -- 记录用户Onboarding完成到的步骤
+    onboarding_step INT,         -- 记录用户Onboarding完成到的步骤
+    UNIQUE (provider, provider_user_id)
 );
 
 -- 管理员白名单表：控制特定用户的权限

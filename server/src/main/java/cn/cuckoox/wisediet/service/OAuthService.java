@@ -81,12 +81,13 @@ public class OAuthService {
                         return Mono.error(new IllegalStateException("Email not found in OAuth2 user info"));
                     }
 
-                    return userRepository.save(new User(
-                            null,
-                            email,
-                            registrationId,
-                            providerId,
-                            1));
+                    return userRepository.findByProviderAndProviderUserId(registrationId, providerId)
+                            .switchIfEmpty(userRepository.save(new User(
+                                    null,
+                                    email,
+                                    registrationId,
+                                    providerId,
+                                    1)));
                 })
                 .flatMap(user -> jwtService.createAccessToken(user.getId())
                         .flatMap(accessToken -> sessionStore.saveSession(

@@ -1,6 +1,7 @@
 package cn.cuckoox.wisediet;
 
 import cn.cuckoox.wisediet.controller.dto.OAuthLoginRequest;
+import cn.cuckoox.wisediet.repository.UserRepository;
 import cn.cuckoox.wisediet.service.SessionStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,9 @@ class AuthControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private SessionStore sessionStore;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void shouldReturnTokensForGoogleLogin() {
@@ -47,6 +51,43 @@ class AuthControllerIntegrationTest extends AbstractIntegrationTest {
                             .expectNext(true)
                             .verifyComplete();
                 });
+    }
+
+    @Test
+    void shouldNotCreateDuplicateUserOnRepeatedLogin() {
+        // First login
+        String state1 = "dup-state-1";
+        StepVerifier.create(sessionStore.saveOAuthState(state1))
+                .expectNext(true)
+                .verifyComplete();
+
+        webTestClient.post().uri("/api/auth/google")
+                .bodyValue(new OAuthLoginRequest("code-123", state1))
+                .exchange()
+                .expectStatus().isOk();
+
+        Long countAfterFirst = userRepository.findAll()
+                .filter(u -> "google".equals(u.getProvider()) && "provider-id-1".equals(u.getProviderUserId()))
+                .count().block();
+
+        // Second login with same OAuth provider user
+        String state2 = "dup-state-2";
+        StepVerifier.create(sessionStore.saveOAuthState(state2))
+                .expectNext(true)
+                .verifyComplete();
+
+        webTestClient.post().uri("/api/auth/google")
+                .bodyValue(new OAuthLoginRequest("code-123", state2))
+                .exchange()
+                .expectStatus().isOk();
+
+        Long countAfterSecond = userRepository.findAll()
+                .filter(u -> "google".equals(u.getProvider()) && "provider-id-1".equals(u.getProviderUserId()))
+                .count().block();
+
+        // Should still be exactly 1 user, not 2
+        org.assertj.core.api.Assertions.assertThat(countAfterFirst).isEqualTo(1L);
+        org.assertj.core.api.Assertions.assertThat(countAfterSecond).isEqualTo(1L);
     }
 
     @Test

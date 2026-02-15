@@ -132,7 +132,7 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
     }
 
     private Mono<String> issueAuthenticatedToken(Integer onboardingStep) {
-        return userRepository.save(new User(null, "onboarding-api@test.com", "google", "onboarding-api-provider", onboardingStep))
+        return userRepository.save(new User(null, "onboarding-api@test.com", "google", "onboarding-api-provider-" + System.nanoTime(), onboardingStep))
                 .flatMap(user -> jwtService.createAccessToken(user.getId())
                         .flatMap(token -> sessionStore.saveSession(jwtService.extractJti(token), user.getId(), Duration.ofMinutes(15))
                                 .thenReturn(token)));

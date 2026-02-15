@@ -24,7 +24,7 @@ class OnboardingGateIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldBlockNonOnboardingWhenStepIncomplete() {
-        Mono<Void> flow = userRepository.save(new User(null, "u@a.com", "google", "gid", 1))
+        Mono<Void> flow = userRepository.save(new User(null, "u@a.com", "google", "gid-gate-" + System.nanoTime(), 1))
                 .flatMap(user -> jwtService.createAccessToken(user.getId())
                         .flatMap(token -> sessionStore.saveSession(
                                         jwtService.extractJti(token),

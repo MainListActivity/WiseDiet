@@ -14,7 +14,7 @@ class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldPersistUserWithOnboardingStep() {
-        Mono<User> flow = userRepository.save(new User(null, "a@b.com", "google", "gid", 1))
+        Mono<User> flow = userRepository.save(new User(null, "a@b.com", "google", "gid-repo-" + System.nanoTime(), 1))
                 .flatMap(saved -> userRepository.findById(saved.getId()));
 
         StepVerifier.create(flow)
