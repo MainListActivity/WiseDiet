@@ -6,6 +6,22 @@ CREATE TABLE IF NOT EXISTS "occupation_tags" (
     category VARCHAR(255)        -- 标签分类
 );
 
+-- 过敏原标签表：存储常见过敏原信息
+CREATE TABLE IF NOT EXISTS "allergen_tags" (
+    id SERIAL PRIMARY KEY,
+    label VARCHAR(255) NOT NULL,  -- 标签名称
+    emoji VARCHAR(10),            -- 表情符号
+    description VARCHAR(255),     -- 描述说明
+    category VARCHAR(255)         -- 分类
+);
+
+-- 饮食偏好标签表：存储饮食偏好选项
+CREATE TABLE IF NOT EXISTS "dietary_preference_tags" (
+    id SERIAL PRIMARY KEY,
+    label VARCHAR(255) NOT NULL,  -- 标签名称
+    emoji VARCHAR(10)             -- 表情符号
+);
+
 -- 用户档案表：存储用户的身体数据和基本画像
 CREATE TABLE IF NOT EXISTS "user_profiles" (
     id SERIAL PRIMARY KEY,
@@ -14,7 +30,10 @@ CREATE TABLE IF NOT EXISTS "user_profiles" (
     height FLOAT,                -- 身高 (cm)
     weight FLOAT,                -- 体重 (kg)
     occupation_tag_ids TEXT,     -- 关联的职业标签ID (逗号分隔或JSON)
-    family_members INT           -- 家庭成员数量
+    family_members INT,          -- 家庭成员数量
+    allergen_tag_ids TEXT,              -- 关联的过敏原标签ID (逗号分隔)
+    dietary_preference_tag_ids TEXT,    -- 关联的饮食偏好标签ID (逗号分隔)
+    custom_avoided_ingredients TEXT     -- 自定义忌口成分 (逗号分隔)
 );
 
 -- 用户表：核心用户账号信息
@@ -67,6 +86,9 @@ COMMENT ON COLUMN "user_profiles".height IS '身高 (cm)';
 COMMENT ON COLUMN "user_profiles".weight IS '体重 (kg)';
 COMMENT ON COLUMN "user_profiles".occupation_tag_ids IS '关联的职业标签ID (逗号分隔或JSON)';
 COMMENT ON COLUMN "user_profiles".family_members IS '家庭成员数量';
+COMMENT ON COLUMN "user_profiles".allergen_tag_ids IS '关联的过敏原标签ID (逗号分隔)';
+COMMENT ON COLUMN "user_profiles".dietary_preference_tag_ids IS '关联的饮食偏好标签ID (逗号分隔)';
+COMMENT ON COLUMN "user_profiles".custom_avoided_ingredients IS '自定义忌口成分 (逗号分隔)';
 
 COMMENT ON TABLE "users" IS '用户表：核心用户账号信息';
 COMMENT ON COLUMN "users".email IS '用户邮箱';
@@ -94,3 +116,12 @@ COMMENT ON COLUMN "dishes".nutrient_tags IS '营养标签 (如 高蛋白, 低碳
 COMMENT ON COLUMN "dishes".selected IS '用户是否选中该菜品';
 COMMENT ON COLUMN "dishes".meal_type IS '餐别 (BREAKFAST, LUNCH, DINNER)';
 
+COMMENT ON TABLE "allergen_tags" IS '过敏原标签表：存储常见过敏原信息';
+COMMENT ON COLUMN "allergen_tags".label IS '标签名称';
+COMMENT ON COLUMN "allergen_tags".emoji IS '表情符号';
+COMMENT ON COLUMN "allergen_tags".description IS '描述说明';
+COMMENT ON COLUMN "allergen_tags".category IS '分类';
+
+COMMENT ON TABLE "dietary_preference_tags" IS '饮食偏好标签表：存储饮食偏好选项';
+COMMENT ON COLUMN "dietary_preference_tags".label IS '标签名称';
+COMMENT ON COLUMN "dietary_preference_tags".emoji IS '表情符号';
