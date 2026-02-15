@@ -5,6 +5,9 @@ class UserProfile {
   double? weight;
   Set<int> occupationTags;
   int familyMembers;
+  Set<int> allergenTagIds;
+  Set<int> dietaryPreferenceTagIds;
+  List<String> customAvoidedIngredients;
 
   UserProfile({
     this.gender,
@@ -13,6 +16,9 @@ class UserProfile {
     this.weight,
     this.occupationTags = const {},
     this.familyMembers = 1,
+    this.allergenTagIds = const {},
+    this.dietaryPreferenceTagIds = const {},
+    this.customAvoidedIngredients = const [],
   });
 
   Map<String, dynamic> toJson() {
@@ -23,6 +29,9 @@ class UserProfile {
       'weight': weight,
       'occupationTagIds': occupationTags.join(','),
       'familyMembers': familyMembers,
+      'allergenTagIds': allergenTagIds.isNotEmpty ? allergenTagIds.join(',') : null,
+      'dietaryPreferenceTagIds': dietaryPreferenceTagIds.isNotEmpty ? dietaryPreferenceTagIds.join(',') : null,
+      'customAvoidedIngredients': customAvoidedIngredients.isNotEmpty ? customAvoidedIngredients.join(',') : null,
     };
   }
 
@@ -33,6 +42,9 @@ class UserProfile {
     double? weight,
     Set<int>? occupationTags,
     int? familyMembers,
+    Set<int>? allergenTagIds,
+    Set<int>? dietaryPreferenceTagIds,
+    List<String>? customAvoidedIngredients,
   }) {
     return UserProfile(
       gender: gender ?? this.gender,
@@ -41,6 +53,9 @@ class UserProfile {
       weight: weight ?? this.weight,
       occupationTags: occupationTags ?? this.occupationTags,
       familyMembers: familyMembers ?? this.familyMembers,
+      allergenTagIds: allergenTagIds ?? this.allergenTagIds,
+      dietaryPreferenceTagIds: dietaryPreferenceTagIds ?? this.dietaryPreferenceTagIds,
+      customAvoidedIngredients: customAvoidedIngredients ?? this.customAvoidedIngredients,
     );
   }
 }

@@ -27,6 +27,18 @@ class OnboardingNotifier extends StateNotifier<UserProfile> {
   void updateFamilyMembers(int count) {
     state = state.copyWith(familyMembers: count);
   }
+
+  void updateAllergens(Set<int> ids) {
+    state = state.copyWith(allergenTagIds: ids);
+  }
+
+  void updateDietaryPreferences(Set<int> ids) {
+    state = state.copyWith(dietaryPreferenceTagIds: ids);
+  }
+
+  void updateCustomAvoidedIngredients(List<String> ingredients) {
+    state = state.copyWith(customAvoidedIngredients: ingredients);
+  }
 }
 
 final onboardingProvider =
