@@ -6,6 +6,7 @@ import cn.cuckoox.wisediet.repository.UserProfileRepository;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
+import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -30,7 +31,7 @@ public class OnboardingController {
     }
 
     @PostMapping("/profile")
-    public Mono<UserProfile> saveProfile(@RequestBody UserProfile profile) {
+    public Mono<UserProfile> saveProfile(@Valid @RequestBody UserProfile profile) {
         return userProfileRepository.save(profile);
     }
 

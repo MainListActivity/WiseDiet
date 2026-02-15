@@ -4,12 +4,19 @@ import '../models/user_profile.dart';
 class OnboardingNotifier extends StateNotifier<UserProfile> {
   OnboardingNotifier() : super(UserProfile());
 
-  void updateBasicInfo({String? gender, int? age, double? height, double? weight}) {
+  void updateBasicInfo({
+    String? gender,
+    int? age,
+    double? height,
+    double? weight,
+    int? familyMembers,
+  }) {
     state = state.copyWith(
       gender: gender,
       age: age,
       height: height,
       weight: weight,
+      familyMembers: familyMembers,
     );
   }
 
@@ -22,6 +29,7 @@ class OnboardingNotifier extends StateNotifier<UserProfile> {
   }
 }
 
-final onboardingProvider = StateNotifierProvider<OnboardingNotifier, UserProfile>((ref) {
-  return OnboardingNotifier();
-});
+final onboardingProvider =
+    StateNotifierProvider<OnboardingNotifier, UserProfile>((ref) {
+      return OnboardingNotifier();
+    });

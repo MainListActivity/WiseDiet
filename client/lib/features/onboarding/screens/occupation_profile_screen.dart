@@ -5,7 +5,7 @@ import '../providers/tag_provider.dart';
 import '../providers/onboarding_provider.dart';
 import '../widgets/neural_background.dart';
 import '../widgets/tag_item.dart';
-import 'family_params_screen.dart';
+import 'loading_analysis_screen.dart';
 
 class OccupationProfileScreen extends ConsumerWidget {
   const OccupationProfileScreen({super.key});
@@ -26,7 +26,10 @@ class OccupationProfileScreen extends ConsumerWidget {
               children: [
                 // Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 24,
+                  ),
                   child: Row(
                     children: [
                       IconButton(
@@ -118,16 +121,21 @@ class OccupationProfileScreen extends ConsumerWidget {
                           onTap: () {
                             final current = ref.read(selectedTagsProvider);
                             if (isSelected) {
-                              ref.read(selectedTagsProvider.notifier).state = {...current}..remove(tag.id);
+                              ref.read(selectedTagsProvider.notifier).state = {
+                                ...current,
+                              }..remove(tag.id);
                             } else {
-                              ref.read(selectedTagsProvider.notifier).state = {...current}..add(tag.id);
+                              ref.read(selectedTagsProvider.notifier).state = {
+                                ...current,
+                              }..add(tag.id);
                             }
                           },
                         );
                       }).toList(),
                     ),
                   ),
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (err, stack) => Center(child: Text('Error: $err')),
                 ),
 
@@ -137,7 +145,11 @@ class OccupationProfileScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.psychology, color: AppTheme.primary, size: 20),
+                    const Icon(
+                      Icons.psychology,
+                      color: AppTheme.primary,
+                      size: 20,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'AI ANALYZING METABOLIC NEEDS...',
@@ -164,12 +176,17 @@ class OccupationProfileScreen extends ConsumerWidget {
                           onPressed: selectedTags.isNotEmpty
                               ? () {
                                   // Update global profile state
-                                  ref.read(onboardingProvider.notifier).updateTags(selectedTags);
+                                  ref
+                                      .read(onboardingProvider.notifier)
+                                      .updateTags(selectedTags);
 
                                   // Navigate to next step
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoadingAnalysisScreen(),
+                                    ),
                                   );
                                 }
                               : null,

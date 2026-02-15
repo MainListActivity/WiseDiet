@@ -62,6 +62,7 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
 
         // When: 提交 onboarding 资料
         Mono<Boolean> requestFlow = issueAuthenticatedToken(0)
+                .delayElement(Duration.ofMillis(100))
                 .flatMap(authToken -> Mono.fromCallable(() -> {
                     webTestClient.post()
                             .uri("/api/onboarding/profile")
@@ -89,6 +90,34 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
                         .filter(profile -> "Male".equals(profile.getGender()))
                         .take(1))
                 .expectNextMatches(profile -> "1,2".equals(profile.getOccupationTagIds()))
+                .verifyComplete();
+    }
+
+    @Test
+    void shouldRejectInvalidBasicInfoPayload() {
+        UserProfile invalidRequest = new UserProfile(
+                null,
+                "Unknown",
+                10,
+                100.0,
+                20.0,
+                "1,2",
+                0
+        );
+
+        Mono<Boolean> requestFlow = issueAuthenticatedToken(0)
+                .flatMap(authToken -> Mono.fromCallable(() -> {
+                    webTestClient.post()
+                            .uri("/api/onboarding/profile")
+                            .header("Authorization", "Bearer " + authToken)
+                            .bodyValue(invalidRequest)
+                            .exchange()
+                            .expectStatus().isBadRequest();
+                    return true;
+                }).subscribeOn(Schedulers.boundedElastic()));
+
+        StepVerifier.create(requestFlow)
+                .expectNext(true)
                 .verifyComplete();
     }
 

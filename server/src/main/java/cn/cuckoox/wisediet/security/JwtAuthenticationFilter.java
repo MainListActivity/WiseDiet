@@ -76,7 +76,12 @@ public class JwtAuthenticationFilter implements WebFilter {
                     return chain.filter(exchange)
                             .contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
                 })
-                .onErrorResume(ex -> unauthorized(exchange));
+                .onErrorResume(ex -> {
+                    if (ex instanceof IllegalStateException) {
+                        return unauthorized(exchange);
+                    }
+                    return Mono.error(ex);
+                });
     }
 
     private boolean requiresAuthentication(String path) {
