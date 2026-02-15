@@ -35,7 +35,18 @@ class OnboardingI18nIntegrationTest extends AbstractIntegrationTest {
                             .expectBody(Map.class)
                             .value(payload -> {
                                 Map<?, ?> keyPoints = (Map<?, ?>) payload.get("key_points");
-                                if (!"个性化健康策略".equals(payload.get("title")) || keyPoints == null || !keyPoints.containsKey("能量")) {
+                                Map<?, ?> projectedImpact = (Map<?, ?>) payload.get("projected_impact");
+                                Map<?, ?> preferences = (Map<?, ?>) payload.get("preferences");
+                                if (!"个性化健康策略".equals(payload.get("title"))
+                                        || keyPoints == null
+                                        || !keyPoints.containsKey("能量")
+                                        || projectedImpact == null
+                                        || !"+15%".equals(projectedImpact.get("focus_boost"))
+                                        || !"2050".equals(projectedImpact.get("calorie_target"))
+                                        || preferences == null
+                                        || !"专注力提升".equals(preferences.get("daily_focus"))
+                                        || payload.get("info_hint") == null
+                                        || payload.get("cta_text") == null) {
                                     throw new AssertionError("unexpected i18n strategy payload");
                                 }
                             });
