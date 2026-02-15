@@ -55,7 +55,11 @@ class TagItem extends StatelessWidget {
             Text(
               tag.label,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.grey[700],
+                color: isSelected
+                    ? Colors.white
+                    : (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[300]
+                        : Colors.grey[700]),
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),
