@@ -111,9 +111,9 @@ class _AllergiesRestrictionsScreenState
                       width: double.infinity,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.red.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.red.withOpacity(0.3)),
+                        border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
                       ),
                       child: Row(
                         children: [
@@ -121,7 +121,7 @@ class _AllergiesRestrictionsScreenState
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'WARNING: Always verify ingredients independently. AI suggestions do not replace medical advice.',
+                              'WARNING: Please select all allergies and restrictions to ensure your safety.',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.red[700],
@@ -144,13 +144,27 @@ class _AllergiesRestrictionsScreenState
                           color: isDark ? Colors.white : AppTheme.secondary,
                           height: 1.2,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: 'Safety ',
+                            style: TextStyle(
+                              color: isDark ? Colors.white : AppTheme.secondary,
+                            ),
+                          ),
+                          const TextSpan(
+                            text: 'First',
                             style: TextStyle(color: Colors.red),
                           ),
-                          TextSpan(text: 'First'),
                         ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Select any allergies or dietary restrictions. This is critical — we\'ll never recommend ingredients that could harm you.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: isDark ? Colors.grey[400] : Colors.grey[600],
+                        height: 1.4,
                       ),
                     ),
 
@@ -193,7 +207,7 @@ class _AllergiesRestrictionsScreenState
                             child: Container(
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? Colors.red.withOpacity(0.1)
+                                    ? Colors.red.withValues(alpha: 0.1)
                                     : (isDark ? AppTheme.surfaceDark : Colors.white),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
@@ -298,7 +312,7 @@ class _AllergiesRestrictionsScreenState
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? AppTheme.primary.withOpacity(0.15)
+                                    ? AppTheme.primary.withValues(alpha: 0.15)
                                     : (isDark ? AppTheme.surfaceDark : Colors.white),
                                 borderRadius: BorderRadius.circular(24),
                                 border: Border.all(
@@ -358,7 +372,8 @@ class _AllergiesRestrictionsScreenState
                           child: TextField(
                             controller: _ingredientController,
                             decoration: InputDecoration(
-                              hintText: 'e.g. Cilantro, MSG...',
+                              hintText: 'Search ingredients...',
+                              prefixIcon: const Icon(Icons.search, size: 20),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -392,11 +407,21 @@ class _AllergiesRestrictionsScreenState
                           return Chip(
                             label: Text(
                               ingredient,
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: isDark ? Colors.orange[300] : Colors.orange[800],
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            backgroundColor: Colors.orange,
-                            deleteIcon: const Icon(Icons.close, size: 18, color: Colors.white),
+                            backgroundColor: isDark
+                                ? Colors.orange.withValues(alpha: 0.15)
+                                : Colors.orange.withValues(alpha: 0.1),
+                            deleteIcon: Icon(
+                              Icons.close,
+                              size: 16,
+                              color: isDark ? Colors.orange[300] : Colors.orange[800],
+                            ),
                             onDeleted: () => _removeCustomIngredient(ingredient),
+                            side: BorderSide.none,
                           );
                         }).toList(),
                       ),
@@ -481,11 +506,12 @@ class _AllergiesRestrictionsScreenState
   }
 
   Widget _buildProgressStep(bool isActive) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: 32,
       height: 6,
       decoration: BoxDecoration(
-        color: isActive ? AppTheme.primary : Colors.grey[300],
+        color: isActive ? AppTheme.primary : (isDark ? Colors.grey[700] : Colors.grey[300]),
         borderRadius: BorderRadius.circular(3),
       ),
     );
