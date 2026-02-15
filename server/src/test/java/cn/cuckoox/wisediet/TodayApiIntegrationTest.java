@@ -14,7 +14,10 @@ import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
+import java.util.Locale;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -73,7 +76,17 @@ class TodayApiIntegrationTest extends AbstractIntegrationTest {
                             .value(response -> {
                                 assertThat(response.id()).isNotNull();
                                 assertThat(response.status()).isEqualTo("pending");
-                                assertThat(response.dishes()).hasSize(3);
+                                assertThat(response.dishes()).hasSize(8);
+                                Set<String> mealTypes = response.dishes().stream()
+                                        .map(dish -> dish.getMealType().toLowerCase(Locale.ROOT))
+                                        .collect(Collectors.toSet());
+                                assertThat(mealTypes).containsExactlyInAnyOrder("breakfast", "lunch", "snack", "dinner");
+                                assertThat(response.dishes()).allSatisfy(dish -> {
+                                    assertThat(dish.getImageUrl()).isNotBlank();
+                                    assertThat(dish.getNutrientTags()).isNotBlank();
+                                    assertThat(dish.getPrepMin()).isGreaterThanOrEqualTo(0);
+                                    assertThat(dish.getCookMin()).isGreaterThan(0);
+                                });
                             });
                     return true;
                 }).subscribeOn(Schedulers.boundedElastic()));
