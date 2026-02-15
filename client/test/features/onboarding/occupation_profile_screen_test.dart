@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wise_diet/features/onboarding/models/allergen_tag.dart';
+import 'package:wise_diet/features/onboarding/models/dietary_preference_tag.dart';
 import 'package:wise_diet/features/onboarding/models/occupation_tag.dart';
 import 'package:wise_diet/features/onboarding/providers/tag_provider.dart';
 import 'package:wise_diet/features/onboarding/screens/occupation_profile_screen.dart';
@@ -21,6 +23,12 @@ Widget _buildTestWidget({Brightness brightness = Brightness.light}) {
   return ProviderScope(
     overrides: [
       occupationTagsProvider.overrideWith((_) async => _mockTags),
+      allergenTagsProvider.overrideWith((_) async => [
+        AllergenTag(id: 1, label: 'Peanuts', emoji: '\u{1F95C}', description: 'Tree nuts included', category: 'nuts'),
+      ]),
+      dietaryPreferenceTagsProvider.overrideWith((_) async => [
+        DietaryPreferenceTag(id: 1, label: 'Vegetarian', emoji: '\u{1F33F}'),
+      ]),
     ],
     child: MaterialApp(
       theme: brightness == Brightness.light
@@ -53,7 +61,7 @@ void main() {
       expect(find.text('Post-Op Recovery'), findsOneWidget);
     });
 
-    testWidgets('tapping Skip for now navigates to FamilyParamsScreen', (tester) async {
+    testWidgets('tapping Skip for now navigates to AllergiesRestrictionsScreen', (tester) async {
       tester.view.physicalSize = const Size(430, 932);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -65,7 +73,7 @@ void main() {
       await tester.tap(find.text('Skip for now'));
       await tester.pumpAndSettle();
 
-      expect(find.text('How many people are eating?'), findsOneWidget);
+      expect(find.textContaining('WARNING'), findsOneWidget);
     });
 
     testWidgets('unselected tag text uses light color in dark mode', (tester) async {
