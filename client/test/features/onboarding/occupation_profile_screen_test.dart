@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wise_diet/features/onboarding/models/allergen_tag.dart';
 import 'package:wise_diet/features/onboarding/models/dietary_preference_tag.dart';
 import 'package:wise_diet/features/onboarding/models/occupation_tag.dart';
@@ -19,7 +20,24 @@ final _mockTags = [
   OccupationTag(id: 9, label: 'Post-Op Recovery', category: 'Health'),
 ];
 
-Widget _buildTestWidget({Brightness brightness = Brightness.light}) {
+GoRouter _buildTestRouter() {
+  return GoRouter(
+    initialLocation: '/onboarding/occupation',
+    routes: [
+      GoRoute(
+        path: '/onboarding/occupation',
+        builder: (context, state) => const OccupationProfileScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/allergies',
+        builder: (context, state) =>
+            const Scaffold(body: Text('WARNING')),
+      ),
+    ],
+  );
+}
+
+Widget _buildTestWidget({Brightness brightness = Brightness.light, GoRouter? router}) {
   return ProviderScope(
     overrides: [
       occupationTagsProvider.overrideWith((_) async => _mockTags),
@@ -30,11 +48,11 @@ Widget _buildTestWidget({Brightness brightness = Brightness.light}) {
         DietaryPreferenceTag(id: 1, label: 'Vegetarian', emoji: '\u{1F33F}'),
       ]),
     ],
-    child: MaterialApp(
+    child: MaterialApp.router(
       theme: brightness == Brightness.light
           ? ThemeData.light()
           : ThemeData.dark(),
-      home: const OccupationProfileScreen(),
+      routerConfig: router ?? _buildTestRouter(),
     ),
   );
 }
@@ -67,13 +85,17 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
-      await tester.pumpWidget(_buildTestWidget());
+      final router = _buildTestRouter();
+      await tester.pumpWidget(_buildTestWidget(router: router));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Skip for now'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('WARNING'), findsOneWidget);
+      expect(
+        router.routerDelegate.currentConfiguration.uri.toString(),
+        '/onboarding/allergies',
+      );
     });
 
     testWidgets('unselected tag text uses light color in dark mode', (tester) async {

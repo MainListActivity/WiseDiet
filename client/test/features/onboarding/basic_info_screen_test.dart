@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wise_diet/features/onboarding/providers/onboarding_provider.dart';
 import 'package:wise_diet/features/onboarding/screens/basic_info_screen.dart';
 
@@ -50,10 +51,25 @@ void main() {
     final container = ProviderContainer();
     addTearDown(container.dispose);
 
+    final router = GoRouter(
+      initialLocation: '/onboarding/basic-info',
+      routes: [
+        GoRoute(
+          path: '/onboarding/basic-info',
+          builder: (context, state) => const BasicInfoScreen(),
+        ),
+        GoRoute(
+          path: '/onboarding/occupation',
+          builder: (context, state) =>
+              const Scaffold(body: Text('Occupation')),
+        ),
+      ],
+    );
+
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(home: BasicInfoScreen()),
+        child: MaterialApp.router(routerConfig: router),
       ),
     );
 
@@ -84,7 +100,7 @@ void main() {
 
     await tester.ensureVisible(find.byKey(const Key('basic_info_next_button')));
     await tester.tap(find.byKey(const Key('basic_info_next_button')));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     final profile = container.read(onboardingProvider);
     expect(profile.gender, 'Other');
@@ -92,6 +108,9 @@ void main() {
     expect(profile.height, 182);
     expect(profile.weight, 74);
     expect(profile.familyMembers, 2);
-    expect(find.text('Profile Setup'), findsWidgets);
+    expect(
+      router.routerDelegate.currentConfiguration.uri.toString(),
+      '/onboarding/occupation',
+    );
   });
 }

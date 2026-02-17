@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wise_diet/features/onboarding/screens/strategy_report_screen.dart';
 
 void main() {
@@ -64,13 +65,32 @@ void main() {
   testWidgets('tapping start button navigates to today smart menu page', (
     tester,
   ) async {
+    final router = GoRouter(
+      initialLocation: '/onboarding/strategy',
+      routes: [
+        GoRoute(
+          path: '/onboarding/strategy',
+          builder: (context, state) =>
+              const StrategyReportScreen(strategy: strategyPayload),
+        ),
+        GoRoute(
+          path: '/home',
+          builder: (context, state) =>
+              const Scaffold(body: Text("Today's Smart Menu")),
+        ),
+      ],
+    );
+
     await tester.pumpWidget(
-      const MaterialApp(home: StrategyReportScreen(strategy: strategyPayload)),
+      MaterialApp.router(routerConfig: router),
     );
 
     await tester.tap(find.text("Generate Today's Plan"));
     await tester.pumpAndSettle();
 
-    expect(find.text("Today's Smart Menu"), findsOneWidget);
+    expect(
+      router.routerDelegate.currentConfiguration.uri.toString(),
+      '/home',
+    );
   });
 }

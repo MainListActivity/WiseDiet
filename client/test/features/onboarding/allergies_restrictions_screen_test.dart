@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wise_diet/features/onboarding/models/allergen_tag.dart';
 import 'package:wise_diet/features/onboarding/models/dietary_preference_tag.dart';
 import 'package:wise_diet/features/onboarding/providers/tag_provider.dart';
@@ -24,17 +25,34 @@ final _mockDietaryPreferenceTags = [
   DietaryPreferenceTag(id: 6, label: 'Paleo', emoji: '🥩'),
 ];
 
-Widget _buildTestWidget({Brightness brightness = Brightness.light}) {
+GoRouter _buildTestRouter() {
+  return GoRouter(
+    initialLocation: '/onboarding/allergies',
+    routes: [
+      GoRoute(
+        path: '/onboarding/allergies',
+        builder: (context, state) => const AllergiesRestrictionsScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding/family',
+        builder: (context, state) =>
+            const Scaffold(body: Text('How many people are eating?')),
+      ),
+    ],
+  );
+}
+
+Widget _buildTestWidget({Brightness brightness = Brightness.light, GoRouter? router}) {
   return ProviderScope(
     overrides: [
       allergenTagsProvider.overrideWith((_) async => _mockAllergenTags),
       dietaryPreferenceTagsProvider.overrideWith((_) async => _mockDietaryPreferenceTags),
     ],
-    child: MaterialApp(
+    child: MaterialApp.router(
       theme: brightness == Brightness.light
           ? ThemeData.light()
           : ThemeData.dark(),
-      home: const AllergiesRestrictionsScreen(),
+      routerConfig: router ?? _buildTestRouter(),
     ),
   );
 }
@@ -159,7 +177,8 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
-      await tester.pumpWidget(_buildTestWidget());
+      final router = _buildTestRouter();
+      await tester.pumpWidget(_buildTestWidget(router: router));
       await tester.pumpAndSettle();
 
       // Scroll down to make Skip button visible
@@ -173,7 +192,10 @@ void main() {
       await tester.tap(find.text('Skip for now'));
       await tester.pumpAndSettle();
 
-      expect(find.text('How many people are eating?'), findsOneWidget);
+      expect(
+        router.routerDelegate.currentConfiguration.uri.toString(),
+        '/onboarding/family',
+      );
     });
 
     testWidgets('Step 3/4 progress indicator is shown', (tester) async {
