@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../core/storage/route_storage.dart';
 import 'auth_state.dart';
 import 'google_login.dart';
 import 'github_login.dart';
@@ -28,12 +29,14 @@ class SecureTokenStorage implements TokenStorage {
 }
 
 class AuthController extends StateNotifier<AuthState> {
-  AuthController(this._authApi, {TokenStorage? tokenStorage})
+  AuthController(this._authApi, {TokenStorage? tokenStorage, RouteStorage? routeStorage})
       : _tokenStorage = tokenStorage ?? SecureTokenStorage(),
+        _routeStorage = routeStorage ?? RouteStorage(),
         super(AuthState.initial());
 
   final AuthApi _authApi;
   final TokenStorage _tokenStorage;
+  final RouteStorage _routeStorage;
 
   Future<void> loginWithGoogle() async {
     final nextState = await _authApi.loginWithGoogle();
@@ -65,6 +68,12 @@ class AuthController extends StateNotifier<AuthState> {
       message: null,
     );
   }
+
+  Future<void> logout() async {
+    await _tokenStorage.clearTokens();
+    await _routeStorage.clearLastRoute();
+    state = AuthState.initial();
+  }
 }
 
 class AuthApiImpl implements AuthApi {
@@ -87,5 +96,9 @@ class AuthApiImpl implements AuthApi {
 final authControllerProvider = StateNotifierProvider<AuthController, AuthState>((ref) {
   final googleLogin = ref.watch(googleLoginProvider);
   final githubLogin = ref.watch(githubLoginProvider);
-  return AuthController(AuthApiImpl(googleLogin, githubLogin));
+  final routeStorage = ref.read(routeStorageProvider);
+  return AuthController(
+    AuthApiImpl(googleLogin, githubLogin),
+    routeStorage: routeStorage,
+  );
 });

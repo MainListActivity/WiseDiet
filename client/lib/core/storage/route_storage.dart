@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RouteStorage {
@@ -23,3 +24,5 @@ class RouteStorage {
     await prefs.remove(_key);
   }
 }
+
+final routeStorageProvider = Provider<RouteStorage>((ref) => RouteStorage());

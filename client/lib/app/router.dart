@@ -13,8 +13,6 @@ import '../features/onboarding/screens/loading_analysis_screen.dart';
 import '../features/onboarding/screens/strategy_report_screen.dart';
 import '../features/today/screens/today_smart_menu_feed_screen.dart';
 
-final routeStorageProvider = Provider<RouteStorage>((ref) => RouteStorage());
-
 final goRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authControllerProvider);
   final routeStorage = ref.read(routeStorageProvider);
