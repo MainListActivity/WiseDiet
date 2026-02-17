@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wise_diet/features/onboarding/screens/strategy_report_screen.dart';
+import 'package:wise_diet/l10n/app_localizations.dart';
 
 void main() {
   const strategyPayload = {
@@ -21,7 +22,11 @@ void main() {
 
   testWidgets('renders strategy report advanced sections', (tester) async {
     await tester.pumpWidget(
-      const MaterialApp(home: StrategyReportScreen(strategy: strategyPayload)),
+      const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: StrategyReportScreen(strategy: strategyPayload),
+      ),
     );
 
     expect(find.text('Projected Impact'), findsOneWidget);
@@ -50,7 +55,11 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(home: StrategyReportScreen(strategy: strategyPayload)),
+      const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: StrategyReportScreen(strategy: strategyPayload),
+      ),
     );
 
     await tester.tap(find.byKey(const Key('preference-item-daily_focus')));
@@ -82,7 +91,11 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MaterialApp.router(routerConfig: router),
+      MaterialApp.router(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routerConfig: router,
+      ),
     );
 
     await tester.tap(find.text("Generate Today's Plan"));

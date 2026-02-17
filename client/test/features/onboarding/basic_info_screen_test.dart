@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wise_diet/features/onboarding/providers/onboarding_provider.dart';
 import 'package:wise_diet/features/onboarding/screens/basic_info_screen.dart';
+import 'package:wise_diet/l10n/app_localizations.dart';
 
 void main() {
   testWidgets('renders 03a design widgets and BMI preview', (tester) async {
@@ -13,7 +14,11 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(home: BasicInfoScreen()),
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: BasicInfoScreen(),
+        ),
       ),
     );
 
@@ -69,7 +74,11 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp.router(routerConfig: router),
+        child: MaterialApp.router(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          routerConfig: router,
+        ),
       ),
     );
 
@@ -103,7 +112,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final profile = container.read(onboardingProvider);
-    expect(profile.gender, 'Other');
+    expect(profile.gender, 'other');
     expect(profile.age, 35);
     expect(profile.height, 182);
     expect(profile.weight, 74);

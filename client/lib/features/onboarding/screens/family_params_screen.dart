@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../l10n/l10n.dart';
 import '../providers/onboarding_provider.dart';
 
 class FamilyParamsScreen extends ConsumerStatefulWidget {
@@ -15,15 +16,17 @@ class _FamilyParamsScreenState extends ConsumerState<FamilyParamsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Family Parameters')),
+      appBar: AppBar(title: Text(l10n.familyParameters)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'How many people are eating?',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              l10n.howManyPeopleEating,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 32),
             Row(
@@ -51,7 +54,7 @@ class _FamilyParamsScreenState extends ConsumerState<FamilyParamsScreen> {
                 ref.read(onboardingProvider.notifier).updateFamilyMembers(_members);
                 context.go('/onboarding/loading');
               },
-              child: const Text('Generate Strategy'),
+              child: Text(l10n.generateStrategy),
             ),
           ],
         ),

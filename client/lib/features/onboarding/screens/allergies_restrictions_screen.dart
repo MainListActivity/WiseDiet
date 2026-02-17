@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../l10n/l10n.dart';
 import '../providers/tag_provider.dart';
 import '../providers/onboarding_provider.dart';
 
@@ -57,6 +58,7 @@ class _AllergiesRestrictionsScreenState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = context.l10n;
     final allergenTagsAsync = ref.watch(allergenTagsProvider);
     final dietaryTagsAsync = ref.watch(dietaryPreferenceTagsProvider);
     final selectedAllergens = ref.watch(selectedAllergenTagsProvider);
@@ -76,11 +78,11 @@ class _AllergiesRestrictionsScreenState
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Allergies & Restrictions',
+                      l10n.allergiesAndRestrictions,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -115,7 +117,7 @@ class _AllergiesRestrictionsScreenState
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'WARNING: Please select all allergies and restrictions to ensure your safety.',
+                              l10n.allergyWarning,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.red[700],
@@ -140,21 +142,21 @@ class _AllergiesRestrictionsScreenState
                         ),
                         children: [
                           TextSpan(
-                            text: 'Safety ',
+                            text: l10n.safetyPrefix,
                             style: TextStyle(
                               color: isDark ? Colors.white : AppTheme.secondary,
                             ),
                           ),
-                          const TextSpan(
-                            text: 'First',
-                            style: TextStyle(color: Colors.red),
+                          TextSpan(
+                            text: l10n.safetyHighlight,
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Select any allergies or dietary restrictions. This is critical — we\'ll never recommend ingredients that could harm you.',
+                      l10n.allergiesSubtitle,
                       style: TextStyle(
                         fontSize: 14,
                         color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -166,7 +168,7 @@ class _AllergiesRestrictionsScreenState
 
                     // "Common Allergens" section
                     Text(
-                      'Common Allergens',
+                      l10n.commonAllergens,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -267,14 +269,14 @@ class _AllergiesRestrictionsScreenState
                         }).toList(),
                       ),
                       loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (err, stack) => Center(child: Text('Error: $err')),
+                      error: (err, stack) => Center(child: Text(l10n.errorPrefix(err.toString()))),
                     ),
 
                     const SizedBox(height: 24),
 
                     // "Dietary Preferences" section
                     Text(
-                      'Dietary Preferences',
+                      l10n.dietaryPreferences,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -342,14 +344,14 @@ class _AllergiesRestrictionsScreenState
                         }).toList(),
                       ),
                       loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (err, stack) => Center(child: Text('Error: $err')),
+                      error: (err, stack) => Center(child: Text(l10n.errorPrefix(err.toString()))),
                     ),
 
                     const SizedBox(height: 24),
 
                     // "Other Ingredients to Avoid"
                     Text(
-                      'Other Ingredients to Avoid',
+                      l10n.otherIngredientsToAvoid,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -366,7 +368,7 @@ class _AllergiesRestrictionsScreenState
                           child: TextField(
                             controller: _ingredientController,
                             decoration: InputDecoration(
-                              hintText: 'Search ingredients...',
+                              hintText: l10n.searchIngredients,
                               prefixIcon: const Icon(Icons.search, size: 20),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -425,7 +427,7 @@ class _AllergiesRestrictionsScreenState
                     // Footer section
                     Center(
                       child: Text(
-                        'Step 3/4',
+                        l10n.stepProgress(3, 4),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -457,18 +459,18 @@ class _AllergiesRestrictionsScreenState
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _navigateToNext,
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Next Step',
-                              style: TextStyle(
+                              l10n.nextStep,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
-                            Icon(Icons.arrow_forward, size: 20),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.arrow_forward, size: 20),
                           ],
                         ),
                       ),
@@ -479,7 +481,7 @@ class _AllergiesRestrictionsScreenState
                       child: TextButton(
                         onPressed: _skipToNext,
                         child: Text(
-                          'Skip for now',
+                          l10n.skipForNow,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[400],

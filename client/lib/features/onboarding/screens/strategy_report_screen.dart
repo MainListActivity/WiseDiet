@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../l10n/l10n.dart';
 
 class StrategyReportScreen extends StatefulWidget {
   final Map<String, dynamic> strategy;
@@ -14,18 +16,18 @@ class StrategyReportScreen extends StatefulWidget {
 class _StrategyReportScreenState extends State<StrategyReportScreen> {
   late Map<String, String> _preferences;
 
-  static const Map<String, String> _preferenceLabels = {
-    'daily_focus': 'Daily Focus',
-    'meal_frequency': 'Meal Frequency',
-    'cooking_level': 'Cooking Level',
-    'budget': 'Budget',
+  static Map<String, String> _preferenceLabels(AppLocalizations l10n) => {
+    'daily_focus': l10n.prefDailyFocus,
+    'meal_frequency': l10n.prefMealFrequency,
+    'cooking_level': l10n.prefCookingLevel,
+    'budget': l10n.prefBudget,
   };
 
-  static const Map<String, List<String>> _preferenceOptions = {
-    'daily_focus': ['Mental Clarity', 'Energy', 'Fat Burn'],
-    'meal_frequency': ['2 meals', '3 meals', '3 meals + 1 snack'],
-    'cooking_level': ['Beginner Friendly', 'Balanced', 'Advanced'],
-    'budget': ['\$10-\$20', '\$20-\$30', '\$30-\$50'],
+  static Map<String, List<String>> _preferenceOptions(AppLocalizations l10n) => {
+    'daily_focus': [l10n.optMentalClarity, l10n.optEnergy, l10n.optFatBurn],
+    'meal_frequency': [l10n.opt2Meals, l10n.opt3Meals, l10n.opt3MealsSnack],
+    'cooking_level': [l10n.optBeginnerFriendly, l10n.optBalanced, l10n.optAdvanced],
+    'budget': [l10n.optBudgetLow, l10n.optBudgetMid, l10n.optBudgetHigh],
   };
 
   @override
@@ -37,10 +39,13 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
   }
 
   Future<void> _editPreference(String key) async {
-    final options = _preferenceOptions[key] ?? const <String>[];
+    final l10n = context.l10n;
+    final options = _preferenceOptions(l10n)[key] ?? const <String>[];
     if (options.isEmpty) {
       return;
     }
+
+    final labels = _preferenceLabels(l10n);
 
     final selected = await showModalBottomSheet<String>(
       context: context,
@@ -60,7 +65,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Select ${_preferenceLabels[key] ?? key}',
+                l10n.selectPreference(labels[key] ?? key),
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
@@ -92,18 +97,18 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final strategy = widget.strategy;
     final keyPoints = Map<String, String>.from(strategy['key_points'] ?? {});
     final projectedImpact = Map<String, String>.from(
       strategy['projected_impact'] ?? <String, String>{},
     );
-    final ctaText = strategy['cta_text'] ?? 'Start My Journey';
-    final infoHint =
-        strategy['info_hint'] ??
-        'You can change these preferences anytime from your profile.';
+    final ctaText = strategy['cta_text'] ?? l10n.startMyJourney;
+    final infoHint = strategy['info_hint'] ?? l10n.preferencesInfoHint;
+    final labels = _preferenceLabels(l10n);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Your Strategy')),
+      appBar: AppBar(title: Text(l10n.yourStrategy)),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -173,9 +178,9 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                const Text(
-                                  'Your Personalized Strategy',
-                                  style: TextStyle(
+                                Text(
+                                  l10n.yourPersonalizedStrategy,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
                                     color: AppTheme.secondary,
@@ -185,7 +190,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              strategy['title'] ?? 'Health Strategy',
+                              strategy['title'] ?? l10n.healthStrategy,
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -219,9 +224,9 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Projected Impact',
-                  style: TextStyle(
+                Text(
+                  l10n.projectedImpact,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF6C7584),
@@ -233,7 +238,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                   children: [
                     Expanded(
                       child: _ImpactCard(
-                        title: 'Focus Boost',
+                        title: l10n.focusBoost,
                         value: projectedImpact['focus_boost'] ?? '+15%',
                         icon: Icons.bolt,
                       ),
@@ -241,7 +246,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: _ImpactCard(
-                        title: 'Calorie Target',
+                        title: l10n.calorieTarget,
                         value: projectedImpact['calorie_target'] ?? '2050',
                         icon: Icons.local_fire_department,
                       ),
@@ -252,9 +257,9 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Your Preferences',
-                      style: TextStyle(
+                    Text(
+                      l10n.yourPreferences,
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF6C7584),
@@ -264,7 +269,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                     TextButton.icon(
                       onPressed: () => _editPreference('daily_focus'),
                       icon: const Icon(Icons.edit, size: 14),
-                      label: const Text('Adjust'),
+                      label: Text(l10n.adjust),
                       style: TextButton.styleFrom(
                         foregroundColor: AppTheme.primary,
                         textStyle: const TextStyle(fontWeight: FontWeight.w700),
@@ -279,7 +284,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                     border: Border.all(color: const Color(0xFFE6EBF1)),
                   ),
                   child: Column(
-                    children: _preferenceLabels.entries
+                    children: labels.entries
                         .toList()
                         .asMap()
                         .entries
@@ -288,7 +293,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                           final item = entry.value;
                           final key = item.key;
                           final value = _preferences[key] ?? '-';
-                          final isLast = index == _preferenceLabels.length - 1;
+                          final isLast = index == labels.length - 1;
                           return Column(
                             children: [
                               _PreferenceItem(
@@ -346,9 +351,9 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Key Focus Areas',
-                  style: TextStyle(
+                Text(
+                  l10n.keyFocusAreas,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.secondary,

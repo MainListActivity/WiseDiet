@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../../l10n/l10n.dart';
 
 class TodaySmartMenuFeedScreen extends StatefulWidget {
   final int requiredSelections;
@@ -96,12 +97,15 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
     ),
   ];
 
-  final List<_MealSection> _sections = const [
-    _MealSection(type: 'breakfast', title: 'Breakfast', timelineLabel: '07:30'),
-    _MealSection(type: 'lunch', title: 'Lunch', timelineLabel: '12:30'),
-    _MealSection(type: 'snack', title: 'Snack', timelineLabel: '16:00'),
-    _MealSection(type: 'dinner', title: 'Dinner', timelineLabel: '19:00'),
-  ];
+  List<_MealSection> _buildSections() {
+    final l10n = context.l10n;
+    return [
+      _MealSection(type: 'breakfast', title: l10n.mealBreakfast, timelineLabel: '07:30'),
+      _MealSection(type: 'lunch', title: l10n.mealLunch, timelineLabel: '12:30'),
+      _MealSection(type: 'snack', title: l10n.mealSnack, timelineLabel: '16:00'),
+      _MealSection(type: 'dinner', title: l10n.mealDinner, timelineLabel: '19:00'),
+    ];
+  }
 
   final Set<int> _selectedIndexes = <int>{};
 
@@ -124,10 +128,12 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final progress = (_selectedIndexes.length / _requiredCount).clamp(0.0, 1.0);
+    final sections = _buildSections();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Today's Smart Menu")),
+      appBar: AppBar(title: Text(l10n.todaysSmartMenu)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         children: [
@@ -135,7 +141,7 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
           const SizedBox(height: 12),
           _buildDailyInsightCard(),
           const SizedBox(height: 16),
-          ..._sections.map((section) => _buildMealTimelineSection(section)),
+          ...sections.map((section) => _buildMealTimelineSection(section)),
         ],
       ),
       bottomNavigationBar: SafeArea(
@@ -162,12 +168,12 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
                 Row(
                   children: [
                     Text(
-                      '${_selectedIndexes.length} / $_requiredCount selected',
+                      l10n.selectedProgress(_selectedIndexes.length, _requiredCount),
                       style: const TextStyle(fontWeight: FontWeight.w700),
                     ),
                     const Spacer(),
                     Text(
-                      '$_totalCalories kcal • $_totalMinutes mins',
+                      l10n.caloriesAndTime(_totalCalories, _totalMinutes),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -194,13 +200,13 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Menu confirmed (${_selectedIndexes.length}/$_requiredCount)',
+                                l10n.menuConfirmed(_selectedIndexes.length, _requiredCount),
                               ),
                             ),
                           );
                         }
                       : null,
-                  child: Text('Confirm Today\'s Menu ($_requiredCount)'),
+                  child: Text(l10n.confirmTodaysMenu(_requiredCount)),
                 ),
               ],
             ),
@@ -211,29 +217,29 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
   }
 
   Widget _buildGuideCard() {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppTheme.primary.withOpacity(0.07),
         borderRadius: BorderRadius.circular(14),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'N+1 Selection Guide',
-            style: TextStyle(fontWeight: FontWeight.w700),
+            l10n.selectionGuide,
+            style: const TextStyle(fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 6),
-          Text(
-            'Choose at least N dishes for your household. We prepared one extra option per meal slot for flexibility.',
-          ),
+          const SizedBox(height: 6),
+          Text(l10n.selectionGuideBody),
         ],
       ),
     );
   }
 
   Widget _buildDailyInsightCard() {
+    final l10n = context.l10n;
     return Container(
       key: const Key('daily-insight-card'),
       padding: const EdgeInsets.all(14),
@@ -244,17 +250,15 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFDBEAFE)),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Daily Insight',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            l10n.dailyInsight,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 6),
-          Text(
-            'Higher protein in breakfast and lunch can reduce evening cravings and improve concentration stability.',
-          ),
+          const SizedBox(height: 6),
+          Text(l10n.dailyInsightBody),
         ],
       ),
     );
@@ -319,6 +323,7 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
   }
 
   Widget _buildDishCard(int index, _DishOption dish, Color mealColor) {
+    final l10n = context.l10n;
     final selected = _selectedIndexes.contains(index);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -398,7 +403,7 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
                       spacing: 6,
                       runSpacing: 6,
                       children: [
-                        _metaPill('${dish.calories} kcal'),
+                        _metaPill(l10n.caloriesKcal(dish.calories)),
                         ...dish.nutrientTags.map(_metaPill),
                       ],
                     ),
@@ -413,7 +418,7 @@ class _TodaySmartMenuFeedScreenState extends State<TodaySmartMenuFeedScreen> {
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
-                        'AI reason: ${dish.reason}',
+                        l10n.aiReason(dish.reason),
                         style: TextStyle(
                           fontSize: 12,
                           color: Theme.of(context).colorScheme.onSurfaceVariant,

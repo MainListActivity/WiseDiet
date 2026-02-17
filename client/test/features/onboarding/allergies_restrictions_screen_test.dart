@@ -6,6 +6,7 @@ import 'package:wise_diet/features/onboarding/models/allergen_tag.dart';
 import 'package:wise_diet/features/onboarding/models/dietary_preference_tag.dart';
 import 'package:wise_diet/features/onboarding/providers/tag_provider.dart';
 import 'package:wise_diet/features/onboarding/screens/allergies_restrictions_screen.dart';
+import 'package:wise_diet/l10n/app_localizations.dart';
 
 final _mockAllergenTags = [
   AllergenTag(id: 1, label: 'Peanuts', emoji: '🥜', description: 'Tree nuts included', category: 'nuts'),
@@ -49,6 +50,8 @@ Widget _buildTestWidget({Brightness brightness = Brightness.light, GoRouter? rou
       dietaryPreferenceTagsProvider.overrideWith((_) async => _mockDietaryPreferenceTags),
     ],
     child: MaterialApp.router(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: brightness == Brightness.light
           ? ThemeData.light()
           : ThemeData.dark(),

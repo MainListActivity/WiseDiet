@@ -7,6 +7,7 @@ import 'package:wise_diet/features/onboarding/models/dietary_preference_tag.dart
 import 'package:wise_diet/features/onboarding/models/occupation_tag.dart';
 import 'package:wise_diet/features/onboarding/providers/tag_provider.dart';
 import 'package:wise_diet/features/onboarding/screens/occupation_profile_screen.dart';
+import 'package:wise_diet/l10n/app_localizations.dart';
 
 final _mockTags = [
   OccupationTag(id: 1, label: 'Programmer (Sedentary)', icon: 'terminal', category: 'Occupation'),
@@ -49,6 +50,8 @@ Widget _buildTestWidget({Brightness brightness = Brightness.light, GoRouter? rou
       ]),
     ],
     child: MaterialApp.router(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: brightness == Brightness.light
           ? ThemeData.light()
           : ThemeData.dark(),

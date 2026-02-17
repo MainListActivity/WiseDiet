@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wise_diet/features/today/screens/today_smart_menu_feed_screen.dart';
+import 'package:wise_diet/l10n/app_localizations.dart';
 
 void main() {
   testWidgets('renders timeline sections with guide and daily insight card', (
     tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(home: TodaySmartMenuFeedScreen(requiredSelections: 2)),
+      const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: TodaySmartMenuFeedScreen(requiredSelections: 2),
+      ),
     );
 
     expect(find.text('N+1 Selection Guide'), findsOneWidget);
@@ -40,7 +45,11 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(home: TodaySmartMenuFeedScreen(requiredSelections: 2)),
+      const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: TodaySmartMenuFeedScreen(requiredSelections: 2),
+      ),
     );
 
     final confirmButton = find.byKey(const Key('confirm-menu-button'));

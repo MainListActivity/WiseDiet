@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../l10n/l10n.dart';
 import '../providers/onboarding_provider.dart';
 
 class BasicInfoScreen extends ConsumerStatefulWidget {
@@ -12,7 +13,7 @@ class BasicInfoScreen extends ConsumerStatefulWidget {
 }
 
 class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
-  String _gender = 'Male';
+  String _gender = 'male';
   double _age = 28;
   double _height = 175;
   double _weight = 70;
@@ -21,20 +22,23 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
   double get _bmi => _weight / ((_height / 100) * (_height / 100));
 
   String get _bmiCategory {
+    final l10n = context.l10n;
     if (_bmi < 18.5) {
-      return 'Underweight';
+      return l10n.bmiUnderweight;
     }
     if (_bmi < 25) {
-      return 'Normal range';
+      return l10n.bmiNormal;
     }
     if (_bmi < 30) {
-      return 'Overweight';
+      return l10n.bmiOverweight;
     }
-    return 'Obesity';
+    return l10n.bmiObesity;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       backgroundColor: AppTheme.backgroundLight,
       body: Stack(
@@ -50,11 +54,11 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                         onPressed: () {},
                         icon: const Icon(Icons.arrow_back),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          'Profile Setup',
+                          l10n.profileSetup,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -89,25 +93,25 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
+                          text: TextSpan(
+                            style: const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.secondary,
                               height: 1.2,
                             ),
                             children: [
-                              TextSpan(text: 'About '),
+                              TextSpan(text: l10n.aboutYouPrefix),
                               TextSpan(
-                                text: 'You',
-                                style: TextStyle(color: AppTheme.primary),
+                                text: l10n.aboutYouHighlight,
+                                style: const TextStyle(color: AppTheme.primary),
                               ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'Tell us a bit about yourself so our AI can calculate your precise nutritional needs.',
+                          l10n.basicInfoSubtitle,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey[600],
@@ -116,7 +120,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'Gender',
+                          l10n.gender,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
@@ -130,7 +134,8 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                             Expanded(
                               child: _buildGenderButton(
                                 key: const Key('gender_male_button'),
-                                label: 'Male',
+                                genderKey: 'male',
+                                label: l10n.genderMale,
                                 icon: Icons.male,
                               ),
                             ),
@@ -138,7 +143,8 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                             Expanded(
                               child: _buildGenderButton(
                                 key: const Key('gender_female_button'),
-                                label: 'Female',
+                                genderKey: 'female',
+                                label: l10n.genderFemale,
                                 icon: Icons.female,
                               ),
                             ),
@@ -146,7 +152,8 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                             Expanded(
                               child: _buildGenderButton(
                                 key: const Key('gender_other_button'),
-                                label: 'Other',
+                                genderKey: 'other',
+                                label: l10n.genderOther,
                                 icon: Icons.person_outline,
                               ),
                             ),
@@ -155,36 +162,36 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                         const SizedBox(height: 24),
                         _buildSliderSection(
                           key: const Key('age_slider'),
-                          label: 'Age',
+                          label: l10n.age,
                           value: _age,
                           min: 16,
                           max: 80,
-                          unit: 'years',
+                          unit: l10n.unitYears,
                           onChanged: (val) => setState(() => _age = val),
                         ),
                         const SizedBox(height: 20),
                         _buildSliderSection(
                           key: const Key('height_slider'),
-                          label: 'Height',
+                          label: l10n.height,
                           value: _height,
                           min: 140,
                           max: 220,
-                          unit: 'cm',
+                          unit: l10n.unitCm,
                           onChanged: (val) => setState(() => _height = val),
                         ),
                         const SizedBox(height: 20),
                         _buildSliderSection(
                           key: const Key('weight_slider'),
-                          label: 'Weight',
+                          label: l10n.weight,
                           value: _weight,
                           min: 35,
                           max: 150,
-                          unit: 'kg',
+                          unit: l10n.unitKg,
                           onChanged: (val) => setState(() => _weight = val),
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'Household Diners',
+                          l10n.householdDiners,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
@@ -194,7 +201,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'How many people regularly eat together? This adjusts portion sizes and ingredients.',
+                          l10n.householdDinersDescription,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[500],
@@ -224,7 +231,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'persons',
+                                  l10n.unitPersons,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[500],
@@ -271,7 +278,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Estimated BMI',
+                                      l10n.estimatedBmi,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey[600],
@@ -350,15 +357,15 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                     );
                 context.go('/onboarding/occupation');
               },
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Next Step',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    l10n.nextStep,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: 8),
-                  Icon(Icons.arrow_forward, size: 20),
+                  const SizedBox(width: 8),
+                  const Icon(Icons.arrow_forward, size: 20),
                 ],
               ),
             ),
@@ -382,10 +389,11 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
 
   Widget _buildGenderButton({
     required Key key,
+    required String genderKey,
     required String label,
     required IconData icon,
   }) {
-    final isSelected = _gender == label;
+    final isSelected = _gender == genderKey;
     return OutlinedButton(
       key: key,
       style: OutlinedButton.styleFrom(
@@ -398,7 +406,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
         foregroundColor: isSelected ? Colors.white : Colors.grey.shade700,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
-      onPressed: () => setState(() => _gender = label),
+      onPressed: () => setState(() => _gender = genderKey),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

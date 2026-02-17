@@ -55,7 +55,7 @@ class AuthController extends StateNotifier<AuthState> {
       onboardingStep: 0,
       accessToken: null,
       refreshToken: null,
-      message: '账号暂不可用，稍后重试',
+      message: 'accountUnavailable',
     );
   }
 

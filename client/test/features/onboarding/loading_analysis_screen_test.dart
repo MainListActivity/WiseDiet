@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wise_diet/features/onboarding/screens/loading_analysis_screen.dart';
+import 'package:wise_diet/l10n/app_localizations.dart';
 
 void main() {
   testWidgets('renders data vortex loading experience elements', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: LoadingAnalysisScreen(autoProcess: false),
         ),
       ),

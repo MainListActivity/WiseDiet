@@ -7,6 +7,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/network/api_client_provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../l10n/l10n.dart';
 import '../providers/onboarding_provider.dart';
 import '../services/onboarding_service.dart';
 
@@ -34,28 +36,30 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
   late final AnimationController _progressController;
   late final OnboardingService _service;
 
-  static const _floatingTags = <_FloatingTagData>[
-    _FloatingTagData(
-      label: 'Muscle Gain',
-      alignment: Alignment(-0.92, -0.36),
-      phase: 0.0,
-    ),
-    _FloatingTagData(
-      label: 'Vegan',
-      alignment: Alignment(0.94, -0.14),
-      phase: 1.1,
-    ),
-    _FloatingTagData(
-      label: 'High Protein',
-      alignment: Alignment(-0.78, 0.34),
-      phase: 2.2,
-    ),
-    _FloatingTagData(
-      label: 'Low GI',
-      alignment: Alignment(0.88, 0.42),
-      phase: 3.0,
-    ),
-  ];
+  static List<_FloatingTagData> _buildFloatingTags(AppLocalizations l10n) {
+    return [
+      _FloatingTagData(
+        label: l10n.tagMuscleGain,
+        alignment: const Alignment(-0.92, -0.36),
+        phase: 0.0,
+      ),
+      _FloatingTagData(
+        label: l10n.tagVegan,
+        alignment: const Alignment(0.94, -0.14),
+        phase: 1.1,
+      ),
+      _FloatingTagData(
+        label: l10n.tagHighProtein,
+        alignment: const Alignment(-0.78, 0.34),
+        phase: 2.2,
+      ),
+      _FloatingTagData(
+        label: l10n.tagLowGI,
+        alignment: const Alignment(0.88, 0.42),
+        phase: 3.0,
+      ),
+    ];
+  }
 
   @override
   void initState() {
@@ -111,7 +115,7 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errorPrefix(e.toString()))));
       context.go('/onboarding/family');
     }
   }
@@ -126,7 +130,9 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final progress = (_progressController.value * 100).clamp(0, 100).toInt();
+    final floatingTags = _buildFloatingTags(l10n);
 
     return Scaffold(
       body: AnimatedBuilder(
@@ -218,7 +224,7 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
                         size: 46,
                         color: AppTheme.primary,
                       ),
-                      ..._floatingTags.map(
+                      ...floatingTags.map(
                         (tag) => _FloatingTag(
                           data: tag,
                           animationValue: _floatController.value,
@@ -233,9 +239,9 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'AI Analyzing metabolic needs...',
-                      style: TextStyle(
+                    Text(
+                      l10n.aiAnalyzingNeeds,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.0,
@@ -243,9 +249,9 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Building your personalized strategy',
-                      style: TextStyle(color: Color(0xFF6A7280)),
+                    Text(
+                      l10n.buildingStrategy,
+                      style: const TextStyle(color: Color(0xFF6A7280)),
                     ),
                     const SizedBox(height: 18),
                     Text(
@@ -283,11 +289,11 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
                   ],
                 ),
               ),
-              const Align(
-                alignment: Alignment(0, 0.93),
+              Align(
+                alignment: const Alignment(0, 0.93),
                 child: Text(
-                  'POWERED BY WISEDIET AI',
-                  style: TextStyle(
+                  l10n.poweredByWiseDietAi,
+                  style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.7,

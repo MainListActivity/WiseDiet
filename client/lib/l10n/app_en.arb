@@ -14,5 +14,155 @@
   "and": " & ",
   "privacyPolicy": "Privacy Policy",
   "period": ".",
-  "loading": "LOADING"
+  "loading": "LOADING",
+
+  "profileSetup": "Profile Setup",
+  "aboutYouPrefix": "About ",
+  "aboutYouHighlight": "You",
+  "basicInfoSubtitle": "Tell us a bit about yourself so our AI can calculate your precise nutritional needs.",
+  "gender": "Gender",
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "genderOther": "Other",
+  "age": "Age",
+  "unitYears": "years",
+  "height": "Height",
+  "unitCm": "cm",
+  "weight": "Weight",
+  "unitKg": "kg",
+  "householdDiners": "Household Diners",
+  "householdDinersDescription": "How many people regularly eat together? This adjusts portion sizes and ingredients.",
+  "unitPersons": "persons",
+  "estimatedBmi": "Estimated BMI",
+  "bmiUnderweight": "Underweight",
+  "bmiNormal": "Normal range",
+  "bmiOverweight": "Overweight",
+  "bmiObesity": "Obesity",
+  "nextStep": "Next Step",
+
+  "defineYourPrefix": "Define Your ",
+  "defineYourHighlight": "Rhythm",
+  "occupationSubtitle": "Select your occupation and any specific health stages to help our AI tailor nutrition to your activity levels.",
+  "aiAnalyzingMetabolicNeeds": "AI ANALYZING METABOLIC NEEDS...",
+  "skipForNow": "Skip for now",
+
+  "allergiesAndRestrictions": "Allergies & Restrictions",
+  "allergyWarning": "WARNING: Please select all allergies and restrictions to ensure your safety.",
+  "safetyPrefix": "Safety ",
+  "safetyHighlight": "First",
+  "allergiesSubtitle": "Select any allergies or dietary restrictions. This is critical — we'll never recommend ingredients that could harm you.",
+  "commonAllergens": "Common Allergens",
+  "dietaryPreferences": "Dietary Preferences",
+  "otherIngredientsToAvoid": "Other Ingredients to Avoid",
+  "searchIngredients": "Search ingredients...",
+  "stepProgress": "Step {current}/{total}",
+  "@stepProgress": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+
+  "familyParameters": "Family Parameters",
+  "howManyPeopleEating": "How many people are eating?",
+  "generateStrategy": "Generate Strategy",
+
+  "tagMuscleGain": "Muscle Gain",
+  "tagVegan": "Vegan",
+  "tagHighProtein": "High Protein",
+  "tagLowGI": "Low GI",
+  "aiAnalyzingNeeds": "AI Analyzing metabolic needs...",
+  "buildingStrategy": "Building your personalized strategy",
+  "poweredByWiseDietAi": "POWERED BY WISEDIET AI",
+  "errorPrefix": "Error: {message}",
+  "@errorPrefix": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+
+  "yourStrategy": "Your Strategy",
+  "yourPersonalizedStrategy": "Your Personalized Strategy",
+  "healthStrategy": "Health Strategy",
+  "projectedImpact": "Projected Impact",
+  "focusBoost": "Focus Boost",
+  "calorieTarget": "Calorie Target",
+  "yourPreferences": "Your Preferences",
+  "adjust": "Adjust",
+  "selectPreference": "Select {preference}",
+  "@selectPreference": {
+    "placeholders": {
+      "preference": {"type": "String"}
+    }
+  },
+  "keyFocusAreas": "Key Focus Areas",
+  "startMyJourney": "Start My Journey",
+  "preferencesInfoHint": "You can change these preferences anytime from your profile.",
+  "prefDailyFocus": "Daily Focus",
+  "prefMealFrequency": "Meal Frequency",
+  "prefCookingLevel": "Cooking Level",
+  "prefBudget": "Budget",
+  "optMentalClarity": "Mental Clarity",
+  "optEnergy": "Energy",
+  "optFatBurn": "Fat Burn",
+  "opt2Meals": "2 meals",
+  "opt3Meals": "3 meals",
+  "opt3MealsSnack": "3 meals + 1 snack",
+  "optBeginnerFriendly": "Beginner Friendly",
+  "optBalanced": "Balanced",
+  "optAdvanced": "Advanced",
+  "optBudgetLow": "$10-$20",
+  "optBudgetMid": "$20-$30",
+  "optBudgetHigh": "$30-$50",
+
+  "todaysSmartMenu": "Today's Smart Menu",
+  "selectionGuide": "N+1 Selection Guide",
+  "selectionGuideBody": "Choose at least N dishes for your household. We prepared one extra option per meal slot for flexibility.",
+  "dailyInsight": "Daily Insight",
+  "dailyInsightBody": "Higher protein in breakfast and lunch can reduce evening cravings and improve concentration stability.",
+  "mealBreakfast": "Breakfast",
+  "mealLunch": "Lunch",
+  "mealSnack": "Snack",
+  "mealDinner": "Dinner",
+  "caloriesKcal": "{calories} kcal",
+  "@caloriesKcal": {
+    "placeholders": {
+      "calories": {"type": "int"}
+    }
+  },
+  "aiReason": "AI reason: {reason}",
+  "@aiReason": {
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
+  },
+  "selectedProgress": "{selected} / {total} selected",
+  "@selectedProgress": {
+    "placeholders": {
+      "selected": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "caloriesAndTime": "{calories} kcal • {minutes} mins",
+  "@caloriesAndTime": {
+    "placeholders": {
+      "calories": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "menuConfirmed": "Menu confirmed ({selected}/{total})",
+  "@menuConfirmed": {
+    "placeholders": {
+      "selected": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "confirmTodaysMenu": "Confirm Today's Menu ({count})",
+  "@confirmTodaysMenu": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "accountUnavailable": "Account unavailable, please try again later"
 }

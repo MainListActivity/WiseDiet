@@ -187,6 +187,564 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'LOADING'**
   String get loading;
+
+  /// No description provided for @profileSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Setup'**
+  String get profileSetup;
+
+  /// No description provided for @aboutYouPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'About '**
+  String get aboutYouPrefix;
+
+  /// No description provided for @aboutYouHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get aboutYouHighlight;
+
+  /// No description provided for @basicInfoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us a bit about yourself so our AI can calculate your precise nutritional needs.'**
+  String get basicInfoSubtitle;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// No description provided for @genderMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get genderMale;
+
+  /// No description provided for @genderFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get genderFemale;
+
+  /// No description provided for @genderOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get genderOther;
+
+  /// No description provided for @age.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get age;
+
+  /// No description provided for @unitYears.
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get unitYears;
+
+  /// No description provided for @height.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get height;
+
+  /// No description provided for @unitCm.
+  ///
+  /// In en, this message translates to:
+  /// **'cm'**
+  String get unitCm;
+
+  /// No description provided for @weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weight;
+
+  /// No description provided for @unitKg.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get unitKg;
+
+  /// No description provided for @householdDiners.
+  ///
+  /// In en, this message translates to:
+  /// **'Household Diners'**
+  String get householdDiners;
+
+  /// No description provided for @householdDinersDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'How many people regularly eat together? This adjusts portion sizes and ingredients.'**
+  String get householdDinersDescription;
+
+  /// No description provided for @unitPersons.
+  ///
+  /// In en, this message translates to:
+  /// **'persons'**
+  String get unitPersons;
+
+  /// No description provided for @estimatedBmi.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated BMI'**
+  String get estimatedBmi;
+
+  /// No description provided for @bmiUnderweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Underweight'**
+  String get bmiUnderweight;
+
+  /// No description provided for @bmiNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal range'**
+  String get bmiNormal;
+
+  /// No description provided for @bmiOverweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Overweight'**
+  String get bmiOverweight;
+
+  /// No description provided for @bmiObesity.
+  ///
+  /// In en, this message translates to:
+  /// **'Obesity'**
+  String get bmiObesity;
+
+  /// No description provided for @nextStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Step'**
+  String get nextStep;
+
+  /// No description provided for @defineYourPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Define Your '**
+  String get defineYourPrefix;
+
+  /// No description provided for @defineYourHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Rhythm'**
+  String get defineYourHighlight;
+
+  /// No description provided for @occupationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your occupation and any specific health stages to help our AI tailor nutrition to your activity levels.'**
+  String get occupationSubtitle;
+
+  /// No description provided for @aiAnalyzingMetabolicNeeds.
+  ///
+  /// In en, this message translates to:
+  /// **'AI ANALYZING METABOLIC NEEDS...'**
+  String get aiAnalyzingMetabolicNeeds;
+
+  /// No description provided for @skipForNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get skipForNow;
+
+  /// No description provided for @allergiesAndRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies & Restrictions'**
+  String get allergiesAndRestrictions;
+
+  /// No description provided for @allergyWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: Please select all allergies and restrictions to ensure your safety.'**
+  String get allergyWarning;
+
+  /// No description provided for @safetyPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety '**
+  String get safetyPrefix;
+
+  /// No description provided for @safetyHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'First'**
+  String get safetyHighlight;
+
+  /// No description provided for @allergiesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select any allergies or dietary restrictions. This is critical — we\'ll never recommend ingredients that could harm you.'**
+  String get allergiesSubtitle;
+
+  /// No description provided for @commonAllergens.
+  ///
+  /// In en, this message translates to:
+  /// **'Common Allergens'**
+  String get commonAllergens;
+
+  /// No description provided for @dietaryPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary Preferences'**
+  String get dietaryPreferences;
+
+  /// No description provided for @otherIngredientsToAvoid.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Ingredients to Avoid'**
+  String get otherIngredientsToAvoid;
+
+  /// No description provided for @searchIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Search ingredients...'**
+  String get searchIngredients;
+
+  /// No description provided for @stepProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current}/{total}'**
+  String stepProgress(int current, int total);
+
+  /// No description provided for @familyParameters.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Parameters'**
+  String get familyParameters;
+
+  /// No description provided for @howManyPeopleEating.
+  ///
+  /// In en, this message translates to:
+  /// **'How many people are eating?'**
+  String get howManyPeopleEating;
+
+  /// No description provided for @generateStrategy.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Strategy'**
+  String get generateStrategy;
+
+  /// No description provided for @tagMuscleGain.
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle Gain'**
+  String get tagMuscleGain;
+
+  /// No description provided for @tagVegan.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegan'**
+  String get tagVegan;
+
+  /// No description provided for @tagHighProtein.
+  ///
+  /// In en, this message translates to:
+  /// **'High Protein'**
+  String get tagHighProtein;
+
+  /// No description provided for @tagLowGI.
+  ///
+  /// In en, this message translates to:
+  /// **'Low GI'**
+  String get tagLowGI;
+
+  /// No description provided for @aiAnalyzingNeeds.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Analyzing metabolic needs...'**
+  String get aiAnalyzingNeeds;
+
+  /// No description provided for @buildingStrategy.
+  ///
+  /// In en, this message translates to:
+  /// **'Building your personalized strategy'**
+  String get buildingStrategy;
+
+  /// No description provided for @poweredByWiseDietAi.
+  ///
+  /// In en, this message translates to:
+  /// **'POWERED BY WISEDIET AI'**
+  String get poweredByWiseDietAi;
+
+  /// No description provided for @errorPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String errorPrefix(String message);
+
+  /// No description provided for @yourStrategy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Strategy'**
+  String get yourStrategy;
+
+  /// No description provided for @yourPersonalizedStrategy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Personalized Strategy'**
+  String get yourPersonalizedStrategy;
+
+  /// No description provided for @healthStrategy.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Strategy'**
+  String get healthStrategy;
+
+  /// No description provided for @projectedImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Impact'**
+  String get projectedImpact;
+
+  /// No description provided for @focusBoost.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Boost'**
+  String get focusBoost;
+
+  /// No description provided for @calorieTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie Target'**
+  String get calorieTarget;
+
+  /// No description provided for @yourPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Preferences'**
+  String get yourPreferences;
+
+  /// No description provided for @adjust.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust'**
+  String get adjust;
+
+  /// No description provided for @selectPreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Select {preference}'**
+  String selectPreference(String preference);
+
+  /// No description provided for @keyFocusAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Focus Areas'**
+  String get keyFocusAreas;
+
+  /// No description provided for @startMyJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Start My Journey'**
+  String get startMyJourney;
+
+  /// No description provided for @preferencesInfoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change these preferences anytime from your profile.'**
+  String get preferencesInfoHint;
+
+  /// No description provided for @prefDailyFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Focus'**
+  String get prefDailyFocus;
+
+  /// No description provided for @prefMealFrequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal Frequency'**
+  String get prefMealFrequency;
+
+  /// No description provided for @prefCookingLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cooking Level'**
+  String get prefCookingLevel;
+
+  /// No description provided for @prefBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get prefBudget;
+
+  /// No description provided for @optMentalClarity.
+  ///
+  /// In en, this message translates to:
+  /// **'Mental Clarity'**
+  String get optMentalClarity;
+
+  /// No description provided for @optEnergy.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy'**
+  String get optEnergy;
+
+  /// No description provided for @optFatBurn.
+  ///
+  /// In en, this message translates to:
+  /// **'Fat Burn'**
+  String get optFatBurn;
+
+  /// No description provided for @opt2Meals.
+  ///
+  /// In en, this message translates to:
+  /// **'2 meals'**
+  String get opt2Meals;
+
+  /// No description provided for @opt3Meals.
+  ///
+  /// In en, this message translates to:
+  /// **'3 meals'**
+  String get opt3Meals;
+
+  /// No description provided for @opt3MealsSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'3 meals + 1 snack'**
+  String get opt3MealsSnack;
+
+  /// No description provided for @optBeginnerFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner Friendly'**
+  String get optBeginnerFriendly;
+
+  /// No description provided for @optBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get optBalanced;
+
+  /// No description provided for @optAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get optAdvanced;
+
+  /// No description provided for @optBudgetLow.
+  ///
+  /// In en, this message translates to:
+  /// **'\$10-\$20'**
+  String get optBudgetLow;
+
+  /// No description provided for @optBudgetMid.
+  ///
+  /// In en, this message translates to:
+  /// **'\$20-\$30'**
+  String get optBudgetMid;
+
+  /// No description provided for @optBudgetHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'\$30-\$50'**
+  String get optBudgetHigh;
+
+  /// No description provided for @todaysSmartMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Smart Menu'**
+  String get todaysSmartMenu;
+
+  /// No description provided for @selectionGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'N+1 Selection Guide'**
+  String get selectionGuide;
+
+  /// No description provided for @selectionGuideBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least N dishes for your household. We prepared one extra option per meal slot for flexibility.'**
+  String get selectionGuideBody;
+
+  /// No description provided for @dailyInsight.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Insight'**
+  String get dailyInsight;
+
+  /// No description provided for @dailyInsightBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Higher protein in breakfast and lunch can reduce evening cravings and improve concentration stability.'**
+  String get dailyInsightBody;
+
+  /// No description provided for @mealBreakfast.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get mealBreakfast;
+
+  /// No description provided for @mealLunch.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch'**
+  String get mealLunch;
+
+  /// No description provided for @mealSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Snack'**
+  String get mealSnack;
+
+  /// No description provided for @mealDinner.
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner'**
+  String get mealDinner;
+
+  /// No description provided for @caloriesKcal.
+  ///
+  /// In en, this message translates to:
+  /// **'{calories} kcal'**
+  String caloriesKcal(int calories);
+
+  /// No description provided for @aiReason.
+  ///
+  /// In en, this message translates to:
+  /// **'AI reason: {reason}'**
+  String aiReason(String reason);
+
+  /// No description provided for @selectedProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{selected} / {total} selected'**
+  String selectedProgress(int selected, int total);
+
+  /// No description provided for @caloriesAndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{calories} kcal • {minutes} mins'**
+  String caloriesAndTime(int calories, int minutes);
+
+  /// No description provided for @menuConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu confirmed ({selected}/{total})'**
+  String menuConfirmed(int selected, int total);
+
+  /// No description provided for @confirmTodaysMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Today\'s Menu ({count})'**
+  String confirmTodaysMenu(int count);
+
+  /// No description provided for @accountUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Account unavailable, please try again later'**
+  String get accountUnavailable;
 }
 
 class _AppLocalizationsDelegate

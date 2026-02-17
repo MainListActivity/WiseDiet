@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../l10n/l10n.dart';
 import '../providers/tag_provider.dart';
 import '../providers/onboarding_provider.dart';
 import '../widgets/neural_background.dart';
@@ -12,6 +13,7 @@ class OccupationProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final tagsAsync = ref.watch(occupationTagsProvider);
     final selectedTags = ref.watch(selectedTagsProvider);
 
@@ -33,11 +35,11 @@ class OccupationProfileScreen extends ConsumerWidget {
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          'Profile Setup',
+                          l10n.profileSetup,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -70,25 +72,25 @@ class OccupationProfileScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       RichText(
-                        text: const TextSpan(
-                          style: TextStyle(
+                        text: TextSpan(
+                          style: const TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.secondary,
                             height: 1.2,
                           ),
                           children: [
-                            TextSpan(text: 'Define Your '),
+                            TextSpan(text: l10n.defineYourPrefix),
                             TextSpan(
-                              text: 'Rhythm',
-                              style: TextStyle(color: AppTheme.primary),
+                              text: l10n.defineYourHighlight,
+                              style: const TextStyle(color: AppTheme.primary),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Select your occupation and any specific health stages to help our AI tailor nutrition to your activity levels.',
+                        l10n.occupationSubtitle,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -128,7 +130,7 @@ class OccupationProfileScreen extends ConsumerWidget {
                         ),
                       ),
                       loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (err, stack) => Center(child: Text('Error: $err')),
+                      error: (err, stack) => Center(child: Text(l10n.errorPrefix(err.toString()))),
                     ),
                   ),
                 ),
@@ -144,7 +146,7 @@ class OccupationProfileScreen extends ConsumerWidget {
                       const SizedBox(width: 8),
                       Flexible(
                         child: Text(
-                          'AI ANALYZING METABOLIC NEEDS...',
+                          l10n.aiAnalyzingMetabolicNeeds,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -176,18 +178,18 @@ class OccupationProfileScreen extends ConsumerWidget {
                                   context.go('/onboarding/allergies');
                                 }
                               : null,
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Next Step',
-                                style: TextStyle(
+                                l10n.nextStep,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(width: 8),
-                              Icon(Icons.arrow_forward, size: 20),
+                              const SizedBox(width: 8),
+                              const Icon(Icons.arrow_forward, size: 20),
                             ],
                           ),
                         ),
@@ -197,7 +199,7 @@ class OccupationProfileScreen extends ConsumerWidget {
                           context.go('/onboarding/allergies');
                         },
                         child: Text(
-                          'Skip for now',
+                          l10n.skipForNow,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[400],
