@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../providers/tag_provider.dart';
 import '../providers/onboarding_provider.dart';
-import 'family_params_screen.dart';
 
 class AllergiesRestrictionsScreen extends ConsumerStatefulWidget {
   const AllergiesRestrictionsScreen({super.key});
@@ -32,17 +32,11 @@ class _AllergiesRestrictionsScreenState
     ref.read(onboardingProvider.notifier).updateDietaryPreferences(selectedDietary);
     ref.read(onboardingProvider.notifier).updateCustomAvoidedIngredients(customIngredients);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
-    );
+    context.go('/onboarding/family');
   }
 
   void _skipToNext() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
-    );
+    context.go('/onboarding/family');
   }
 
   void _addCustomIngredient() {

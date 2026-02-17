@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../providers/tag_provider.dart';
 import '../providers/onboarding_provider.dart';
 import '../widgets/neural_background.dart';
 import '../widgets/tag_item.dart';
-import 'family_params_screen.dart';
 
 class OccupationProfileScreen extends ConsumerWidget {
   const OccupationProfileScreen({super.key});
@@ -173,10 +173,7 @@ class OccupationProfileScreen extends ConsumerWidget {
                                   ref.read(onboardingProvider.notifier).updateTags(selectedTags);
 
                                   // Navigate to next step
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
-                                  );
+                                  context.go('/onboarding/allergies');
                                 }
                               : null,
                           child: const Row(
@@ -197,10 +194,7 @@ class OccupationProfileScreen extends ConsumerWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const FamilyParamsScreen()),
-                          );
+                          context.go('/onboarding/allergies');
                         },
                         child: Text(
                           'Skip for now',

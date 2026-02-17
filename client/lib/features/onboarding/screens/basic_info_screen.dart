@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
-import 'occupation_profile_screen.dart';
 import '../providers/onboarding_provider.dart';
 
 class BasicInfoScreen extends ConsumerStatefulWidget {
@@ -348,12 +348,7 @@ class _BasicInfoScreenState extends ConsumerState<BasicInfoScreen> {
                       weight: _weight,
                       familyMembers: _familyMembers,
                     );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const OccupationProfileScreen(),
-                  ),
-                );
+                context.go('/onboarding/occupation');
               },
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,

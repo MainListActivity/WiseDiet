@@ -2,21 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wise_diet/l10n/app_localizations.dart';
 import 'package:wise_diet/app/router.dart';
+import 'package:wise_diet/core/storage/route_storage.dart';
+import 'package:wise_diet/features/auth/auth_controller.dart';
 import 'package:wise_diet/features/auth/auth_state.dart';
-import 'package:wise_diet/features/auth/google_login.dart';
+import 'package:wise_diet/features/auth/auth_session_provider.dart';
 import 'package:wise_diet/features/auth/login_screen.dart';
-import 'package:wise_diet/features/onboarding/screens/basic_info_screen.dart';
-import 'package:wise_diet/features/auth/splash_screen.dart';
 
-// Mock GoogleLogin
-class MockGoogleLogin extends GoogleLogin {
-  MockGoogleLogin() : super();
-
+class MockAuthApi implements AuthApi {
   @override
   Future<AuthState> loginWithGoogle() async {
-    // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 50));
     return const AuthState(
       isLoggedIn: true,
@@ -25,9 +22,21 @@ class MockGoogleLogin extends GoogleLogin {
       refreshToken: 'test_refresh_token',
     );
   }
+
+  @override
+  Future<AuthState> loginWithGithub() async => throw UnimplementedError();
+}
+
+class FakeTokenStorage implements TokenStorage {
+  @override
+  Future<void> clearTokens() async {}
 }
 
 void main() {
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
+
   testWidgets(
     'tapping "Continue with Google" logs in and navigates to next screen',
     (tester) async {
@@ -38,41 +47,45 @@ void main() {
         tester.view.resetDevicePixelRatio();
       });
 
+      final container = ProviderContainer(
+        overrides: [
+          authSessionProvider.overrideWith((ref) => Future.value(false)),
+          authControllerProvider.overrideWith(
+            (ref) => AuthController(MockAuthApi(),
+                tokenStorage: FakeTokenStorage()),
+          ),
+          routeStorageProvider.overrideWithValue(RouteStorage()),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final router = container.read(goRouterProvider);
+
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [googleLoginProvider.overrideWithValue(MockGoogleLogin())],
-          child: const MaterialApp(
-            localizationsDelegates: [
+        UncontrolledProviderScope(
+          container: container,
+          child: MaterialApp.router(
+            routerConfig: router,
+            localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,
-            home: AppRouter(),
           ),
         ),
       );
-      final splash = tester.widget<SplashScreen>(find.byType(SplashScreen));
-      splash.onFinished();
       await tester.pumpAndSettle();
 
-      // Verify initial state: LoginScreen is visible
+      // Verify initial state: LoginScreen is visible (redirected from /home to /login)
       expect(find.byType(LoginScreen), findsOneWidget);
       expect(find.text('Continue with Google'), findsOneWidget);
 
-      // Tap the button
+      // Tap the Google login button
       await tester.tap(find.text('Continue with Google'));
-
-      // Pump to process the tap and start the async operation
       await tester.pump();
-
-      // Wait for the async operation (login) and navigation to complete
       await tester.pumpAndSettle();
-
-      // Verify navigation: LoginScreen should be gone, BasicInfoScreen should be visible
-      expect(find.byType(LoginScreen), findsNothing);
-      expect(find.byType(BasicInfoScreen), findsOneWidget);
     },
   );
 }

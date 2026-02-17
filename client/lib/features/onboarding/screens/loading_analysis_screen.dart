@@ -3,11 +3,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../core/network/api_client_provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../providers/onboarding_provider.dart';
 import '../services/onboarding_service.dart';
-import 'strategy_report_screen.dart';
 
 class LoadingAnalysisScreen extends ConsumerStatefulWidget {
   const LoadingAnalysisScreen({
@@ -102,12 +103,7 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
         );
       }
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => StrategyReportScreen(strategy: strategy),
-        ),
-      );
+      context.go('/onboarding/strategy', extra: strategy);
     } catch (e) {
       if (!mounted) {
         return;
@@ -116,7 +112,7 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.pop(context);
+      context.go('/onboarding/family');
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../today/screens/today_smart_menu_feed_screen.dart';
 
 class StrategyReportScreen extends StatefulWidget {
   final Map<String, dynamic> strategy;
@@ -411,18 +411,7 @@ class _StrategyReportScreenState extends State<StrategyReportScreen> {
                       shadowColor: AppTheme.primary.withOpacity(0.32),
                     ),
                     onPressed: () {
-                      final requiredSelections =
-                          strategy['family_members'] is int
-                          ? strategy['family_members'] as int
-                          : 1;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TodaySmartMenuFeedScreen(
-                            requiredSelections: requiredSelections,
-                          ),
-                        ),
-                      );
+                      context.go('/home');
                     },
                     icon: const Icon(Icons.arrow_forward),
                     label: Text(ctaText),

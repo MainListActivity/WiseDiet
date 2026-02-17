@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/onboarding_provider.dart';
-import 'loading_analysis_screen.dart';
 
 class FamilyParamsScreen extends ConsumerStatefulWidget {
   const FamilyParamsScreen({super.key});
@@ -49,10 +49,7 @@ class _FamilyParamsScreenState extends ConsumerState<FamilyParamsScreen> {
             ElevatedButton(
               onPressed: () {
                 ref.read(onboardingProvider.notifier).updateFamilyMembers(_members);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoadingAnalysisScreen()),
-                );
+                context.go('/onboarding/loading');
               },
               child: const Text('Generate Strategy'),
             ),
