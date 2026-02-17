@@ -1,32 +1,64 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import '../../features/auth/auth_controller.dart';
 
-class ApiClient {
-  ApiClient(this._authController, {http.Client? httpClient})
-      : _httpClient = httpClient ?? http.Client();
+typedef ResponseHook = Future<void> Function();
 
-  final AuthController _authController;
-  final http.Client _httpClient;
+abstract class AccessTokenProvider {
+  Future<String?> readAccessToken();
+}
 
-  Future<http.Response> get(Uri uri) async {
-    final response = await _httpClient.get(uri);
-    await _handleResponse(response);
-    return response;
-  }
+class SecureAccessTokenProvider implements AccessTokenProvider {
+  SecureAccessTokenProvider({FlutterSecureStorage? storage})
+    : _storage = storage ?? const FlutterSecureStorage();
 
-  Future<http.Response> post(Uri uri, {Object? body, Map<String, String>? headers}) async {
-    final response = await _httpClient.post(uri, body: body, headers: headers);
-    await _handleResponse(response);
-    return response;
-  }
+  final FlutterSecureStorage _storage;
 
-  Future<void> _handleResponse(http.Response response) async {
+  @override
+  Future<String?> readAccessToken() => _storage.read(key: 'accessToken');
+}
+
+class ApiClient extends http.BaseClient {
+  ApiClient({
+    ResponseHook? onUnauthorized,
+    ResponseHook? onOnboardingRequired,
+    AccessTokenProvider? accessTokenProvider,
+    http.Client? httpClient,
+  }) : _onUnauthorized = onUnauthorized ?? _noop,
+       _onOnboardingRequired = onOnboardingRequired ?? _noop,
+       _accessTokenProvider =
+           accessTokenProvider ?? SecureAccessTokenProvider(),
+       _inner = httpClient ?? http.Client();
+
+  final ResponseHook _onUnauthorized;
+  final ResponseHook _onOnboardingRequired;
+  final AccessTokenProvider _accessTokenProvider;
+  final http.Client _inner;
+
+  static Future<void> _noop() async {}
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final token = await _accessTokenProvider.readAccessToken();
+    if (token != null &&
+        token.isNotEmpty &&
+        !request.headers.containsKey('Authorization')) {
+      request.headers['Authorization'] = 'Bearer $token';
+    }
+
+    final response = await _inner.send(request);
+
     if (response.statusCode == 401) {
-      await _authController.handleUnauthorized();
-      return;
+      await _onUnauthorized();
+    } else if (response.statusCode == 403 &&
+        response.headers['x-error-code'] == 'ONBOARDING_REQUIRED') {
+      await _onOnboardingRequired();
     }
-    if (response.statusCode == 403 && response.headers['x-error-code'] == 'ONBOARDING_REQUIRED') {
-      await _authController.handleOnboardingRequired();
-    }
+
+    return response;
+  }
+
+  @override
+  void close() {
+    _inner.close();
   }
 }

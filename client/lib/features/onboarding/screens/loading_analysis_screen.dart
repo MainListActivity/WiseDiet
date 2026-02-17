@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/network/api_client_provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../providers/onboarding_provider.dart';
 import '../services/onboarding_service.dart';
@@ -33,16 +34,34 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
   late final OnboardingService _service;
 
   static const _floatingTags = <_FloatingTagData>[
-    _FloatingTagData(label: 'Muscle Gain', alignment: Alignment(-0.92, -0.36), phase: 0.0),
-    _FloatingTagData(label: 'Vegan', alignment: Alignment(0.94, -0.14), phase: 1.1),
-    _FloatingTagData(label: 'High Protein', alignment: Alignment(-0.78, 0.34), phase: 2.2),
-    _FloatingTagData(label: 'Low GI', alignment: Alignment(0.88, 0.42), phase: 3.0),
+    _FloatingTagData(
+      label: 'Muscle Gain',
+      alignment: Alignment(-0.92, -0.36),
+      phase: 0.0,
+    ),
+    _FloatingTagData(
+      label: 'Vegan',
+      alignment: Alignment(0.94, -0.14),
+      phase: 1.1,
+    ),
+    _FloatingTagData(
+      label: 'High Protein',
+      alignment: Alignment(-0.78, 0.34),
+      phase: 2.2,
+    ),
+    _FloatingTagData(
+      label: 'Low GI',
+      alignment: Alignment(0.88, 0.42),
+      phase: 3.0,
+    ),
   ];
 
   @override
   void initState() {
     super.initState();
-    _service = widget._service ?? OnboardingService();
+    _service =
+        widget._service ??
+        OnboardingService(client: ref.read(apiClientProvider));
 
     _ringController = AnimationController(
       vsync: this,
@@ -77,7 +96,10 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
       }
 
       if (_progressController.value < 1.0) {
-        _progressController.animateTo(1.0, duration: const Duration(milliseconds: 550));
+        _progressController.animateTo(
+          1.0,
+          duration: const Duration(milliseconds: 550),
+        );
       }
 
       Navigator.pushReplacement(
@@ -126,7 +148,11 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFFF2F7FF), Color(0xFFE9F1FF), Color(0xFFF8FCFF)],
+                    colors: [
+                      Color(0xFFF2F7FF),
+                      Color(0xFFE9F1FF),
+                      Color(0xFFF8FCFF),
+                    ],
                   ),
                 ),
               ),
@@ -134,12 +160,18 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
               Positioned(
                 left: -90,
                 top: 70,
-                child: _BlurOrb(color: AppTheme.primary.withOpacity(0.14), size: 210),
+                child: _BlurOrb(
+                  color: AppTheme.primary.withOpacity(0.14),
+                  size: 210,
+                ),
               ),
               Positioned(
                 right: -70,
                 bottom: 120,
-                child: _BlurOrb(color: AppTheme.secondary.withOpacity(0.12), size: 190),
+                child: _BlurOrb(
+                  color: AppTheme.secondary.withOpacity(0.12),
+                  size: 190,
+                ),
               ),
               Align(
                 child: SizedBox(
@@ -344,12 +376,7 @@ class _BlurOrb extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: RadialGradient(
-            colors: [
-              color,
-              color.withOpacity(0),
-            ],
-          ),
+          gradient: RadialGradient(colors: [color, color.withOpacity(0)]),
         ),
       ),
     );

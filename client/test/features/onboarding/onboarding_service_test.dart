@@ -6,17 +6,8 @@ import 'package:http/testing.dart';
 import 'package:wise_diet/features/onboarding/models/user_profile.dart';
 import 'package:wise_diet/features/onboarding/services/onboarding_service.dart';
 
-class _FakeAccessTokenProvider implements AccessTokenProvider {
-  _FakeAccessTokenProvider(this._token);
-
-  final String? _token;
-
-  @override
-  Future<String?> readAccessToken() async => _token;
-}
-
 void main() {
-  test('submitProfile should send bearer token and profile payload', () async {
+  test('submitProfile should send profile payload', () async {
     Map<String, String>? capturedHeaders;
     Map<String, dynamic>? capturedBody;
 
@@ -26,10 +17,7 @@ void main() {
       return http.Response('{}', 200);
     });
 
-    final service = OnboardingService(
-      client: mockClient,
-      accessTokenProvider: _FakeAccessTokenProvider('token-123'),
-    );
+    final service = OnboardingService(client: mockClient);
 
     await service.submitProfile(
       UserProfile(
@@ -42,7 +30,7 @@ void main() {
       ),
     );
 
-    expect(capturedHeaders?['Authorization'], 'Bearer token-123');
+    expect(capturedHeaders?['Content-Type'], 'application/json');
     expect(capturedBody?['familyMembers'], 3);
     expect(capturedBody?['occupationTagIds'], '1,2');
   });

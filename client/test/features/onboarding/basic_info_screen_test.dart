@@ -84,7 +84,7 @@ void main() {
 
     await tester.ensureVisible(find.byKey(const Key('basic_info_next_button')));
     await tester.tap(find.byKey(const Key('basic_info_next_button')));
-    await tester.pumpAndSettle();
+    await tester.pump();
 
     final profile = container.read(onboardingProvider);
     expect(profile.gender, 'Other');

@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/network/api_config.dart';
+import '../../core/network/api_client.dart';
+import '../../core/network/api_client_provider.dart';
 import 'auth_state.dart';
 
 class GithubLogin {
@@ -17,7 +19,7 @@ class GithubLogin {
     FlutterSecureStorage? storage,
     Future<bool> Function(Uri url)? launcher,
   }) : _appLinks = appLinks ?? AppLinks(),
-       _httpClient = httpClient ?? http.Client(),
+       _httpClient = httpClient ?? ApiClient(),
        _storage = storage ?? const FlutterSecureStorage(),
        _launcher = launcher ?? launchUrl;
 
@@ -82,4 +84,7 @@ class GithubLogin {
   }
 }
 
-final githubLoginProvider = Provider<GithubLogin>((ref) => GithubLogin());
+final githubLoginProvider = Provider<GithubLogin>((ref) {
+  final client = ref.watch(authApiClientProvider);
+  return GithubLogin(httpClient: client);
+});

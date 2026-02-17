@@ -8,11 +8,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../core/network/api_config.dart';
+import '../../core/network/api_client.dart';
+import '../../core/network/api_client_provider.dart';
 import 'auth_state.dart';
 
 class GoogleLogin {
   GoogleLogin({http.Client? httpClient, FlutterSecureStorage? storage})
-    : _httpClient = httpClient ?? http.Client(),
+    : _httpClient = httpClient ?? ApiClient(),
       _storage = storage ?? const FlutterSecureStorage();
 
   final http.Client _httpClient;
@@ -24,7 +26,9 @@ class GoogleLogin {
     );
 
     if (uriResponse.statusCode != 200) {
-      debugPrint('[GoogleLogin] GET /api/auth/google failed: ${uriResponse.statusCode}');
+      debugPrint(
+        '[GoogleLogin] GET /api/auth/google failed: ${uriResponse.statusCode}',
+      );
       return AuthState.initial();
     }
 
@@ -32,7 +36,9 @@ class GoogleLogin {
     final clientId = uriBody['clientId'] as String?;
     final scopes = (uriBody['scopes'] as List<dynamic>?)?.cast<String>();
     final state = uriBody['state'] as String?;
-    debugPrint('[GoogleLogin] clientId=$clientId, scopes=$scopes, state=$state');
+    debugPrint(
+      '[GoogleLogin] clientId=$clientId, scopes=$scopes, state=$state',
+    );
 
     if (clientId == null || state == null) {
       debugPrint('[GoogleLogin] clientId or state is null');
@@ -62,7 +68,9 @@ class GoogleLogin {
     );
 
     if (response.statusCode != 200) {
-      debugPrint('[GoogleLogin] POST /api/auth/google failed: ${response.statusCode} ${response.body}');
+      debugPrint(
+        '[GoogleLogin] POST /api/auth/google failed: ${response.statusCode} ${response.body}',
+      );
       return AuthState.initial();
     }
 
@@ -70,7 +78,9 @@ class GoogleLogin {
     final accessToken = body['accessToken'] as String?;
     final refreshToken = body['refreshToken'] as String?;
     if (accessToken == null || refreshToken == null) {
-      debugPrint('[GoogleLogin] tokens are null: accessToken=$accessToken, refreshToken=$refreshToken');
+      debugPrint(
+        '[GoogleLogin] tokens are null: accessToken=$accessToken, refreshToken=$refreshToken',
+      );
       return AuthState.initial();
     }
 
@@ -105,4 +115,7 @@ class GoogleLogin {
   }
 }
 
-final googleLoginProvider = Provider<GoogleLogin>((ref) => GoogleLogin());
+final googleLoginProvider = Provider<GoogleLogin>((ref) {
+  final client = ref.watch(authApiClientProvider);
+  return GoogleLogin(httpClient: client);
+});
