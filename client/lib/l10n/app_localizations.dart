@@ -745,6 +745,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account unavailable, please try again later'**
   String get accountUnavailable;
+
+  /// No description provided for @navToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get navToday;
+
+  /// No description provided for @navShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get navShopping;
+
+  /// No description provided for @navHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get navHistory;
+
+  /// No description provided for @shoppingPlaceholderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping List'**
+  String get shoppingPlaceholderTitle;
+
+  /// No description provided for @shoppingPlaceholderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your smart shopping list is coming soon.'**
+  String get shoppingPlaceholderBody;
+
+  /// No description provided for @historyPlaceholderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'History & Me'**
+  String get historyPlaceholderTitle;
+
+  /// No description provided for @historyPlaceholderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your meal history and insights are coming soon.'**
+  String get historyPlaceholderBody;
+
+  /// No description provided for @profileCardViewProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'View profile'**
+  String get profileCardViewProfile;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get profileLogout;
+
+  /// No description provided for @profileLogoutConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out?'**
+  String get profileLogoutConfirmTitle;
+
+  /// No description provided for @profileLogoutConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You will need to sign in again.'**
+  String get profileLogoutConfirmBody;
+
+  /// No description provided for @profileLogoutConfirmCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get profileLogoutConfirmCancel;
+
+  /// No description provided for @profileLogoutConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get profileLogoutConfirmAction;
 }
 
 class _AppLocalizationsDelegate

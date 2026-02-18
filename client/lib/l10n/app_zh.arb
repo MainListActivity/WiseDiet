@@ -115,5 +115,20 @@
   "menuConfirmed": "菜单已确认 ({selected}/{total})",
   "confirmTodaysMenu": "确认今日菜单 ({count})",
 
-  "accountUnavailable": "账号暂不可用，稍后重试"
+  "accountUnavailable": "账号暂不可用，稍后重试",
+
+  "navToday": "今日",
+  "navShopping": "采购",
+  "navHistory": "档案",
+  "shoppingPlaceholderTitle": "采购清单",
+  "shoppingPlaceholderBody": "智能采购清单即将推出。",
+  "historyPlaceholderTitle": "档案与历史",
+  "historyPlaceholderBody": "你的饮食历史和洞察即将推出。",
+  "profileCardViewProfile": "查看个人信息",
+  "profileTitle": "个人信息",
+  "profileLogout": "退出登录",
+  "profileLogoutConfirmTitle": "确认退出？",
+  "profileLogoutConfirmBody": "退出后需要重新登录。",
+  "profileLogoutConfirmCancel": "取消",
+  "profileLogoutConfirmAction": "退出登录"
 }

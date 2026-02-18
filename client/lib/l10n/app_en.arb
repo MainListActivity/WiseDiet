@@ -164,5 +164,20 @@
     }
   },
 
-  "accountUnavailable": "Account unavailable, please try again later"
+  "accountUnavailable": "Account unavailable, please try again later",
+
+  "navToday": "Today",
+  "navShopping": "Shopping",
+  "navHistory": "History",
+  "shoppingPlaceholderTitle": "Shopping List",
+  "shoppingPlaceholderBody": "Your smart shopping list is coming soon.",
+  "historyPlaceholderTitle": "History & Me",
+  "historyPlaceholderBody": "Your meal history and insights are coming soon.",
+  "profileCardViewProfile": "View profile",
+  "profileTitle": "Profile",
+  "profileLogout": "Log out",
+  "profileLogoutConfirmTitle": "Log out?",
+  "profileLogoutConfirmBody": "You will need to sign in again.",
+  "profileLogoutConfirmCancel": "Cancel",
+  "profileLogoutConfirmAction": "Log out"
 }

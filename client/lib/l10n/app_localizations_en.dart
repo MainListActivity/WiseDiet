@@ -359,4 +359,48 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get accountUnavailable =>
       'Account unavailable, please try again later';
+
+  @override
+  String get navToday => 'Today';
+
+  @override
+  String get navShopping => 'Shopping';
+
+  @override
+  String get navHistory => 'History';
+
+  @override
+  String get shoppingPlaceholderTitle => 'Shopping List';
+
+  @override
+  String get shoppingPlaceholderBody =>
+      'Your smart shopping list is coming soon.';
+
+  @override
+  String get historyPlaceholderTitle => 'History & Me';
+
+  @override
+  String get historyPlaceholderBody =>
+      'Your meal history and insights are coming soon.';
+
+  @override
+  String get profileCardViewProfile => 'View profile';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profileLogout => 'Log out';
+
+  @override
+  String get profileLogoutConfirmTitle => 'Log out?';
+
+  @override
+  String get profileLogoutConfirmBody => 'You will need to sign in again.';
+
+  @override
+  String get profileLogoutConfirmCancel => 'Cancel';
+
+  @override
+  String get profileLogoutConfirmAction => 'Log out';
 }

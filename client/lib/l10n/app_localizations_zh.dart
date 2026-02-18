@@ -349,4 +349,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get accountUnavailable => '账号暂不可用，稍后重试';
+
+  @override
+  String get navToday => '今日';
+
+  @override
+  String get navShopping => '采购';
+
+  @override
+  String get navHistory => '档案';
+
+  @override
+  String get shoppingPlaceholderTitle => '采购清单';
+
+  @override
+  String get shoppingPlaceholderBody => '智能采购清单即将推出。';
+
+  @override
+  String get historyPlaceholderTitle => '档案与历史';
+
+  @override
+  String get historyPlaceholderBody => '你的饮食历史和洞察即将推出。';
+
+  @override
+  String get profileCardViewProfile => '查看个人信息';
+
+  @override
+  String get profileTitle => '个人信息';
+
+  @override
+  String get profileLogout => '退出登录';
+
+  @override
+  String get profileLogoutConfirmTitle => '确认退出？';
+
+  @override
+  String get profileLogoutConfirmBody => '退出后需要重新登录。';
+
+  @override
+  String get profileLogoutConfirmCancel => '取消';
+
+  @override
+  String get profileLogoutConfirmAction => '退出登录';
 }
