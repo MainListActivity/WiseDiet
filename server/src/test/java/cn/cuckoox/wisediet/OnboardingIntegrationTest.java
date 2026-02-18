@@ -53,6 +53,7 @@ public class OnboardingIntegrationTest extends AbstractIntegrationTest {
                                 UserProfile saved = response.getResponseBody();
                                 assertNotNull(saved);
                                 assertNotNull(saved.getId());
+                                assertNotNull(saved.getUserId());
                                 assertEquals("Male", saved.getGender());
                                 assertEquals("1,2", saved.getOccupationTagIds());
                             });

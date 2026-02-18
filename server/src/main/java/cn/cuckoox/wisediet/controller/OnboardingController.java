@@ -3,6 +3,7 @@ package cn.cuckoox.wisediet.controller;
 import cn.cuckoox.wisediet.i18n.RequestLocaleResolver;
 import cn.cuckoox.wisediet.model.UserProfile;
 import cn.cuckoox.wisediet.repository.UserProfileRepository;
+import cn.cuckoox.wisediet.security.CurrentUserService;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
@@ -21,18 +22,25 @@ public class OnboardingController {
     private final UserProfileRepository userProfileRepository;
     private final MessageSource messageSource;
     private final RequestLocaleResolver requestLocaleResolver;
+    private final CurrentUserService currentUserService;
 
     public OnboardingController(UserProfileRepository userProfileRepository,
                                 MessageSource messageSource,
-                                RequestLocaleResolver requestLocaleResolver) {
+                                RequestLocaleResolver requestLocaleResolver,
+                                CurrentUserService currentUserService) {
         this.userProfileRepository = userProfileRepository;
         this.messageSource = messageSource;
         this.requestLocaleResolver = requestLocaleResolver;
+        this.currentUserService = currentUserService;
     }
 
     @PostMapping("/profile")
     public Mono<UserProfile> saveProfile(@Valid @RequestBody UserProfile profile) {
-        return userProfileRepository.save(profile);
+        return currentUserService.currentUserId()
+                .flatMap(userId -> {
+                    profile.setUserId(userId);
+                    return userProfileRepository.save(profile);
+                });
     }
 
     @GetMapping("/strategy")
