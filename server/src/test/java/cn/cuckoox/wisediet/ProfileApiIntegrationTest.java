@@ -15,7 +15,7 @@ import reactor.test.StepVerifier;
 import java.time.Duration;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProfileApiIntegrationTest extends AbstractIntegrationTest {
 
@@ -43,12 +43,14 @@ public class ProfileApiIntegrationTest extends AbstractIntegrationTest {
                             .header("Authorization", "Bearer " + pair.token())
                             .exchange()
                             .expectStatus().isOk()
-                            .expectBody()
-                            .jsonPath("$.gender").isEqualTo("Male")
-                            .jsonPath("$.age").isEqualTo(30)
-                            .jsonPath("$.height").isEqualTo(175.0)
-                            .jsonPath("$.weight").isEqualTo(75.0)
-                            .jsonPath("$.familyMembers").isEqualTo(2);
+                            .expectBody(UserProfile.class)
+                            .value(profile -> {
+                                assertThat(profile.getGender()).isEqualTo("Male");
+                                assertThat(profile.getAge()).isEqualTo(30);
+                                assertThat(profile.getHeight()).isEqualTo(175.0);
+                                assertThat(profile.getWeight()).isEqualTo(75.0);
+                                assertThat(profile.getFamilyMembers()).isEqualTo(2);
+                            });
                     return true;
                 }).subscribeOn(Schedulers.boundedElastic()));
 
@@ -87,9 +89,11 @@ public class ProfileApiIntegrationTest extends AbstractIntegrationTest {
                             .bodyValue(Map.of("weight", 80.5))
                             .exchange()
                             .expectStatus().isOk()
-                            .expectBody()
-                            .jsonPath("$.weight").isEqualTo(80.5)
-                            .jsonPath("$.age").isEqualTo(30);
+                            .expectBody(UserProfile.class)
+                            .value(profile -> {
+                                assertThat(profile.getWeight()).isEqualTo(80.5);
+                                assertThat(profile.getAge()).isEqualTo(30);
+                            });
                     return true;
                 }).subscribeOn(Schedulers.boundedElastic()));
 
@@ -106,8 +110,8 @@ public class ProfileApiIntegrationTest extends AbstractIntegrationTest {
                             .bodyValue(Map.of("occupationTagIds", "3,4,5"))
                             .exchange()
                             .expectStatus().isOk()
-                            .expectBody()
-                            .jsonPath("$.occupationTagIds").isEqualTo("3,4,5");
+                            .expectBody(UserProfile.class)
+                            .value(profile -> assertThat(profile.getOccupationTagIds()).isEqualTo("3,4,5"));
                     return true;
                 }).subscribeOn(Schedulers.boundedElastic()));
 
