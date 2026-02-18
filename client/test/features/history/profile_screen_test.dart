@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,7 +7,11 @@ import 'package:wise_diet/features/auth/auth_controller.dart';
 import 'package:wise_diet/features/auth/auth_state.dart';
 import 'package:wise_diet/features/history/providers/profile_provider.dart';
 import 'package:wise_diet/features/history/screens/profile_screen.dart';
+import 'package:wise_diet/features/onboarding/models/allergen_tag.dart';
+import 'package:wise_diet/features/onboarding/models/dietary_preference_tag.dart';
+import 'package:wise_diet/features/onboarding/models/occupation_tag.dart';
 import 'package:wise_diet/features/onboarding/models/user_profile.dart';
+import 'package:wise_diet/features/onboarding/providers/tag_provider.dart';
 import 'package:wise_diet/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,15 +37,18 @@ class FakeTokenStorage implements TokenStorage {
 class _FakeProfileNotifier extends ProfileNotifier {
   _FakeProfileNotifier(this._value);
   final AsyncValue<UserProfile> _value;
+  final _completer = Completer<UserProfile>();
 
   @override
-  Future<UserProfile> build() async {
+  Future<UserProfile> build() {
     if (_value is AsyncData<UserProfile>) {
-      return (_value as AsyncData<UserProfile>).value;
+      return Future.value((_value as AsyncData<UserProfile>).value);
     }
-    if (_value is AsyncError) throw (_value as AsyncError).error;
-    await Future.delayed(const Duration(seconds: 60));
-    throw UnimplementedError();
+    if (_value is AsyncError) {
+      return Future.error((_value as AsyncError).error);
+    }
+    // Loading state: never completes within the test
+    return _completer.future;
   }
 }
 
@@ -59,10 +68,18 @@ final _testProfile = UserProfile(
 
 // ---- Helper builders ----
 
+final _emptyOccupationTags = <OccupationTag>[];
+final _emptyAllergenTags = <AllergenTag>[];
+final _emptyDietaryTags = <DietaryPreferenceTag>[];
+
 Widget buildProfileScreen(AsyncValue<UserProfile> profileValue) {
   return ProviderScope(
     overrides: [
       profileProvider.overrideWith(() => _FakeProfileNotifier(profileValue)),
+      occupationTagsProvider.overrideWith((_) async => _emptyOccupationTags),
+      allergenTagsProvider.overrideWith((_) async => _emptyAllergenTags),
+      dietaryPreferenceTagsProvider
+          .overrideWith((_) async => _emptyDietaryTags),
     ],
     child: const MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -82,6 +99,10 @@ Widget buildProfileScreenWithAuth({
       authControllerProvider.overrideWith(
         (ref) => authControllerFactory(),
       ),
+      occupationTagsProvider.overrideWith((_) async => _emptyOccupationTags),
+      allergenTagsProvider.overrideWith((_) async => _emptyAllergenTags),
+      dietaryPreferenceTagsProvider
+          .overrideWith((_) async => _emptyDietaryTags),
     ],
     child: const MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -98,16 +119,16 @@ void main() {
 
   // ---- Legacy auth tests (updated for new ProfileScreen) ----
 
-  testWidgets('renders profile screen with avatar and logout button',
+  testWidgets('renders profile screen with title and logout button',
       (tester) async {
     await tester.pumpWidget(
       buildProfileScreenWithAuth(
-        profileValue: const AsyncValue.loading(),
+        profileValue: AsyncValue.data(_testProfile),
         authControllerFactory: () =>
             AuthController(FakeAuthApi(), tokenStorage: FakeTokenStorage()),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.text('Profile'), findsOneWidget);
     expect(find.byKey(const Key('logout-button')), findsOneWidget);
@@ -123,6 +144,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('logout-button')),
+      100,
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('logout-button')));
     await tester.pumpAndSettle();
 
@@ -151,11 +177,20 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('logout-button')),
+      100,
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('logout-button')));
     await tester.pumpAndSettle();
 
-    // Tap the confirm action in the dialog
-    await tester.tap(find.widgetWithText(TextButton, 'Log out'));
+    // Tap the confirm action in the dialog (find by key in dialog actions)
+    final logoutActionButton = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.widgetWithText(TextButton, 'Log out'),
+    );
+    await tester.tap(logoutActionButton);
     await tester.pumpAndSettle();
 
     expect(tokenStorage.cleared, isTrue);
@@ -238,8 +273,13 @@ void main() {
     await tester
         .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('profile-edit-occupation')));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('profile-edit-occupation')),
+      100,
+    );
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('profile-edit-occupation')));
+    await tester.pump();
     expect(find.byKey(const Key('profile-tag-bottom-sheet')), findsOneWidget);
   });
 }
