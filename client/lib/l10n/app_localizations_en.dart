@@ -403,4 +403,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileLogoutConfirmAction => 'Log out';
+
+  @override
+  String get profileSectionBasicInfo => 'Basic Info';
+
+  @override
+  String get profileSectionHousehold => 'Household';
+
+  @override
+  String get profileSectionOccupation => 'Occupation Tags';
+
+  @override
+  String get profileSectionDiet => 'Diet & Allergies';
+
+  @override
+  String get profileFieldGender => 'Gender';
+
+  @override
+  String get profileFieldAge => 'Age';
+
+  @override
+  String get profileFieldHeight => 'Height';
+
+  @override
+  String get profileFieldWeight => 'Weight';
+
+  @override
+  String get profileFieldFamilyMembers => 'Household Diners';
+
+  @override
+  String get profileFieldOccupationTags => 'Occupation Tags';
+
+  @override
+  String get profileFieldAllergens => 'Allergens';
+
+  @override
+  String get profileFieldDietaryPreferences => 'Dietary Preferences';
+
+  @override
+  String get profileFieldCustomAvoid => 'Custom Avoid';
+
+  @override
+  String get profileEditButton => 'Edit';
+
+  @override
+  String get profileSaveError => 'Failed to save. Please try again.';
+
+  @override
+  String get profileNoTags => 'None selected';
+
+  @override
+  String get profileNoCustomAvoid => 'None';
 }

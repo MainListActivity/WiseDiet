@@ -829,6 +829,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log out'**
   String get profileLogoutConfirmAction;
+
+  /// No description provided for @profileSectionBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get profileSectionBasicInfo;
+
+  /// No description provided for @profileSectionHousehold.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get profileSectionHousehold;
+
+  /// No description provided for @profileSectionOccupation.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupation Tags'**
+  String get profileSectionOccupation;
+
+  /// No description provided for @profileSectionDiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Diet & Allergies'**
+  String get profileSectionDiet;
+
+  /// No description provided for @profileFieldGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get profileFieldGender;
+
+  /// No description provided for @profileFieldAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get profileFieldAge;
+
+  /// No description provided for @profileFieldHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get profileFieldHeight;
+
+  /// No description provided for @profileFieldWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get profileFieldWeight;
+
+  /// No description provided for @profileFieldFamilyMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Household Diners'**
+  String get profileFieldFamilyMembers;
+
+  /// No description provided for @profileFieldOccupationTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupation Tags'**
+  String get profileFieldOccupationTags;
+
+  /// No description provided for @profileFieldAllergens.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergens'**
+  String get profileFieldAllergens;
+
+  /// No description provided for @profileFieldDietaryPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary Preferences'**
+  String get profileFieldDietaryPreferences;
+
+  /// No description provided for @profileFieldCustomAvoid.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Avoid'**
+  String get profileFieldCustomAvoid;
+
+  /// No description provided for @profileEditButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get profileEditButton;
+
+  /// No description provided for @profileSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save. Please try again.'**
+  String get profileSaveError;
+
+  /// No description provided for @profileNoTags.
+  ///
+  /// In en, this message translates to:
+  /// **'None selected'**
+  String get profileNoTags;
+
+  /// No description provided for @profileNoCustomAvoid.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get profileNoCustomAvoid;
 }
 
 class _AppLocalizationsDelegate

@@ -179,5 +179,22 @@
   "profileLogoutConfirmTitle": "Log out?",
   "profileLogoutConfirmBody": "You will need to sign in again.",
   "profileLogoutConfirmCancel": "Cancel",
-  "profileLogoutConfirmAction": "Log out"
+  "profileLogoutConfirmAction": "Log out",
+  "profileSectionBasicInfo": "Basic Info",
+  "profileSectionHousehold": "Household",
+  "profileSectionOccupation": "Occupation Tags",
+  "profileSectionDiet": "Diet & Allergies",
+  "profileFieldGender": "Gender",
+  "profileFieldAge": "Age",
+  "profileFieldHeight": "Height",
+  "profileFieldWeight": "Weight",
+  "profileFieldFamilyMembers": "Household Diners",
+  "profileFieldOccupationTags": "Occupation Tags",
+  "profileFieldAllergens": "Allergens",
+  "profileFieldDietaryPreferences": "Dietary Preferences",
+  "profileFieldCustomAvoid": "Custom Avoid",
+  "profileEditButton": "Edit",
+  "profileSaveError": "Failed to save. Please try again.",
+  "profileNoTags": "None selected",
+  "profileNoCustomAvoid": "None"
 }

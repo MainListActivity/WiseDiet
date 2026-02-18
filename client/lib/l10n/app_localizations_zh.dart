@@ -391,4 +391,55 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get profileLogoutConfirmAction => '退出登录';
+
+  @override
+  String get profileSectionBasicInfo => '基本信息';
+
+  @override
+  String get profileSectionHousehold => '居家参数';
+
+  @override
+  String get profileSectionOccupation => '职业标签';
+
+  @override
+  String get profileSectionDiet => '饮食偏好与过敏';
+
+  @override
+  String get profileFieldGender => '性别';
+
+  @override
+  String get profileFieldAge => '年龄';
+
+  @override
+  String get profileFieldHeight => '身高';
+
+  @override
+  String get profileFieldWeight => '体重';
+
+  @override
+  String get profileFieldFamilyMembers => '家庭用餐人数';
+
+  @override
+  String get profileFieldOccupationTags => '职业标签';
+
+  @override
+  String get profileFieldAllergens => '过敏原';
+
+  @override
+  String get profileFieldDietaryPreferences => '饮食偏好';
+
+  @override
+  String get profileFieldCustomAvoid => '自定义忌口';
+
+  @override
+  String get profileEditButton => '编辑';
+
+  @override
+  String get profileSaveError => '保存失败，请重试';
+
+  @override
+  String get profileNoTags => '未选择';
+
+  @override
+  String get profileNoCustomAvoid => '无';
 }

@@ -130,5 +130,22 @@
   "profileLogoutConfirmTitle": "确认退出？",
   "profileLogoutConfirmBody": "退出后需要重新登录。",
   "profileLogoutConfirmCancel": "取消",
-  "profileLogoutConfirmAction": "退出登录"
+  "profileLogoutConfirmAction": "退出登录",
+  "profileSectionBasicInfo": "基本信息",
+  "profileSectionHousehold": "居家参数",
+  "profileSectionOccupation": "职业标签",
+  "profileSectionDiet": "饮食偏好与过敏",
+  "profileFieldGender": "性别",
+  "profileFieldAge": "年龄",
+  "profileFieldHeight": "身高",
+  "profileFieldWeight": "体重",
+  "profileFieldFamilyMembers": "家庭用餐人数",
+  "profileFieldOccupationTags": "职业标签",
+  "profileFieldAllergens": "过敏原",
+  "profileFieldDietaryPreferences": "饮食偏好",
+  "profileFieldCustomAvoid": "自定义忌口",
+  "profileEditButton": "编辑",
+  "profileSaveError": "保存失败，请重试",
+  "profileNoTags": "未选择",
+  "profileNoCustomAvoid": "无"
 }
