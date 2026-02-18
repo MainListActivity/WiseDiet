@@ -1,13 +1,12 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import '../../../core/network/api_client.dart';
 import '../../../core/network/api_config.dart';
 import '../models/user_profile.dart';
 
 class OnboardingService {
-  OnboardingService({http.Client? client}) : _client = client ?? ApiClient();
+  OnboardingService({ApiClient? client}) : _client = client ?? ApiClient();
 
-  final http.Client _client;
+  final ApiClient _client;
 
   Future<void> submitProfile(UserProfile profile) async {
     final response = await _client.post(

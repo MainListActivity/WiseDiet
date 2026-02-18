@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
-
+import '../../../core/network/api_client.dart';
 import '../../../core/network/api_config.dart';
 import '../../onboarding/models/user_profile.dart';
 
 class ProfileService {
-  ProfileService({required http.Client client}) : _client = client;
+  ProfileService({required ApiClient client}) : _client = client;
 
-  final http.Client _client;
+  final ApiClient _client;
 
   Future<UserProfile> getProfile() async {
     final response = await _client.get(

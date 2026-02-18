@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../core/network/api_config.dart';
@@ -13,11 +12,11 @@ import '../../core/network/api_client_provider.dart';
 import 'auth_state.dart';
 
 class GoogleLogin {
-  GoogleLogin({http.Client? httpClient, FlutterSecureStorage? storage})
+  GoogleLogin({ApiClient? httpClient, FlutterSecureStorage? storage})
     : _httpClient = httpClient ?? ApiClient(),
       _storage = storage ?? const FlutterSecureStorage();
 
-  final http.Client _httpClient;
+  final ApiClient _httpClient;
   final FlutterSecureStorage _storage;
 
   Future<AuthState> loginWithGoogle() async {

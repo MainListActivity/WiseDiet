@@ -4,7 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:wise_diet/features/onboarding/models/user_profile.dart';
+import 'package:wise_diet/core/network/api_client.dart';
 import 'package:wise_diet/features/onboarding/services/onboarding_service.dart';
+
+class _TestAccessTokenProvider implements AccessTokenProvider {
+  @override
+  Future<String?> readAccessToken() async => null;
+}
 
 void main() {
   test('submitProfile should send profile payload', () async {
@@ -17,7 +23,12 @@ void main() {
       return http.Response('{}', 200);
     });
 
-    final service = OnboardingService(client: mockClient);
+    final service = OnboardingService(
+      client: ApiClient(
+        httpClient: mockClient,
+        accessTokenProvider: _TestAccessTokenProvider(),
+      ),
+    );
 
     await service.submitProfile(
       UserProfile(

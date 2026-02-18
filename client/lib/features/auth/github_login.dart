@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/network/api_config.dart';
@@ -15,7 +14,7 @@ import 'auth_state.dart';
 class GithubLogin {
   GithubLogin({
     AppLinks? appLinks,
-    http.Client? httpClient,
+    ApiClient? httpClient,
     FlutterSecureStorage? storage,
     Future<bool> Function(Uri url)? launcher,
   }) : _appLinks = appLinks ?? AppLinks(),
@@ -24,7 +23,7 @@ class GithubLogin {
        _launcher = launcher ?? launchUrl;
 
   final AppLinks _appLinks;
-  final http.Client _httpClient;
+  final ApiClient _httpClient;
   final FlutterSecureStorage _storage;
   final Future<bool> Function(Uri url) _launcher;
 

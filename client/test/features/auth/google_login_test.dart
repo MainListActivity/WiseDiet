@@ -3,10 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:wise_diet/features/auth/auth_state.dart';
+import 'package:wise_diet/core/network/api_client.dart';
 import 'package:wise_diet/features/auth/google_login.dart';
 
+class _TestAccessTokenProvider implements AccessTokenProvider {
+  @override
+  Future<String?> readAccessToken() async => null;
+}
+
 class ThrowingGoogleLogin extends GoogleLogin {
-  ThrowingGoogleLogin({required http.Client httpClient}) : super(httpClient: httpClient);
+  ThrowingGoogleLogin({required ApiClient httpClient}) : super(httpClient: httpClient);
 
   @override
   Future<String?> requestServerAuthCode({
@@ -31,7 +37,12 @@ void main() {
       throw UnimplementedError('POST should not be called when sign-in fails.');
     });
 
-    final login = ThrowingGoogleLogin(httpClient: httpClient);
+    final login = ThrowingGoogleLogin(
+      httpClient: ApiClient(
+        httpClient: httpClient,
+        accessTokenProvider: _TestAccessTokenProvider(),
+      ),
+    );
 
     final state = await login.loginWithGoogle();
 
