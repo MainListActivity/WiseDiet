@@ -168,5 +168,50 @@ void main() {
         '/onboarding/basic-info',
       );
     });
+
+    testWidgets('renders bottom navigation bar on /home', (tester) async {
+      final container = ProviderContainer(
+        overrides: [
+          authSessionProvider.overrideWith((ref) => Future.value(true)),
+          authControllerProvider.overrideWith(
+            (ref) {
+              final controller = AuthController(FakeAuthApi(),
+                  tokenStorage: FakeTokenStorage());
+              controller.state = const AuthState(
+                isLoggedIn: true,
+                onboardingStep: 0,
+                accessToken: 'token',
+                refreshToken: 'refresh',
+              );
+              return controller;
+            },
+          ),
+          routeStorageProvider.overrideWithValue(RouteStorage()),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final router = container.read(goRouterProvider);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: MaterialApp.router(
+            routerConfig: router,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(NavigationBar), findsOneWidget);
+      expect(find.byType(NavigationDestination), findsNWidgets(3));
+    });
   });
 }
