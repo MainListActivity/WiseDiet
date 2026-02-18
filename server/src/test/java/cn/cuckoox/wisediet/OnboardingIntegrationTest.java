@@ -39,7 +39,7 @@ public class OnboardingIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldCreateUserProfile() {
-        UserProfile profile = new UserProfile(null, "Male", 30, 175.0, 75.0, "1,2", 1, null, null, null);
+        UserProfile profile = new UserProfile(null, null, "Male", 30, 175.0, 75.0, "1,2", 1, null, null, null);
 
         Mono<Boolean> flow = issueAuthenticatedToken(0)
                 .flatMap(token -> Mono.fromCallable(() -> {

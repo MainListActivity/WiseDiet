@@ -59,7 +59,7 @@ class AllergenTagIntegrationTest extends AbstractIntegrationTest {
     @Test
     void shouldPersistProfileWithAllergenAndDietaryFields() {
         UserProfile request = new UserProfile(
-                null, "Female", 25, 165.0, 55.0, "1,2", 2,
+                null, null, "Female", 25, 165.0, 55.0, "1,2", 2,
                 "1,3", "2,4", "Cilantro,Bitter melon"
         );
 

@@ -20,6 +20,7 @@ import jakarta.validation.constraints.Pattern;
 public class UserProfile {
     @Id
     private Long id;
+    private Long userId;
     @NotBlank
     @Pattern(regexp = "(?i)male|female|other")
     private String gender;

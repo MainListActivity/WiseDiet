@@ -9,7 +9,7 @@ class SecurityBoundaryIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldRequireAuthenticationForOnboardingProfile() {
-        UserProfile request = new UserProfile(null, "Male", 28, 180.0, 70.0, "1", 2, null, null, null);
+        UserProfile request = new UserProfile(null, null, "Male", 28, 180.0, 70.0, "1", 2, null, null, null);
 
         Mono<Boolean> flow = Mono.fromCallable(() -> {
             webTestClient.post()

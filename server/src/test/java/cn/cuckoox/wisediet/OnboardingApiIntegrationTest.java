@@ -53,6 +53,7 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
         // Given: 完整的基础信息与职业标签
         UserProfile request = new UserProfile(
                 null,
+                null,
                 "Male",
                 30,
                 180.0,
