@@ -35,6 +35,36 @@ class UserProfile {
     };
   }
 
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
+    return UserProfile(
+      gender: json['gender'] as String?,
+      age: json['age'] as int?,
+      height: (json['height'] as num?)?.toDouble(),
+      weight: (json['weight'] as num?)?.toDouble(),
+      occupationTags: _parseIds(json['occupationTagIds']),
+      familyMembers: (json['familyMembers'] as int?) ?? 1,
+      allergenTagIds: _parseIds(json['allergenTagIds']),
+      dietaryPreferenceTagIds: _parseIds(json['dietaryPreferenceTagIds']),
+      customAvoidedIngredients: _parseList(json['customAvoidedIngredients']),
+    );
+  }
+
+  static Set<int> _parseIds(dynamic value) {
+    if (value == null || value.toString().isEmpty) return {};
+    return value.toString().split(',')
+        .where((s) => s.trim().isNotEmpty)
+        .map((s) => int.parse(s.trim()))
+        .toSet();
+  }
+
+  static List<String> _parseList(dynamic value) {
+    if (value == null || value.toString().isEmpty) return [];
+    return value.toString().split(',')
+        .where((s) => s.trim().isNotEmpty)
+        .map((s) => s.trim())
+        .toList();
+  }
+
   UserProfile copyWith({
     String? gender,
     int? age,
