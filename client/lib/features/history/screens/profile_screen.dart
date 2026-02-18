@@ -247,21 +247,27 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             Text(l10n.profileFieldGender,
                 style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 8),
-            for (final option in ['Male', 'Female', 'Other'])
-              RadioListTile<String>(
-                title: Text(option),
-                value: option,
-                groupValue: _controllerFor(field, value).text.isEmpty
-                    ? null
-                    : _controllerFor(field, value).text,
-                onChanged: (v) {
-                  setState(() {
-                    _controllerFor(field, value).text = v ?? '';
-                  });
-                },
-                contentPadding: EdgeInsets.zero,
-                dense: true,
+            RadioGroup<String>(
+              groupValue: _controllerFor(field, value).text.isEmpty
+                  ? null
+                  : _controllerFor(field, value).text,
+              onChanged: (v) {
+                setState(() {
+                  _controllerFor(field, value).text = v ?? '';
+                });
+              },
+              child: Column(
+                children: [
+                  for (final option in ['Male', 'Female', 'Other'])
+                    RadioListTile<String>(
+                      title: Text(option),
+                      value: option,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                    ),
+                ],
               ),
+            ),
             Row(
               children: [
                 IconButton(
@@ -398,10 +404,62 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       label: l10n.profileFieldCustomAvoid,
       valueWidget: Text(value),
       editKey: const Key('profile-edit-customAvoid'),
-      onEdit: () {
-        // TODO: open custom ingredient editor
-      },
+      onEdit: () => _openCustomAvoidEditor(context, profile),
     );
+  }
+
+  void _openCustomAvoidEditor(BuildContext context, UserProfile profile) {
+    final controller = TextEditingController(
+      text: profile.customAvoidedIngredients.join(', '),
+    );
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+          bottom: MediaQuery.of(sheetContext).viewInsets.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              context.l10n.profileFieldCustomAvoid,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: controller,
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: '香菜, 榴莲',
+                border: const OutlineInputBorder(),
+                helperText: context.l10n.profileNoCustomAvoid,
+              ),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () async {
+                final items = controller.text
+                    .split(',')
+                    .map((s) => s.trim())
+                    .where((s) => s.isNotEmpty)
+                    .toList();
+                await ref.read(profileProvider.notifier).updateField({
+                  'customAvoidedIngredients':
+                      items.isEmpty ? '' : items.join(','),
+                });
+                if (sheetContext.mounted) Navigator.of(sheetContext).pop();
+              },
+              child: const Text('确认'),
+            ),
+          ],
+        ),
+      ),
+    ).whenComplete(controller.dispose);
   }
 
   void _openTagBottomSheet(
@@ -530,7 +588,7 @@ class _FieldRow extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .onSurface
-                          .withOpacity(0.6),
+                          .withValues(alpha: 0.6),
                     )),
           ),
           Expanded(
