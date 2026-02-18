@@ -5,13 +5,12 @@ import 'package:wise_diet/l10n/app_localizations.dart';
 
 void main() {
   testWidgets('renders history placeholder with profile card and body', (tester) async {
-    var profileTapped = false;
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: HistoryPlaceholderScreen(
-          onProfileTap: () => profileTapped = true,
+          onProfileTap: () {},
         ),
       ),
     );
