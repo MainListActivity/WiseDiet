@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="light" lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WiseDiet - Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#4b7c5a",
+                "secondary": "#2C3E50",
+                "background-light": "#f6f7f7",
+                "background-dark": "#161c18",
+                "surface-light": "#ffffff",
+                "surface-dark": "#1e2420",
+            },
+            fontFamily: { "display": ["Inter", "sans-serif"] },
+        },
+    },
+}
+</script>
+<style>
+body { min-height: max(884px, 100dvh); }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display transition-colors duration-300">
+
+<!-- Dark mode toggle -->
+<div class="fixed top-4 right-4 z-50">
+  <button onclick="document.documentElement.classList.toggle('dark')"
+          class="w-9 h-9 rounded-full bg-white dark:bg-surface-dark shadow flex items-center justify-center border border-gray-200 dark:border-gray-700">
+    <span class="material-symbols-outlined text-gray-600 dark:text-gray-300 text-[18px]">dark_mode</span>
+  </button>
+</div>
+
+<!-- Phone frame -->
+<div class="flex justify-center py-8 px-4">
+<div class="w-full max-w-sm bg-background-light dark:bg-background-dark min-h-screen rounded-3xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
+
+  <!-- AppBar -->
+  <div class="flex items-center px-2 pt-3 pb-2 bg-surface-light dark:bg-surface-dark border-b border-gray-100 dark:border-gray-800">
+    <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+      <span class="material-symbols-outlined text-secondary dark:text-gray-300">arrow_back</span>
+    </button>
+    <h1 class="flex-1 text-center text-base font-semibold text-secondary dark:text-white">个人信息</h1>
+    <div class="w-10"></div>
+  </div>
+
+  <!-- Scrollable content -->
+  <div class="overflow-y-auto px-4 py-4 space-y-4">
+
+    <!-- Card: 基本信息 -->
+    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+      <div class="px-4 pt-4 pb-2">
+        <p class="text-xs font-semibold text-primary uppercase tracking-wider">基本信息</p>
+      </div>
+      <!-- 性别 -->
+      <div class="px-4 py-3 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
+        <span class="text-sm text-gray-500 dark:text-gray-400 w-20">性别</span>
+        <span class="flex-1 text-sm font-medium text-secondary dark:text-white text-right">男</span>
+        <button class="ml-3 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <span class="material-symbols-outlined text-gray-400 text-[18px]">edit</span>
+        </button>
+      </div>
+      <!-- 年龄 -->
+      <div class="px-4 py-3 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
+        <span class="text-sm text-gray-500 dark:text-gray-400 w-20">年龄</span>
+        <span class="flex-1 text-sm font-medium text-secondary dark:text-white text-right">28 岁</span>
+        <button class="ml-3 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <span class="material-symbols-outlined text-gray-400 text-[18px]">edit</span>
+        </button>
+      </div>
+      <!-- 身高 -->
+      <div class="px-4 py-3 flex items-center justify-between border-b border-gray-50 dark:border-gray-700/50">
+        <span class="text-sm text-gray-500 dark:text-gray-400 w-20">身高</span>
+        <span class="flex-1 text-sm font-medium text-secondary dark:text-white text-right">175 cm</span>
+        <button class="ml-3 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <span class="material-symbols-outlined text-gray-400 text-[18px]">edit</span>
+        </button>
+      </div>
+      <!-- 体重 — INLINE EDIT STATE -->
+      <div class="px-4 py-2 bg-primary/5 dark:bg-primary/10">
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500 dark:text-gray-400 w-20 flex-shrink-0">体重</span>
+          <div class="flex-1 flex items-center gap-1">
+            <input type="number" value="70" class="flex-1 text-sm bg-white dark:bg-gray-800 border border-primary rounded-lg px-3 py-1.5 text-secondary dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50" />
+            <span class="text-xs text-gray-400 flex-shrink-0">kg</span>
+          </div>
+          <button class="p-1.5 rounded-full bg-primary text-white ml-1">
+            <span class="material-symbols-outlined text-[18px]">check</span>
+          </button>
+          <button class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+            <span class="material-symbols-outlined text-gray-400 text-[18px]">close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: 居家参数 -->
+    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+      <div class="px-4 pt-4 pb-2">
+        <p class="text-xs font-semibold text-primary uppercase tracking-wider">居家参数</p>
+      </div>
+      <div class="px-4 py-3 flex items-center justify-between">
+        <span class="text-sm text-gray-500 dark:text-gray-400 w-28">家庭用餐人数</span>
+        <span class="flex-1 text-sm font-medium text-secondary dark:text-white text-right">3 人</span>
+        <button class="ml-3 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <span class="material-symbols-outlined text-gray-400 text-[18px]">edit</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Card: 职业标签 -->
+    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+      <div class="px-4 pt-4 pb-2 flex items-center justify-between">
+        <p class="text-xs font-semibold text-primary uppercase tracking-wider">职业标签</p>
+        <button class="text-xs text-primary font-medium flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">edit</span>编辑
+        </button>
+      </div>
+      <div class="px-4 pb-4 flex flex-wrap gap-2">
+        <span class="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-xs font-medium">
+          <span>💻</span> 程序员
+        </span>
+        <span class="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-xs font-medium">
+          <span>🧠</span> 高压工作
+        </span>
+      </div>
+    </div>
+
+    <!-- Card: 饮食偏好与过敏 -->
+    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+      <div class="px-4 pt-4 pb-2">
+        <p class="text-xs font-semibold text-primary uppercase tracking-wider">饮食偏好与过敏</p>
+      </div>
+      <!-- 过敏原 -->
+      <div class="px-4 pb-3 border-b border-gray-50 dark:border-gray-700/50">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm text-gray-500 dark:text-gray-400">过敏原</span>
+          <button class="text-xs text-primary font-medium flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">edit</span>编辑
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-xs font-medium border border-red-100 dark:border-red-800">🥜 花生</span>
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-xs font-medium border border-red-100 dark:border-red-800">🥛 牛奶</span>
+        </div>
+      </div>
+      <!-- 饮食偏好 -->
+      <div class="px-4 py-3 border-b border-gray-50 dark:border-gray-700/50">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm text-gray-500 dark:text-gray-400">饮食偏好</span>
+          <button class="text-xs text-primary font-medium flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">edit</span>编辑
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-xs font-medium">🌾 低GI</span>
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-xs font-medium">💪 高蛋白</span>
+        </div>
+      </div>
+      <!-- 自定义忌口 -->
+      <div class="px-4 py-3 flex items-center justify-between">
+        <span class="text-sm text-gray-500 dark:text-gray-400 w-20">自定义忌口</span>
+        <span class="flex-1 text-sm font-medium text-secondary dark:text-white text-right">香菜、榴莲</span>
+        <button class="ml-3 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <span class="material-symbols-outlined text-gray-400 text-[18px]">edit</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+
+    <!-- Logout button -->
+    <button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-red-200 dark:border-red-800 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium text-sm">
+      <span class="material-symbols-outlined text-[20px]">logout</span>
+      退出登录
+    </button>
+
+    <div class="h-8"></div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
