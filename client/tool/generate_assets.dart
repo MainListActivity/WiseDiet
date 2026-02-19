@@ -144,17 +144,21 @@ void drawLogo(
         bool inside = true;
         // Check corners
         if (x < x1 + rad && y < y1 + rad) {
-          if (pow(x - (x1 + rad), 2) + pow(y - (y1 + rad), 2) > pow(rad, 2))
+          if (pow(x - (x1 + rad), 2) + pow(y - (y1 + rad), 2) > pow(rad, 2)) {
             inside = false;
+          }
         } else if (x > x2 - rad && y < y1 + rad) {
-          if (pow(x - (x2 - rad), 2) + pow(y - (y1 + rad), 2) > pow(rad, 2))
+          if (pow(x - (x2 - rad), 2) + pow(y - (y1 + rad), 2) > pow(rad, 2)) {
             inside = false;
+          }
         } else if (x < x1 + rad && y > y2 - rad) {
-          if (pow(x - (x1 + rad), 2) + pow(y - (y2 - rad), 2) > pow(rad, 2))
+          if (pow(x - (x1 + rad), 2) + pow(y - (y2 - rad), 2) > pow(rad, 2)) {
             inside = false;
+          }
         } else if (x > x2 - rad && y > y2 - rad) {
-          if (pow(x - (x2 - rad), 2) + pow(y - (y2 - rad), 2) > pow(rad, 2))
+          if (pow(x - (x2 - rad), 2) + pow(y - (y2 - rad), 2) > pow(rad, 2)) {
             inside = false;
+          }
         }
 
         if (inside) {

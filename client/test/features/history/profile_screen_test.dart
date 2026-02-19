@@ -42,7 +42,7 @@ class _FakeProfileNotifier extends ProfileNotifier {
   @override
   Future<UserProfile> build() {
     if (_value is AsyncData<UserProfile>) {
-      return Future.value((_value as AsyncData<UserProfile>).value);
+      return Future.value((_value).value);
     }
     if (_value is AsyncError) {
       return Future.error((_value as AsyncError).error);
@@ -78,8 +78,9 @@ Widget buildProfileScreen(AsyncValue<UserProfile> profileValue) {
       profileProvider.overrideWith(() => _FakeProfileNotifier(profileValue)),
       occupationTagsProvider.overrideWith((_) async => _emptyOccupationTags),
       allergenTagsProvider.overrideWith((_) async => _emptyAllergenTags),
-      dietaryPreferenceTagsProvider
-          .overrideWith((_) async => _emptyDietaryTags),
+      dietaryPreferenceTagsProvider.overrideWith(
+        (_) async => _emptyDietaryTags,
+      ),
     ],
     child: const MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -96,13 +97,12 @@ Widget buildProfileScreenWithAuth({
   return ProviderScope(
     overrides: [
       profileProvider.overrideWith(() => _FakeProfileNotifier(profileValue)),
-      authControllerProvider.overrideWith(
-        (ref) => authControllerFactory(),
-      ),
+      authControllerProvider.overrideWith((ref) => authControllerFactory()),
       occupationTagsProvider.overrideWith((_) async => _emptyOccupationTags),
       allergenTagsProvider.overrideWith((_) async => _emptyAllergenTags),
-      dietaryPreferenceTagsProvider
-          .overrideWith((_) async => _emptyDietaryTags),
+      dietaryPreferenceTagsProvider.overrideWith(
+        (_) async => _emptyDietaryTags,
+      ),
     ],
     child: const MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -119,8 +119,9 @@ void main() {
 
   // ---- Legacy auth tests (updated for new ProfileScreen) ----
 
-  testWidgets('renders profile screen with title and logout button',
-      (tester) async {
+  testWidgets('renders profile screen with title and logout button', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       buildProfileScreenWithAuth(
         profileValue: AsyncValue.data(_testProfile),
@@ -163,8 +164,10 @@ void main() {
       buildProfileScreenWithAuth(
         profileValue: AsyncValue.data(_testProfile),
         authControllerFactory: () {
-          final controller =
-              AuthController(FakeAuthApi(), tokenStorage: tokenStorage);
+          final controller = AuthController(
+            FakeAuthApi(),
+            tokenStorage: tokenStorage,
+          );
           controller.state = const AuthState(
             isLoggedIn: true,
             onboardingStep: 0,
@@ -198,31 +201,27 @@ void main() {
 
   // ---- New profile section tests ----
 
-  testWidgets('shows loading indicator while profile is loading',
-      (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(const AsyncValue.loading()));
+  testWidgets('shows loading indicator while profile is loading', (
+    tester,
+  ) async {
+    await tester.pumpWidget(buildProfileScreen(const AsyncValue.loading()));
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
-  testWidgets('shows four section cards when profile is loaded',
-      (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+  testWidgets('shows four section cards when profile is loaded', (
+    tester,
+  ) async {
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
-    expect(
-        find.byKey(const Key('profile-section-basic-info')), findsOneWidget);
-    expect(
-        find.byKey(const Key('profile-section-household')), findsOneWidget);
-    expect(
-        find.byKey(const Key('profile-section-occupation')), findsOneWidget);
+    expect(find.byKey(const Key('profile-section-basic-info')), findsOneWidget);
+    expect(find.byKey(const Key('profile-section-household')), findsOneWidget);
+    expect(find.byKey(const Key('profile-section-occupation')), findsOneWidget);
     expect(find.byKey(const Key('profile-section-diet')), findsOneWidget);
   });
 
   testWidgets('shows gender, age, height, weight values', (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
     expect(find.text('Male'), findsOneWidget);
     expect(find.text('28'), findsOneWidget);
@@ -230,10 +229,10 @@ void main() {
     expect(find.text('70.0'), findsOneWidget);
   });
 
-  testWidgets('tapping weight edit button shows inline TextField',
-      (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+  testWidgets('tapping weight edit button shows inline TextField', (
+    tester,
+  ) async {
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('profile-edit-weight')));
     await tester.pumpAndSettle();
@@ -242,10 +241,10 @@ void main() {
     expect(find.byKey(const Key('profile-cancel-weight')), findsOneWidget);
   });
 
-  testWidgets('tapping cancel after edit restores read-only view',
-      (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+  testWidgets('tapping cancel after edit restores read-only view', (
+    tester,
+  ) async {
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('profile-edit-weight')));
     await tester.pumpAndSettle();
@@ -256,22 +255,19 @@ void main() {
   });
 
   testWidgets('occupation section shows edit button', (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('profile-edit-occupation')), findsOneWidget);
   });
 
   testWidgets('shows logout button', (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('logout-button')), findsOneWidget);
   });
 
   testWidgets('tapping occupation edit opens bottom sheet', (tester) async {
-    await tester
-        .pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
+    await tester.pumpWidget(buildProfileScreen(AsyncValue.data(_testProfile)));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.byKey(const Key('profile-edit-occupation')),
