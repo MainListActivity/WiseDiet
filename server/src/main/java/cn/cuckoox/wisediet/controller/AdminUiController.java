@@ -79,21 +79,28 @@ public class AdminUiController {
         return validateAdminToken(token)
                 .then(dishLibraryService.findById(id))
                 .flatMap(dish -> dishLibraryService.updateStatus(id, !dish.isActive()))
-                .map(updated -> {
-                    model.addAttribute("dish", updated);
+                .then(dishLibraryService.findAll(0, 20, false).collectList()
+                        .zipWith(dishLibraryService.count(false)))
+                .map(tuple -> {
+                    model.addAttribute("dishes", tuple.getT1());
+                    model.addAttribute("total", tuple.getT2());
                     model.addAttribute("token", token);
-                    return "admin/dishes :: .dish-row-" + id;
+                    return "admin/dishes :: #dish-list";
                 });
     }
 
     private Mono<Void> validateAdminToken(String token) {
-        return Mono.fromCallable(() -> jwtService.extractJti(token))
-                .onErrorMap(e -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token"))
-                .flatMap(jti -> sessionStore.exists(jti)
-                        .flatMap(exists -> {
-                            if (!exists) return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Session expired"));
-                            return jwtService.parseUserId(token);
-                        }))
+        String jti;
+        try {
+            jti = jwtService.extractJti(token);
+        } catch (Exception e) {
+            return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token"));
+        }
+        return sessionStore.exists(jti)
+                .flatMap(exists -> {
+                    if (!exists) return Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Session expired"));
+                    return jwtService.parseUserId(token);
+                })
                 .flatMap(userId -> adminWhitelistRepository.existsByUserId(userId)
                         .filter(Boolean.TRUE::equals)
                         .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.FORBIDDEN, "Not admin")))

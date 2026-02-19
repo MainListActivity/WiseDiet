@@ -78,9 +78,41 @@ class AdminUiIntegrationTest extends AbstractIntegrationTest {
                             .exchange()
                             .expectStatus().isOk()
                             .expectBody(String.class)
-                            .value(body -> {
-                                assert body.contains("菜品库管理") : "Page should contain title";
-                            })
+                            .value(body -> org.assertj.core.api.Assertions.assertThat(body)
+                                    .contains("菜品库管理"))
+                ).subscribeOn(Schedulers.boundedElastic()))
+        ).verifyComplete();
+    }
+
+    @Test
+    void shouldReturn200WithNewForm_whenAdmin() {
+        StepVerifier.create(
+            createAdminToken()
+                .flatMap(token -> Mono.fromRunnable(() ->
+                    webTestClient.get().uri("/admin/ui/dishes/new?token=" + token)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody(String.class)
+                            .value(body -> org.assertj.core.api.Assertions.assertThat(body)
+                                    .contains("新增菜品"))
+                ).subscribeOn(Schedulers.boundedElastic()))
+        ).verifyComplete();
+    }
+
+    @Test
+    void shouldCreateDishAndReturnUpdatedList_whenAdmin() {
+        StepVerifier.create(
+            createAdminToken()
+                .flatMap(token -> Mono.fromRunnable(() ->
+                    webTestClient.post()
+                            .uri("/admin/ui/dishes?token=" + token)
+                            .contentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED)
+                            .bodyValue("name=测试菜&category=meat_red&difficulty=2&prepMin=10&cookMin=20&servings=2&ingredients=[]&steps=[]")
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody(String.class)
+                            .value(body -> org.assertj.core.api.Assertions.assertThat(body)
+                                    .contains("测试菜"))
                 ).subscribeOn(Schedulers.boundedElastic()))
         ).verifyComplete();
     }
