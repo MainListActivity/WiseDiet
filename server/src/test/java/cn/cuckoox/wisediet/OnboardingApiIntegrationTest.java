@@ -132,6 +132,70 @@ class OnboardingApiIntegrationTest extends AbstractIntegrationTest {
                 .verifyComplete();
     }
 
+
+    @Test
+    void shouldUpsertProfileOnResubmit() {
+        UserProfile first = new UserProfile(null, null, "Male", 30, 180.0, 70.0, "1", 2, null, null, null);
+        UserProfile second = new UserProfile(null, null, "Female", 28, 165.0, 55.0, "2", 1, null, null, null);
+
+        Mono<Boolean> flow = issueAuthenticatedToken(1)
+                .flatMap(token -> Mono.fromCallable(() -> {
+                    webTestClient.post().uri("/api/onboarding/profile")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(first)
+                            .exchange()
+                            .expectStatus().isOk();
+
+                    webTestClient.post().uri("/api/onboarding/profile")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(second)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody(UserProfile.class)
+                            .value(profile -> {
+                                if (!"Female".equals(profile.getGender())) {
+                                    throw new AssertionError("expected updated gender Female, got: " + profile.getGender());
+                                }
+                            });
+                    return true;
+                }).subscribeOn(Schedulers.boundedElastic()));
+
+        StepVerifier.create(flow).expectNext(true).verifyComplete();
+
+        StepVerifier.create(
+                userRepository.findAll()
+                        .filter(u -> "google".equals(u.getProvider()))
+                        .last()
+                        .flatMapMany(u -> userProfileRepository.findAll()
+                                .filter(p -> u.getId().equals(p.getUserId())))
+                        .count()
+        ).expectNext(1L).verifyComplete();
+    }
+
+    @Test
+    void shouldCompleteOnboardingAfterProfileSubmit() {
+        UserProfile profile = new UserProfile(null, null, "Male", 25, 175.0, 68.0, null, 1, null, null, null);
+
+        Mono<Boolean> flow = issueAuthenticatedToken(1)
+                .flatMap(token -> Mono.fromCallable(() -> {
+                    webTestClient.post().uri("/api/onboarding/profile")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(profile)
+                            .exchange()
+                            .expectStatus().isOk();
+                    return true;
+                }).subscribeOn(Schedulers.boundedElastic()));
+
+        StepVerifier.create(flow).expectNext(true).verifyComplete();
+
+        StepVerifier.create(
+                userRepository.findAll()
+                        .filter(u -> "google".equals(u.getProvider()))
+                        .last()
+                        .map(u -> u.getOnboardingStep())
+        ).expectNext(0).verifyComplete();
+    }
+
     private Mono<String> issueAuthenticatedToken(Integer onboardingStep) {
         return userRepository.save(new User(null, "onboarding-api@test.com", "google", "onboarding-api-provider-" + System.nanoTime(), onboardingStep))
                 .flatMap(user -> jwtService.createAccessToken(user.getId())

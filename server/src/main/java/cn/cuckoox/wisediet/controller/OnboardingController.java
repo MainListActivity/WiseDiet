@@ -3,6 +3,7 @@ package cn.cuckoox.wisediet.controller;
 import cn.cuckoox.wisediet.i18n.RequestLocaleResolver;
 import cn.cuckoox.wisediet.model.UserProfile;
 import cn.cuckoox.wisediet.repository.UserProfileRepository;
+import cn.cuckoox.wisediet.repository.UserRepository;
 import cn.cuckoox.wisediet.security.CurrentUserService;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +21,18 @@ import java.util.Map;
 public class OnboardingController {
 
     private final UserProfileRepository userProfileRepository;
+    private final UserRepository userRepository;
     private final MessageSource messageSource;
     private final RequestLocaleResolver requestLocaleResolver;
     private final CurrentUserService currentUserService;
 
     public OnboardingController(UserProfileRepository userProfileRepository,
+                                UserRepository userRepository,
                                 MessageSource messageSource,
                                 RequestLocaleResolver requestLocaleResolver,
                                 CurrentUserService currentUserService) {
         this.userProfileRepository = userProfileRepository;
+        this.userRepository = userRepository;
         this.messageSource = messageSource;
         this.requestLocaleResolver = requestLocaleResolver;
         this.currentUserService = currentUserService;
@@ -37,10 +41,15 @@ public class OnboardingController {
     @PostMapping("/profile")
     public Mono<UserProfile> saveProfile(@Valid @RequestBody UserProfile profile) {
         return currentUserService.currentUserId()
-                .flatMap(userId -> {
-                    profile.setUserId(userId);
-                    return userProfileRepository.save(profile);
-                });
+                .flatMap(userId -> userProfileRepository.findByUserId(userId)
+                        .defaultIfEmpty(new UserProfile())
+                        .flatMap(existing -> {
+                            profile.setId(existing.getId());
+                            profile.setUserId(userId);
+                            return userProfileRepository.save(profile);
+                        }))
+                .flatMap(saved -> userRepository.completeOnboarding(saved.getUserId())
+                        .thenReturn(saved));
     }
 
     @GetMapping("/strategy")
