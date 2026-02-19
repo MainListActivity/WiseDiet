@@ -86,9 +86,11 @@ class GoogleLogin {
     await _storage.write(key: 'accessToken', value: accessToken);
     await _storage.write(key: 'refreshToken', value: refreshToken);
 
+    final onboardingStep = (body['onboardingStep'] as num?)?.toInt() ?? 1;
+
     return AuthState(
       isLoggedIn: true,
-      onboardingStep: 1,
+      onboardingStep: onboardingStep,
       accessToken: accessToken,
       refreshToken: refreshToken,
     );
