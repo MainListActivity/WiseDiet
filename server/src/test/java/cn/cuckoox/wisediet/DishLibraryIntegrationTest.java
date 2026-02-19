@@ -10,6 +10,8 @@ import cn.cuckoox.wisediet.service.SessionStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
@@ -32,23 +34,22 @@ class DishLibraryIntegrationTest extends AbstractIntegrationTest {
         ).verifyComplete();
     }
 
-    private String createAdminToken() {
-        User admin = userRepository.save(new User(null, "admin@test.com", "google", "admin-pid", 0))
+    // 返回 Mono<String> 而不是 String，避免 .block()
+    private Mono<String> createAdminToken() {
+        return userRepository.save(new User(null, "admin@test.com", "google", "admin-pid", 0))
                 .flatMap(u -> adminWhitelistRepository.save(new AdminWhitelist(null, u.getId())).thenReturn(u))
-                .block(Duration.ofSeconds(5));
-        String token = jwtService.createAccessToken(admin.getId(), "ADMIN").block(Duration.ofSeconds(5));
-        sessionStore.saveSession(jwtService.extractJti(token), admin.getId(), Duration.ofMinutes(15))
-                .block(Duration.ofSeconds(5));
-        return token;
+                .flatMap(u -> jwtService.createAccessToken(u.getId(), "ADMIN")
+                        .flatMap(token -> sessionStore.saveSession(jwtService.extractJti(token),
+                                u.getId(), Duration.ofMinutes(15))
+                                .thenReturn(token)));
     }
 
-    private String createUserToken() {
-        User user = userRepository.save(new User(null, "plain@test.com", "google", "plain-pid", 0))
-                .block(Duration.ofSeconds(5));
-        String token = jwtService.createAccessToken(user.getId(), "USER").block(Duration.ofSeconds(5));
-        sessionStore.saveSession(jwtService.extractJti(token), user.getId(), Duration.ofMinutes(15))
-                .block(Duration.ofSeconds(5));
-        return token;
+    private Mono<String> createUserToken() {
+        return userRepository.save(new User(null, "plain@test.com", "google", "plain-pid", 0))
+                .flatMap(u -> jwtService.createAccessToken(u.getId(), "USER")
+                        .flatMap(token -> sessionStore.saveSession(jwtService.extractJti(token),
+                                u.getId(), Duration.ofMinutes(15))
+                                .thenReturn(token)));
     }
 
     @Test
@@ -60,17 +61,20 @@ class DishLibraryIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void shouldReturn403_whenNonAdminAccesses() {
-        String token = createUserToken();
-        webTestClient.get().uri("/api/admin/dishes")
-                .header("Authorization", "Bearer " + token)
-                .exchange()
-                .expectStatus().isForbidden();
+        StepVerifier.create(
+            createUserToken().flatMap(token ->
+                Mono.fromRunnable(() ->
+                    webTestClient.get().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isForbidden()
+                ).subscribeOn(Schedulers.boundedElastic())
+            )
+        ).verifyComplete();
     }
 
     @Test
     void shouldCreateAndListDish_whenAdmin() {
-        String token = createAdminToken();
-
         Map<String, Object> request = Map.of(
                 "name", "番茄炒蛋",
                 "category", "veggie_mixed",
@@ -84,30 +88,34 @@ class DishLibraryIntegrationTest extends AbstractIntegrationTest {
                 "nutrients", "{\"calories\":150}"
         );
 
-        webTestClient.post().uri("/api/admin/dishes")
-                .header("Authorization", "Bearer " + token)
-                .bodyValue(request)
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody()
-                .jsonPath("$.id").exists()
-                .jsonPath("$.name").isEqualTo("番茄炒蛋")
-                .jsonPath("$.isActive").isEqualTo(true);
+        StepVerifier.create(
+            createAdminToken().flatMap(token ->
+                Mono.fromRunnable(() -> {
+                    webTestClient.post().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(request)
+                            .exchange()
+                            .expectStatus().isCreated()
+                            .expectBody()
+                            .jsonPath("$.id").exists()
+                            .jsonPath("$.name").isEqualTo("番茄炒蛋")
+                            .jsonPath("$.isActive").isEqualTo(true);
 
-        webTestClient.get().uri("/api/admin/dishes")
-                .header("Authorization", "Bearer " + token)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.content[0].name").isEqualTo("番茄炒蛋")
-                .jsonPath("$.total").isEqualTo(1);
+                    webTestClient.get().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody()
+                            .jsonPath("$.content[0].name").isEqualTo("番茄炒蛋")
+                            .jsonPath("$.total").isEqualTo(1);
+                }).subscribeOn(Schedulers.boundedElastic())
+            )
+        ).verifyComplete();
     }
 
     @Test
     void shouldToggleDishStatus_whenAdmin() {
-        String token = createAdminToken();
-
-        Map<String, Object> request = Map.of(
+        Map<String, Object> createRequest = Map.of(
                 "name", "测试菜",
                 "category", "meat_red",
                 "difficulty", 2,
@@ -118,29 +126,38 @@ class DishLibraryIntegrationTest extends AbstractIntegrationTest {
                 "steps", "[]"
         );
 
-        Long id = webTestClient.post().uri("/api/admin/dishes")
-                .header("Authorization", "Bearer " + token)
-                .bodyValue(request)
-                .exchange()
-                .expectStatus().isCreated()
-                .returnResult(Map.class)
-                .getResponseBody()
-                .map(m -> ((Number) m.get("id")).longValue())
-                .blockFirst(Duration.ofSeconds(5));
+        StepVerifier.create(
+            createAdminToken().flatMap(token ->
+                Mono.fromRunnable(() -> {
+                    // 创建菜品，提取 id
+                    Long id = webTestClient.post().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(createRequest)
+                            .exchange()
+                            .expectStatus().isCreated()
+                            .returnResult(Map.class)
+                            .getResponseBody()
+                            .map(m -> ((Number) m.get("id")).longValue())
+                            .blockFirst(Duration.ofSeconds(5));
 
-        webTestClient.patch().uri("/api/admin/dishes/" + id + "/status")
-                .header("Authorization", "Bearer " + token)
-                .bodyValue(Map.of("isActive", false))
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.isActive").isEqualTo(false);
+                    // 禁用菜品
+                    webTestClient.patch().uri("/api/admin/dishes/" + id + "/status")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(Map.of("isActive", false))
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody()
+                            .jsonPath("$.isActive").isEqualTo(false);
 
-        webTestClient.get().uri("/api/admin/dishes?activeOnly=true")
-                .header("Authorization", "Bearer " + token)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.total").isEqualTo(0);
+                    // 验证 activeOnly 列表中不存在
+                    webTestClient.get().uri("/api/admin/dishes?activeOnly=true")
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody()
+                            .jsonPath("$.total").isEqualTo(0);
+                }).subscribeOn(Schedulers.boundedElastic())
+            )
+        ).verifyComplete();
     }
 }
