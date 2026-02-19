@@ -1,5 +1,6 @@
 package cn.cuckoox.wisediet.service;
 
+import cn.cuckoox.wisediet.config.JwtProperties;
 import cn.cuckoox.wisediet.controller.dto.AuthTokenResponse;
 import cn.cuckoox.wisediet.controller.dto.AuthUriResponse;
 import cn.cuckoox.wisediet.model.User;
@@ -28,6 +29,7 @@ public class OAuthService {
     private final JwtService jwtService;
     private final SessionStore sessionStore;
     private final AdminWhitelistRepository adminWhitelistRepository;
+    private final JwtProperties jwtProperties;
     private final WebClientReactiveAuthorizationCodeTokenResponseClient tokenResponseClient;
     private final DefaultReactiveOAuth2UserService oauth2UserService;
 
@@ -35,12 +37,14 @@ public class OAuthService {
                         UserRepository userRepository,
                         JwtService jwtService,
                         SessionStore sessionStore,
-                        AdminWhitelistRepository adminWhitelistRepository) {
+                        AdminWhitelistRepository adminWhitelistRepository,
+                        JwtProperties jwtProperties) {
         this.clientRegistrationRepository = clientRegistrationRepository;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.sessionStore = sessionStore;
         this.adminWhitelistRepository = adminWhitelistRepository;
+        this.jwtProperties = jwtProperties;
         this.tokenResponseClient = new WebClientReactiveAuthorizationCodeTokenResponseClient();
         this.oauth2UserService = new DefaultReactiveOAuth2UserService();
     }
@@ -98,7 +102,7 @@ public class OAuthService {
                         .flatMap(accessToken -> sessionStore.saveSession(
                                         jwtService.extractJti(accessToken),
                                         user.getId(),
-                                        Duration.ofMinutes(15))
+                                        Duration.ofMinutes(jwtProperties.getAccessTtlMinutes()))
                                 .thenReturn(new AuthTokenResponse(accessToken, UUID.randomUUID().toString(), user.getOnboardingStep()))));
     }
 

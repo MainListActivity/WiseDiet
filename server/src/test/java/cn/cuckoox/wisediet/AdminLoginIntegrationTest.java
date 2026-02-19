@@ -49,7 +49,7 @@ class AdminLoginIntegrationTest extends AbstractIntegrationTest {
                 .getResponseBody()
                 .doOnNext(response -> {
                     String role = jwtService.extractRole(response.accessToken());
-                    assert "ADMIN".equals(role) : "Expected ADMIN role but got: " + role;
+                    org.junit.jupiter.api.Assertions.assertEquals("ADMIN", role, "Expected ADMIN role but got: " + role);
                 })
         ).expectNextCount(1).verifyComplete();
     }
@@ -70,7 +70,7 @@ class AdminLoginIntegrationTest extends AbstractIntegrationTest {
                 .getResponseBody()
                 .doOnNext(response -> {
                     String role = jwtService.extractRole(response.accessToken());
-                    assert "USER".equals(role) : "Expected USER role but got: " + role;
+                    org.junit.jupiter.api.Assertions.assertEquals("USER", role, "Expected USER role but got: " + role);
                 })
         ).expectNextCount(1).verifyComplete();
     }
