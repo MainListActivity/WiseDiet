@@ -9,6 +9,7 @@ import '../../../core/network/api_client_provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/l10n.dart';
+import '../../auth/auth_controller.dart';
 import '../providers/onboarding_provider.dart';
 import '../services/onboarding_service.dart';
 
@@ -93,6 +94,7 @@ class _LoadingAnalysisScreenState extends ConsumerState<LoadingAnalysisScreen>
       final profile = ref.read(onboardingProvider);
 
       await _service.submitProfile(profile);
+      ref.read(authControllerProvider.notifier).completeOnboarding();
       await Future.delayed(const Duration(seconds: 2));
       final strategy = await _service.getStrategy();
 
