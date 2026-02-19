@@ -3,6 +3,7 @@ package cn.cuckoox.wisediet.service;
 import cn.cuckoox.wisediet.controller.dto.AuthTokenResponse;
 import cn.cuckoox.wisediet.controller.dto.AuthUriResponse;
 import cn.cuckoox.wisediet.model.User;
+import cn.cuckoox.wisediet.repository.AdminWhitelistRepository;
 import cn.cuckoox.wisediet.repository.UserRepository;
 import java.time.Duration;
 import java.util.UUID;
@@ -26,17 +27,20 @@ public class OAuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final SessionStore sessionStore;
+    private final AdminWhitelistRepository adminWhitelistRepository;
     private final WebClientReactiveAuthorizationCodeTokenResponseClient tokenResponseClient;
     private final DefaultReactiveOAuth2UserService oauth2UserService;
 
     public OAuthService(ReactiveClientRegistrationRepository clientRegistrationRepository,
                         UserRepository userRepository,
                         JwtService jwtService,
-                        SessionStore sessionStore) {
+                        SessionStore sessionStore,
+                        AdminWhitelistRepository adminWhitelistRepository) {
         this.clientRegistrationRepository = clientRegistrationRepository;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.sessionStore = sessionStore;
+        this.adminWhitelistRepository = adminWhitelistRepository;
         this.tokenResponseClient = new WebClientReactiveAuthorizationCodeTokenResponseClient();
         this.oauth2UserService = new DefaultReactiveOAuth2UserService();
     }
@@ -89,7 +93,8 @@ public class OAuthService {
                                     providerId,
                                     1)));
                 })
-                .flatMap(user -> jwtService.createAccessToken(user.getId())
+                .flatMap(user -> adminWhitelistRepository.existsByUserId(user.getId())
+                        .flatMap(isAdmin -> jwtService.createAccessToken(user.getId(), isAdmin ? "ADMIN" : "USER"))
                         .flatMap(accessToken -> sessionStore.saveSession(
                                         jwtService.extractJti(accessToken),
                                         user.getId(),

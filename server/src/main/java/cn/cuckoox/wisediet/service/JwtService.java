@@ -33,6 +33,10 @@ public class JwtService {
     }
 
     public Mono<String> createAccessToken(Long userId) {
+        return createAccessToken(userId, "USER");
+    }
+
+    public Mono<String> createAccessToken(Long userId, String role) {
         return Mono.fromSupplier(() -> {
             Instant now = Instant.now();
             String jti = UUID.randomUUID().toString();
@@ -41,6 +45,7 @@ public class JwtService {
                     .id(jti)
                     .issuedAt(now)
                     .expiresAt(now.plus(Duration.ofMinutes(jwtProperties.getAccessTtlMinutes())))
+                    .claim("role", role)
                     .build();
             JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
             return jwtEncoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
@@ -53,6 +58,10 @@ public class JwtService {
 
     public String extractJti(String token) {
         return jwtDecoder.decode(token).getId();
+    }
+
+    public String extractRole(String token) {
+        return jwtDecoder.decode(token).getClaimAsString("role");
     }
 
     private static byte[] hashSecret(String secret) {

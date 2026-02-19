@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface AdminWhitelistRepository extends ReactiveCrudRepository<AdminWhitelist, Long> {
     Mono<AdminWhitelist> findByUserId(Long userId);
+    Mono<Boolean> existsByUserId(Long userId);
 }
