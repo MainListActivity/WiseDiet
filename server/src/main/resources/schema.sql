@@ -127,3 +127,20 @@ COMMENT ON COLUMN "allergen_tags".category IS '分类';
 COMMENT ON TABLE "dietary_preference_tags" IS '饮食偏好标签表：存储饮食偏好选项';
 COMMENT ON COLUMN "dietary_preference_tags".label IS '标签名称';
 COMMENT ON COLUMN "dietary_preference_tags".emoji IS '表情符号';
+
+-- 菜品主库：管理员维护的菜品数据，LLM 从此选菜推荐
+CREATE TABLE IF NOT EXISTS "dish_library" (
+    id          BIGSERIAL PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    category    VARCHAR(30)  NOT NULL,     -- 对应前端图片 key，如 meat_red / veggie_leafy
+    difficulty  INT          NOT NULL DEFAULT 2, -- 1-3: 易/中/难
+    prep_min    INT          NOT NULL DEFAULT 5,
+    cook_min    INT          NOT NULL DEFAULT 15,
+    servings    INT          NOT NULL DEFAULT 2,
+    ingredients JSONB        NOT NULL DEFAULT '[]',
+    steps       JSONB        NOT NULL DEFAULT '[]',
+    nutrient_tags JSONB,
+    nutrients   JSONB,
+    is_active   BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at  TIMESTAMP    NOT NULL DEFAULT NOW()
+);
