@@ -37,20 +37,22 @@ public class AdminUiController {
         return validateAdminToken(token)
                 .then(dishLibraryService.findAll(page, 20, false).collectList()
                         .zipWith(dishLibraryService.count(false)))
-                .doOnNext(tuple -> {
+                .map(tuple -> {
                     model.addAttribute("dishes", tuple.getT1());
                     model.addAttribute("total", tuple.getT2());
                     model.addAttribute("page", page);
                     model.addAttribute("token", token);
-                })
-                .thenReturn("admin/dishes");
+                    return "admin/dishes";
+                });
     }
 
     @GetMapping("/dishes/new")
     public Mono<String> newForm(@RequestParam String token, Model model) {
         return validateAdminToken(token)
-                .doOnSuccess(v -> model.addAttribute("token", token))
-                .thenReturn("admin/dish-form");
+                .then(Mono.defer(() -> {
+                    model.addAttribute("token", token);
+                    return Mono.just("admin/dish-form");
+                }));
     }
 
     @PostMapping("/dishes")
@@ -61,13 +63,13 @@ public class AdminUiController {
                 .then(dishLibraryService.create(form.toRequest()))
                 .then(dishLibraryService.findAll(0, 20, false).collectList()
                         .zipWith(dishLibraryService.count(false)))
-                .doOnNext(tuple -> {
+                .map(tuple -> {
                     model.addAttribute("dishes", tuple.getT1());
                     model.addAttribute("total", tuple.getT2());
                     model.addAttribute("page", 0);
                     model.addAttribute("token", token);
-                })
-                .thenReturn("admin/dishes :: #dish-list");
+                    return "admin/dishes :: #dish-list";
+                });
     }
 
     @PostMapping("/dishes/{id}/toggle")
@@ -77,11 +79,11 @@ public class AdminUiController {
         return validateAdminToken(token)
                 .then(dishLibraryService.findById(id))
                 .flatMap(dish -> dishLibraryService.updateStatus(id, !dish.isActive()))
-                .doOnNext(updated -> {
+                .map(updated -> {
                     model.addAttribute("dish", updated);
                     model.addAttribute("token", token);
-                })
-                .thenReturn("admin/dishes :: .dish-row-" + id);
+                    return "admin/dishes :: .dish-row-" + id;
+                });
     }
 
     private Mono<Void> validateAdminToken(String token) {

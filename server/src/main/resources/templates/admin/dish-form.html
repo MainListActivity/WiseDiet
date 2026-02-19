@@ -3,9 +3,9 @@
 <body>
 <div class="bg-white rounded shadow p-6 mb-4">
     <h2 class="text-lg font-semibold mb-4">新增菜品</h2>
-    <form th:action="'/admin/ui/dishes?token=' + ${token}"
+    <form th:action="@{'/admin/ui/dishes'(token=${token})}"
           method="post"
-          hx-post="'/admin/ui/dishes?token=' + ${token}"
+          th:attr="hx-post=@{'/admin/ui/dishes'(token=${token})}"
           hx-target="#dish-list"
           hx-swap="outerHTML"
           class="grid grid-cols-2 gap-4">
