@@ -5,6 +5,7 @@ import cn.cuckoox.wisediet.controller.dto.DishLibraryResponse;
 import cn.cuckoox.wisediet.repository.AdminWhitelistRepository;
 import cn.cuckoox.wisediet.security.CurrentUserService;
 import cn.cuckoox.wisediet.service.DishLibraryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,12 +56,12 @@ public class DishLibraryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<DishLibraryResponse> create(@RequestBody DishLibraryRequest request) {
+    public Mono<DishLibraryResponse> create(@Valid @RequestBody DishLibraryRequest request) {
         return requireAdmin().then(dishLibraryService.create(request));
     }
 
     @PutMapping("/{id}")
-    public Mono<DishLibraryResponse> update(@PathVariable Long id, @RequestBody DishLibraryRequest request) {
+    public Mono<DishLibraryResponse> update(@PathVariable Long id, @Valid @RequestBody DishLibraryRequest request) {
         return requireAdmin()
                 .then(dishLibraryService.update(id, request))
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)));
@@ -82,7 +83,8 @@ public class DishLibraryController {
 
     private Mono<Void> requireAdmin() {
         return currentUserService.currentUserId()
-                .flatMap(userId -> adminWhitelistRepository.findByUserId(userId)
+                .flatMap(userId -> adminWhitelistRepository.existsByUserId(userId)
+                        .filter(Boolean.TRUE::equals)
                         .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.FORBIDDEN)))
                         .then());
     }

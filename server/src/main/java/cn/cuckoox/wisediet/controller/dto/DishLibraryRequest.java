@@ -1,8 +1,10 @@
 package cn.cuckoox.wisediet.controller.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record DishLibraryRequest(
-        String name,
-        String category,
+        @NotBlank String name,
+        @NotBlank String category,
         Integer difficulty,
         Integer prepMin,
         Integer cookMin,

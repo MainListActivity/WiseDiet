@@ -16,6 +16,7 @@ import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 class DishLibraryIntegrationTest extends AbstractIntegrationTest {
 
@@ -130,18 +131,20 @@ class DishLibraryIntegrationTest extends AbstractIntegrationTest {
             createAdminToken().flatMap(token ->
                 Mono.fromRunnable(() -> {
                     // 创建菜品，提取 id
-                    Long id = webTestClient.post().uri("/api/admin/dishes")
+                    AtomicLong capturedId = new AtomicLong();
+                    webTestClient.post().uri("/api/admin/dishes")
                             .header("Authorization", "Bearer " + token)
                             .bodyValue(createRequest)
                             .exchange()
                             .expectStatus().isCreated()
-                            .returnResult(Map.class)
-                            .getResponseBody()
-                            .map(m -> ((Number) m.get("id")).longValue())
-                            .blockFirst(Duration.ofSeconds(5));
+                            .expectBody(Map.class)
+                            .consumeWith(result -> {
+                                Long id = ((Number) result.getResponseBody().get("id")).longValue();
+                                capturedId.set(id);
+                            });
 
                     // 禁用菜品
-                    webTestClient.patch().uri("/api/admin/dishes/" + id + "/status")
+                    webTestClient.patch().uri("/api/admin/dishes/" + capturedId.get() + "/status")
                             .header("Authorization", "Bearer " + token)
                             .bodyValue(Map.of("isActive", false))
                             .exchange()
@@ -156,6 +159,99 @@ class DishLibraryIntegrationTest extends AbstractIntegrationTest {
                             .expectStatus().isOk()
                             .expectBody()
                             .jsonPath("$.total").isEqualTo(0);
+                }).subscribeOn(Schedulers.boundedElastic())
+            )
+        ).verifyComplete();
+    }
+
+    @Test
+    void shouldGetDishById_whenAdmin() {
+        StepVerifier.create(
+            createAdminToken().flatMap(token ->
+                Mono.fromRunnable(() -> {
+                    AtomicLong capturedId = new AtomicLong();
+                    webTestClient.post().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(Map.of("name", "红烧肉", "category", "meat_red",
+                                    "difficulty", 2, "prepMin", 15, "cookMin", 60,
+                                    "servings", 4, "ingredients", "[]", "steps", "[]"))
+                            .exchange()
+                            .expectStatus().isCreated()
+                            .expectBody(Map.class)
+                            .consumeWith(r -> capturedId.set(((Number) r.getResponseBody().get("id")).longValue()));
+
+                    webTestClient.get().uri("/api/admin/dishes/" + capturedId.get())
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody()
+                            .jsonPath("$.name").isEqualTo("红烧肉");
+
+                    webTestClient.get().uri("/api/admin/dishes/99999")
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isNotFound();
+                }).subscribeOn(Schedulers.boundedElastic())
+            )
+        ).verifyComplete();
+    }
+
+    @Test
+    void shouldUpdateDish_whenAdmin() {
+        StepVerifier.create(
+            createAdminToken().flatMap(token ->
+                Mono.fromRunnable(() -> {
+                    AtomicLong capturedId = new AtomicLong();
+                    webTestClient.post().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(Map.of("name", "原始菜名", "category", "meat_red",
+                                    "difficulty", 1, "prepMin", 5, "cookMin", 10,
+                                    "servings", 2, "ingredients", "[]", "steps", "[]"))
+                            .exchange()
+                            .expectStatus().isCreated()
+                            .expectBody(Map.class)
+                            .consumeWith(r -> capturedId.set(((Number) r.getResponseBody().get("id")).longValue()));
+
+                    webTestClient.put().uri("/api/admin/dishes/" + capturedId.get())
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(Map.of("name", "更新后菜名", "category", "meat_poultry",
+                                    "difficulty", 2, "prepMin", 10, "cookMin", 20,
+                                    "servings", 2, "ingredients", "[]", "steps", "[]"))
+                            .exchange()
+                            .expectStatus().isOk()
+                            .expectBody()
+                            .jsonPath("$.name").isEqualTo("更新后菜名")
+                            .jsonPath("$.category").isEqualTo("meat_poultry");
+                }).subscribeOn(Schedulers.boundedElastic())
+            )
+        ).verifyComplete();
+    }
+
+    @Test
+    void shouldDeleteDish_whenAdmin() {
+        StepVerifier.create(
+            createAdminToken().flatMap(token ->
+                Mono.fromRunnable(() -> {
+                    AtomicLong capturedId = new AtomicLong();
+                    webTestClient.post().uri("/api/admin/dishes")
+                            .header("Authorization", "Bearer " + token)
+                            .bodyValue(Map.of("name", "待删菜", "category", "veggie_leafy",
+                                    "difficulty", 1, "prepMin", 5, "cookMin", 5,
+                                    "servings", 2, "ingredients", "[]", "steps", "[]"))
+                            .exchange()
+                            .expectStatus().isCreated()
+                            .expectBody(Map.class)
+                            .consumeWith(r -> capturedId.set(((Number) r.getResponseBody().get("id")).longValue()));
+
+                    webTestClient.delete().uri("/api/admin/dishes/" + capturedId.get())
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isNoContent();
+
+                    webTestClient.get().uri("/api/admin/dishes/" + capturedId.get())
+                            .header("Authorization", "Bearer " + token)
+                            .exchange()
+                            .expectStatus().isNotFound();
                 }).subscribeOn(Schedulers.boundedElastic())
             )
         ).verifyComplete();
