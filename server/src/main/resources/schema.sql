@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS "dietary_preference_tags" (
 -- 用户档案表：存储用户的身体数据和基本画像
 CREATE TABLE IF NOT EXISTS "user_profiles" (
     id SERIAL PRIMARY KEY,
-    user_id BIGINT,              -- 关联的用户ID
+    user_id BIGINT UNIQUE,       -- 关联的用户ID
     gender VARCHAR(50),          -- 性别
     age INT,                     -- 年龄
     height FLOAT,                -- 身高 (cm)
