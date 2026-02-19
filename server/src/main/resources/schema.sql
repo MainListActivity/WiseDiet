@@ -137,10 +137,10 @@ CREATE TABLE IF NOT EXISTS "dish_library" (
     prep_min    INT          NOT NULL DEFAULT 5,
     cook_min    INT          NOT NULL DEFAULT 15,
     servings    INT          NOT NULL DEFAULT 2,
-    ingredients JSONB        NOT NULL DEFAULT '[]',
-    steps       JSONB        NOT NULL DEFAULT '[]',
-    nutrient_tags JSONB,
-    nutrients   JSONB,
+    ingredients TEXT         NOT NULL DEFAULT '[]',
+    steps       TEXT         NOT NULL DEFAULT '[]',
+    nutrient_tags TEXT,
+    nutrients   TEXT,
     is_active   BOOLEAN      NOT NULL DEFAULT TRUE,
     created_at  TIMESTAMP    NOT NULL DEFAULT NOW()
 );
