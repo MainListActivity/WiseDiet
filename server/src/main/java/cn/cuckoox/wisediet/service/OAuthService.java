@@ -94,7 +94,7 @@ public class OAuthService {
                                         jwtService.extractJti(accessToken),
                                         user.getId(),
                                         Duration.ofMinutes(15))
-                                .thenReturn(new AuthTokenResponse(accessToken, UUID.randomUUID().toString()))));
+                                .thenReturn(new AuthTokenResponse(accessToken, UUID.randomUUID().toString(), user.getOnboardingStep()))));
     }
 
     public Mono<AuthUriResponse> getAuthUri(String authType) {

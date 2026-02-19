@@ -4,6 +4,7 @@ import cn.cuckoox.wisediet.controller.dto.OAuthLoginRequest;
 import cn.cuckoox.wisediet.repository.UserRepository;
 import cn.cuckoox.wisediet.service.SessionStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.test.StepVerifier;
@@ -15,6 +16,12 @@ class AuthControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @BeforeEach
+    void cleanUsers() {
+        StepVerifier.create(userRepository.deleteAll())
+                .verifyComplete();
+    }
 
     @Test
     void shouldReturnTokensForGoogleLogin() {
@@ -29,7 +36,28 @@ class AuthControllerIntegrationTest extends AbstractIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$.accessToken").exists()
-                .jsonPath("$.refreshToken").exists();
+                .jsonPath("$.refreshToken").exists()
+                .jsonPath("$.onboardingStep").isEqualTo(1);
+    }
+
+    @Test
+    void shouldReturnOnboardingStepZeroForExistingCompletedUser() {
+        // Given: pre-insert a user with onboardingStep=0 who has provider-id-1 (what mock oauth server returns)
+        StepVerifier.create(
+            userRepository.save(new cn.cuckoox.wisediet.model.User(null, "completed@test.com", "google", "provider-id-1", 0))
+        ).expectNextCount(1).verifyComplete();
+
+        String state = "completed-state-1";
+        StepVerifier.create(sessionStore.saveOAuthState(state))
+                .expectNext(true)
+                .verifyComplete();
+
+        webTestClient.post().uri("/api/auth/google")
+                .bodyValue(new OAuthLoginRequest("code-123", state))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.onboardingStep").isEqualTo(0);
     }
 
     @Test
