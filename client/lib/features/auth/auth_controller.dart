@@ -69,6 +69,15 @@ class AuthController extends StateNotifier<AuthState> {
     );
   }
 
+
+  void completeOnboarding() {
+    state = AuthState(
+      isLoggedIn: true,
+      onboardingStep: 0,
+      accessToken: state.accessToken,
+      refreshToken: state.refreshToken,
+    );
+  }
   Future<void> logout() async {
     await _tokenStorage.clearTokens();
     await _routeStorage.clearLastRoute();
